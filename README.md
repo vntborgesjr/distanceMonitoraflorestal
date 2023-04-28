@@ -12,7 +12,7 @@ O objetivo do distanceMonitoraflorestal e fornecer ferramentas que facilitem a s
 Voce pode instalar a versao de desenvolvimento do distanceMonitoraflorestal utilizando o seguinte codigo:
 
 ``` r
-devtools::install_github("distanceMonitoraflorestal")
+devtools::install_github("vntborgesjr/distanceMonitoraflorestal")
 ```
 
 ## Exemplo
