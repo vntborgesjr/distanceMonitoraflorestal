@@ -15,7 +15,7 @@ Voce pode instalar a versao de desenvolvimento do distanceMonitoraflorestal util
 devtools::install_github("distanceMonitoraflorestal")
 ```
 
-## ExEmplo
+## Exemplo
 
 Esse e um exemplo basico de como vc pode visualizar a distribuicao de distancias da especie com o maior numero de observacoes na base de dados, *Dasypoctra croconota* na Resex Tapajos-Arapiuns.
 
