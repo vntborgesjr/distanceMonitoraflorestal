@@ -15,9 +15,9 @@ Voce pode instalar a versao de desenvolvimento do distanceMonitoraflorestal util
 devtools::install_github("distanceMonitoraflorestal")
 ```
 
-## Examplo
+## ExEmplo
 
-Esse e um exemplo basico de como vc pode visualizar a distribuicao de distancias da especie com o maior numero de observacoes na base de dados, \emph{Dasypoctra croconota} na Resex Tapajos-Arapiuns.
+Esse e um exemplo basico de como vc pode visualizar a distribuicao de distancias da especie com o maior numero de observacoes na base de dados, *Dasypoctra croconota* na Resex Tapajos-Arapiuns.
 
 ``` r
 library(distanceMonitoraflorestal)
