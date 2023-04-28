@@ -37,3 +37,5 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 LazyData: true
+URL: https://github.com/vntborgesjr/distanceMonitoraflorestal
+BugReports: https://github.com/vntborgesjr/distanceMonitoraflorestal/issues
