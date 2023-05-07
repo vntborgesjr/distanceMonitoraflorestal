@@ -5,7 +5,7 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-O objetivo do distanceMonitoraflorestal e fornecer ferramentas que facilitem a selecao, visualizacao e analise de densidade das especies de aves e medios e grandes mamiferos a partir dos dados brutos do Programa Monitora Componente Florestal do ICMBio/CENAP/CEMAVE. 
+O objetivo do distanceMonitoraflorestal e fornecer ferramentas que facilitem a selecao, visualizacao e analise de abundancia e/ou densidade das especies de aves e mamiferos de medio e grande porte a partir dos dados brutos do Programa Monitora Componente Florestal do ICMBio/CENAP/CEMAVE. 
 
 ## Instalacao
 
