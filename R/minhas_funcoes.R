@@ -86,6 +86,7 @@ carregar_dados_brutos_rds <- function(
   return(dados)
 }
 
+# Documentacao da funcao carregar_dados_completos() ----------------------
 #' Carrega os dados brutos selecionando, trasformando e renomeando as colunas
 #'
 #' @description
@@ -804,7 +805,7 @@ contar_n_obs_validadas <- function(
 }
 
 # Documentacao da funcao contar_n_sp() --------------------
-#' Fornece o numero total de especies na base de dados selecionados
+#' Fornece o numero total de especies validadas na base de dados selecionados
 #'
 #' @description
 #' A funcao \code{} ...
