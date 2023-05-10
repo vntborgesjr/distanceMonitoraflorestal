@@ -37,20 +37,14 @@ library(tidyselect)
 #' @examples \dontrun{carregar_dados_brutos_xlsx()}
 carregar_dados_brutos_xlsx <- function(
     dados = readxl::read_excel(
-      path = paste0(
-        here::here(),
-        "/inst/extdata/monitora_masto_aves_2023_04_04.xlsx"
-      ),
+      path = "/extdata/monitora_masto_aves_2023_04_04.xlsx",
       sheet = "dados brutos"
     )
 ) {
   # grava uma versao dados_brutos.rds no diretorio inst/extdata
   readr::write_rds(
     dados,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/dados_brutos.rds"
-    )
+    file = "/extdata/dados_brutos.rds"
   )
 
   # retorna os dados butos
@@ -76,10 +70,7 @@ carregar_dados_brutos_xlsx <- function(
 #' @examples \dontrun{carregar_dados_brutos_rds()}
 carregar_dados_brutos_rds <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_brutos.rds"
-      )
+      file = "/extdata/dados_brutos.rds"
     )
 ) {
   # retorna os dados butos
@@ -105,10 +96,7 @@ carregar_dados_brutos_rds <- function(
 #' @examples \dontrun{carregar_dados_completos()}
 carregar_dados_completos <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_brutos.rds'
-      )
+      file = '/extdata/dados_brutos.rds'
     )
 ) {
   # padronizar separadores
@@ -251,10 +239,7 @@ carregar_dados_completos <- function(
   # grava uma versao dados_completos.rds no diretorio inst/extdata
   readr::write_rds(
     dados_completos,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/dados_completos.rds"
-    )
+    file = "/extdata/dados_completos.rds"
   )
   # retornar o data.frame
   return(dados_completos)
@@ -283,14 +268,10 @@ carregar_dados_completos <- function(
 #' @examples \dontrun{carregar_dados_filtrados()}
 carregar_dados_filtrados <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_completos.rds'
-      )
-    ),
+      file = "/extdata/dados_completos.rds",
     nome_uc = "Resex Tapajos-Arapiuns",
     nome_sp = "Dasyprocta croconota"
-
+  )
 ) {
   # gerar o data.frame desejado
   dados_filtrados <- dados |>
@@ -302,10 +283,7 @@ carregar_dados_filtrados <- function(
   # grava uma versao dados_filtrados.rds no diretorio inst/extdata
   readr::write_rds(
     dados_filtrados,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/dados_filtrados.rds"
-    )
+    file = "/extdata/dados_filtrados.rds"
   )
 
   # retornar o data.frame
@@ -334,10 +312,7 @@ carregar_dados_filtrados <- function(
 #' @examples \dontrun{carregar_dados_selecionados()}
 carregar_dados_selecionados <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_completos.rds"
-      )
+      file = "/extdata/dados_completos.rds"
     )
 ) {
   # gerar o data.frame desejado
@@ -347,10 +322,7 @@ carregar_dados_selecionados <- function(
   # grava uma versao dados_completos.rds no diretorio inst/extdata
   readr::write_rds(
     dados_selecionados,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/dados_selecionados.rds"
-    )
+    file = "/extdata/dados_selecionados.rds"
   )
 
   # retornar o data.frame
@@ -379,10 +351,7 @@ carregar_dados_selecionados <- function(
 #' @examples \dontrun{contar_n_ano_uc()}
 contar_n_ano_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/inst/extdata/dados_selecionados.rds"
     )
 ) {
   # gera o numero de anos em que cada UC foi amostrada
@@ -406,10 +375,7 @@ contar_n_ano_uc <- function(
   # grava a tabela n_ano_uc.rds no diretorio inst/extdata/
   readr::write_rds(
     n_ano_uc,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_ano_uc.rds"
-    )
+    file = "/extdata/n_ano_uc.rds"
   )
 
   # retorna o numero de UCs por ano
@@ -437,10 +403,7 @@ contar_n_ano_uc <- function(
 #' @examples \dontrun{contar_n_obs_sp_ano()}
 contar_n_obs_sp_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gerar a tabela com o numero de observacoes por UC em cada ano
@@ -454,10 +417,7 @@ contar_n_obs_sp_ano <- function(
   # grava a tabela n_obs_uc.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_sp_ano,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_sp_ano.rds"
-    )
+    file = "/extdata/n_obs_sp_ano.rds"
   )
 
   # retorna a tabela com o numero de observacoes por UC
@@ -485,10 +445,7 @@ contar_n_obs_sp_ano <- function(
 #' @examples \dontrun{contar_n_obs_sp_uc_ano()}
 contar_n_obs_sp_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gera o numero de observacoes por especie, por Uc e por ano
@@ -504,10 +461,7 @@ contar_n_obs_sp_uc_ano <- function(
   # grava a tabela n_obs_sp_uc.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_sp_uc_ano,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_sp_uc_ano.rds"
-    )
+    file = "/extdata/n_obs_sp_uc_ano.rds"
   )
 
   # retorna o numero de observacoes por especie, por Uc e por ano
@@ -535,10 +489,7 @@ contar_n_obs_sp_uc_ano <- function(
 #' @examples \dontrun{contar_n_obs_sp_uc_estacao_ano()}
 contar_n_obs_sp_uc_estacao_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gera o numero de observacoes por especie, por Uc, por estacao e por ano
@@ -555,10 +506,7 @@ contar_n_obs_sp_uc_estacao_ano <- function(
   # grava a tabela n_obs_uc_sp_estacao_ano.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_sp_uc_estacao_ano,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_sp_uc_estacao_ano.rds"
-    )
+    file = "/extdata/n_obs_sp_uc_estacao_ano.rds"
   )
 
   # retorna o numero de observacoes por especie, por Uc, por estacao e por ano
@@ -586,10 +534,7 @@ contar_n_obs_sp_uc_estacao_ano <- function(
 #' @examples \dontrun{contar_n_obs_sp_uc()}
 contar_n_obs_sp_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gera o numero de observacoes por especie
@@ -604,10 +549,7 @@ contar_n_obs_sp_uc <- function(
   # grava a tabela n_obs_sp_uc.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_sp_uc,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_sp_uc.rds"
-    )
+    file = "/extdata/n_obs_sp_uc.rds"
   )
 
   # retorna o numero de observacoes por especie
@@ -635,10 +577,7 @@ contar_n_obs_sp_uc <- function(
 #' @examples \dontrun{contar_n_obs_sp()}
 contar_n_obs_sp <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_completos.rds"
-      )
+      file = "/extdata/dados_completos.rds"
     )
 ) {
   #
@@ -651,10 +590,7 @@ contar_n_obs_sp <- function(
   # grava a tabela n_uc_ano.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_sp,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_sp.rds"
-    )
+    file = "/inst/extdata/n_obs_sp.rds"
   )
 
   return(n_obs_sp)
@@ -681,10 +617,7 @@ contar_n_obs_sp <- function(
 #' @examples \dontrun{contar_n_obs_uc_ano()}
 contar_n_obs_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gerar a tabela com o numero de observacoes por UC em cada ano
@@ -698,10 +631,7 @@ contar_n_obs_uc_ano <- function(
   # grava a tabela n_obs_uc.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_uc_ano,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_uc_ano.rds"
-    )
+    file = "/extdata/n_obs_uc_ano.rds"
   )
 
   # retorna a tabela com o numero de observacoes por UC
@@ -729,10 +659,7 @@ contar_n_obs_uc_ano <- function(
 #' @examples \dontrun{contar_n_obs_uc()}
 contar_n_obs_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gerar a tabela com o numero de observacoes por UC
@@ -745,10 +672,7 @@ contar_n_obs_uc <- function(
   # grava a tabela n_obs_uc.rds no diretorio inst/extdata/
   readr::write_rds(
     n_obs_uc,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_obs_uc.rds"
-    )
+    file = "/extdata/n_obs_uc.rds"
   )
 
   # retorna a tabela com o numero de observacoes por UC
@@ -776,10 +700,7 @@ contar_n_obs_uc <- function(
 #' @examples \dontrun{contar_n_obs_validadas()}
 contar_n_obs_validadas <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_completos.rds'
-      )
+      file = "/extdata/dados_completos.rds"
     )
 ) {
   # gerar tabela com o numero de observacoes validadas para cada nivel
@@ -790,10 +711,7 @@ contar_n_obs_validadas <- function(
   # gravar tabela_n_obs_validadas.rds no diretorio inst/extdata
   readr::write_rds(
     tabela_n_obs_validadas,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/tabela_n_obs_validadas.rds"
-    )
+    file = "/extdata/tabela_n_obs_validadas.rds"
   )
 
   # extrair os numeros de observacoes validadas
@@ -825,10 +743,7 @@ contar_n_obs_validadas <- function(
 #' @examples \dontrun{contar_n_sp()}
 contar_n_sp <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   #
@@ -860,10 +775,7 @@ contar_n_sp <- function(
 #' @examples \dontrun{contar_n_uc_ano()}
 contar_n_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # gera o numero de observacoes por especie
@@ -885,10 +797,7 @@ contar_n_uc_ano <- function(
   # grava a tabela n_uc_ano.rds no diretorio inst/extdata/
   readr::write_rds(
     n_uc_ano,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/n_uc_ano.rds"
-    )
+    file = "/extdata/n_uc_ano.rds"
   )
 
   # retorna uma tabela com o numero de UCs por ano
@@ -916,10 +825,7 @@ contar_n_uc_ano <- function(
 #' @examples \dontrun{contar_n_uc()}
 contar_n_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/dados_selecionados.rds"
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   #
@@ -953,10 +859,7 @@ contar_n_uc <- function(
 #' @examples \dontrun{gerar_tabdin_dados_brutos()}
 gerar_tabdin_dados_brutos <- function(
     dados = readxl::read_excel(
-      path = paste0(
-        here::here(),
-        "/inst/extdata/monitora_masto_aves_2023_04_04.xlsx"
-      ),
+      path = "/extdata/monitora_masto_aves_2023_04_04.xlsx",
       sheet = "dados brutos"
     ),
     n_linhas = 1:1000
@@ -992,10 +895,7 @@ gerar_tabdin_dados_brutos <- function(
 #' @examples \dontrun{gerar_tabdin_dados_completos()}
 gerar_tabdin_dados_completos <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_completos.rds'
-      )
+      file = "/extdata/dados_completos.rds"
     ),
     n_linhas = 1:4500
 ) {
@@ -1030,10 +930,7 @@ gerar_tabdin_dados_completos <- function(
 #' @examples \dontrun{gerar_tabdin_dados_selecionados_distanceR_cov()}
 gerar_tabdin_dados_selecionados_distanceR_cov <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados_transformados_dist_r_cov.rds'
-      )
+      file = "/extdata/dados_selecionados_transformados_dist_r_cov.rds"
     ),
     n_linhas = 1:4500
 ) {
@@ -1074,10 +971,7 @@ gerar_tabdin_dados_selecionados_distanceR_cov <- function(
 #' @examples \dontrun{gerar_tabdin_dados_selecionados_distanceR()}
 gerar_tabdin_dados_selecionados_distanceR <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados_transformados_dist_r.rds'
-      )
+      file = "/extdata/dados_selecionados_transformados_dist_r.rds"
     ),
     n_linhas = 1:4500
 ) {
@@ -1120,10 +1014,7 @@ gerar_tabdin_dados_selecionados_distanceR <- function(
 #' @examples \dontrun{gerar_tabdin_dados_filtrados()}
 gerar_tabdin_dados_filtrados <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados.rds'
-      )
+      file = "/extdata/dados_selecionados.rds"
     ),
     nome_uc = "Resex Tapajos-Arapiuns",
     nome_sp = "Dasyprocta croconota",
@@ -1168,10 +1059,7 @@ gerar_tabdin_dados_filtrados <- function(
 #' @examples \dontrun{gerar_tabdin_dados_selecionados()}
 gerar_tabdin_dados_selecionados <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados.rds'
-      )
+      file = "/extdata/dados_selecionados.rds"
     ),
     n_linhas = 1:4500
 ) {
@@ -1212,10 +1100,7 @@ gerar_tabdin_dados_selecionados <- function(
 #' @examples \dontrun{gerar_tabdin_n_ano_uc()}
 gerar_tabdin_n_ano_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_ano_uc.rds'
-      )
+      file = "/extdata/n_ano_uc.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de anos em que cada UC foi amostrada
@@ -1252,10 +1137,7 @@ gerar_tabdin_n_ano_uc <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_sp_ano()}
 gerar_tabdin_n_obs_sp_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_sp_ano.rds'
-      )
+      file = "/extdata/n_obs_sp_ano.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de gerar_tabdin_n_obs_sp_ano
@@ -1292,10 +1174,7 @@ gerar_tabdin_n_obs_sp_ano <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_sp_uc_ano()}
 gerar_tabdin_n_obs_sp_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_sp_uc_ano.rds'
-      )
+      file = "/extdata/n_obs_sp_uc_ano.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de observacoes por UC, por especies, por estacao e por ano
@@ -1332,10 +1211,7 @@ gerar_tabdin_n_obs_sp_uc_ano <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_sp_uc_estacao_ano()}
 gerar_tabdin_n_obs_sp_uc_estacao_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_sp_uc_estacao_ano.rds'
-      )
+      file = "/extdata/n_obs_sp_uc_estacao_ano.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de observacoes por UC, por especies, por estacao e por ano
@@ -1372,10 +1248,7 @@ gerar_tabdin_n_obs_sp_uc_estacao_ano <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_sp_uc()}
 gerar_tabdin_n_obs_sp_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_sp_uc.rds'
-      )
+      file = "/extdata/n_obs_sp_uc.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de observacoes por sp por UC
@@ -1412,10 +1285,7 @@ gerar_tabdin_n_obs_sp_uc <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_sp()}
 gerar_tabdin_n_obs_sp <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_sp.rds'
-      )
+      file = "/extdata/n_obs_sp.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de observacoes por sp
@@ -1452,10 +1322,7 @@ gerar_tabdin_n_obs_sp <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_uc_ano()}
 gerar_tabdin_n_obs_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_uc_ano.rds'
-      )
+      file = "/extdata/n_obs_uc_ano.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de anos em que cada UC foi amostrada
@@ -1492,10 +1359,7 @@ gerar_tabdin_n_obs_uc_ano <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_uc()}
 gerar_tabdin_n_obs_uc <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_uc.rds'
-      )
+      file = "/extdata/n_obs_uc.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de observacoes por uc
@@ -1532,10 +1396,7 @@ gerar_tabdin_n_obs_uc <- function(
 #' @examples \dontrun{gerar_tabdin_n_uc_ano()}
 gerar_tabdin_n_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_uc_ano.rds'
-      )
+      file = "/extdata/n_uc_ano.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de observacoes por sp
@@ -1572,10 +1433,7 @@ gerar_tabdin_n_uc_ano <- function(
 #' @examples \dontrun{plotar_distribuicao_distancia_interativo()}
 plotar_distribuicao_distancia_interativo <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados_transformados_dist_r.rds'
-      )
+      file = "/extdata/dados_selecionados_transformados_dist_r.rds"
     )
 ) {
   # desenha o grafico de caixa
@@ -1665,10 +1523,7 @@ plotar_distribuicao_distancia_interativo <- function(
 #' @examples \dontrun{plotar_distribuicao_distancia_estatico()}
 plotar_distribuicao_distancia_estatico <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados_transformados_dist_r.rds'
-      )
+      file = "/extdata/dados_selecionados_transformados_dist_r.rds"
     )
 ) {
   # desenha o grafico de caixa
@@ -1747,10 +1602,7 @@ plotar_distribuicao_distancia_estatico <- function(
 #' @examples \dontrun{plotar_n_obs_sp_estatico()}
 plotar_n_obs_sp_estatico <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/n_obs_sp.rds"
-      )
+      file = "/extdata/n_obs_sp.rds"
     )
 ) {
   fig <- dados |>
@@ -1826,10 +1678,7 @@ plotar_n_obs_sp_estatico <- function(
 #' @examples \dontrun{plotar_n_obs_sp_interativo()}
 plotar_n_obs_sp_interativo <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/n_obs_sp.rds"
-      )
+      file = "/extdata/n_obs_sp.rds"
     )
 ) {
   fig <- plotly::ggplotly(
@@ -1902,10 +1751,7 @@ plotar_n_obs_sp_interativo <- function(
 #' @examples \dontrun{plotar_n_obs_sp_uc_interativo()}
 plotar_n_obs_sp_uc_interativo <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/n_obs_sp_uc.rds"
-      )
+      file = "/extdata/n_obs_sp_uc.rds"
     )
 ) {
   # desenha o grafico com mais de 1000 observacoes
@@ -2055,10 +1901,7 @@ plotar_n_obs_sp_uc_interativo <- function(
 #' @examples \dontrun{plotar_n_obs_uc_estatico()}
 plotar_n_obs_uc_estatico <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_uc.rds'
-      )
+      file = "/extdata/n_obs_uc.rds"
     )
 ) {
   # desenha os graficos com mais de 1000, de 501 a 1000, de 101 a 500 e ate 100 observacoes
@@ -2144,10 +1987,7 @@ plotar_n_obs_uc_estatico <- function(
 # desenha um grafico de barras intereativo com o numero de observacoes por UC
 plotar_n_obs_uc_interativo <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/n_obs_uc.rds'
-      )
+      file = "/extdata/n_obs_uc.rds"
     )
 ) {
   # desenha o grafico com mais de 1000 observacoes
@@ -2212,10 +2052,7 @@ plotar_n_obs_uc_interativo <- function(
 #' @examples \dontrun{plotar_n_obs_validadas_estatico()}
 plotar_n_obs_validadas_estatico <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/tabela_n_obs_validadas.rds"
-      )
+      file = "/extdata/tabela_n_obs_validadas.rds"
     )
 ) {
   #
@@ -2267,10 +2104,7 @@ plotar_n_obs_validadas_estatico <- function(
 #' @examples \dontrun{plotar_n_obs_validadas_interativo()}
 plotar_n_obs_validadas_interativo <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/inst/extdata/tabela_n_obs_validadas.rds"
-      )
+      file = "/extdata/tabela_n_obs_validadas.rds"
     )
 ) {
   #
@@ -2322,10 +2156,7 @@ plotar_n_obs_validadas_interativo <- function(
 # adicionando duas covariaveis
 transformar_para_distanceR_covariaveis <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados.rds'
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   dados_transformados_dist_r_cov <- dados |>
@@ -2353,10 +2184,7 @@ transformar_para_distanceR_covariaveis <- function(
   # garvar no diretorio inst/extdata/ arquivo dados_transformados_dist_r_cov.rds
   readr::write_rds(
     dados_transformados_dist_r_cov,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/dados_selecionados_transformados_dist_r_cov.rds"
-    )
+    file = "/extdata/dados_selecionados_transformados_dist_r_cov.rds"
   )
   # retorna o data.frame
   return(dados_transformados_dist_r_cov)
@@ -2384,10 +2212,7 @@ transformar_para_distanceR_covariaveis <- function(
 #' @examples \dontrun{transformar_para_distanceR()}
 transformar_para_distanceR <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/inst/extdata/dados_selecionados.rds'
-      )
+      file = "/extdata/dados_selecionados.rds"
     )
 ) {
   # transforma dados para formato distance R
@@ -2418,10 +2243,7 @@ transformar_para_distanceR <- function(
   # grava uma versao dados_transformados_dist_r.rds no diretorio data
   readr::write_rds(
     dados_transformados_dist_r,
-    file = paste0(
-      here::here(),
-      "/inst/extdata/dados_selecionados_transformados_dist_r.rds"
-    )
+    file = "/extdata/dados_selecionados_transformados_dist_r.rds"
   )
 
   # retorna o data.frame
