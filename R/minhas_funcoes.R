@@ -1322,10 +1322,7 @@ gerar_tabdin_n_obs_sp <- function(
 #' @examples \dontrun{gerar_tabdin_n_obs_uc_ano()}
 gerar_tabdin_n_obs_uc_ano <- function(
     dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/extdata/n_obs_uc_ano.rds"
-      )
+      file = "/extdata/n_obs_uc_ano.rds"
     )
 ) {
   # gerar tabela dinamica dos dados do numero de anos em que cada UC foi amostrada
