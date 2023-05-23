@@ -157,7 +157,7 @@ carregar_dados_brutos_xlsx <- function(
     caminho,
     planilha = NULL
 ) {
-  # grava uma versao dados_brutos.rds no diretorio inst/extdata
+  # carrega o arquivo indicado no caminho fornecido
   dados <- readxl::read_excel(
     path = caminho,
     sheet = planilha
