@@ -34,7 +34,7 @@
 #
 # Adicionar funcoes ao pacote ---------------------------------------------
 
-# devtools::use_r("minhas_funcoes.R")
+# usethis::use_r("minhas_funcoes.R")
 
 # Carergar todas as funcoes -----------------------------------------------
 
@@ -60,7 +60,7 @@
 # minhas_funcoes <- c(
 #  "carregar_dados_brutos_xlsx"
 #)
-# usethis::use_test(minhas_funcoes)
+# usethis::use_test("minhas_funcoes.R")
 #
 # rodar quando quiser repetir os testes existentes. para adicionar novos testest, rodar as linha anteriores
 # devtools::test()
