@@ -5,7 +5,7 @@
 \title{Carrega os dados brutos originais em formato .rds}
 \usage{
 carregar_dados_brutos_rds(
-  dados = readr::read_rds(file = paste0(here::here(), "/inst/extdata/dados_brutos.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data-raw/dados_brutos.rds"))
 )
 }
 \arguments{

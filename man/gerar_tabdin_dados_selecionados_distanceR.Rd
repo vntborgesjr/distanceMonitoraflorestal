@@ -6,7 +6,7 @@
 \usage{
 gerar_tabdin_dados_selecionados_distanceR(
   dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados_transformados_dist_r.rds")),
+    "/data/dados_selecionados_transformados_dist_r.rds")),
   n_linhas = 1:4500
 )
 }

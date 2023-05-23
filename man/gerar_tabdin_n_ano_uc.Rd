@@ -5,7 +5,7 @@
 \title{Gera uma tabela dinamica do numero de anos em que cada UC foi amostrada}
 \usage{
 gerar_tabdin_n_ano_uc(
-  dados = readr::read_rds(file = paste0(here::here(), "/inst/extdata/n_ano_uc.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/n_ano_uc.rds"))
 )
 }
 \arguments{

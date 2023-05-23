@@ -6,7 +6,7 @@
 \usage{
 gerar_tabdin_dados_brutos(
   dados = readxl::read_excel(path = paste0(here::here(),
-    "/inst/extdata/monitora_masto_aves_2023_04_04.xlsx"), sheet = "dados brutos"),
+    "/data-raw/monitora_masto_aves_2023_04_04.xlsx"), sheet = "dados brutos"),
   n_linhas = 1:1000
 )
 }

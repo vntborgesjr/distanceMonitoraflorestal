@@ -6,7 +6,7 @@
 \usage{
 plotar_n_obs_validadas_estatico(
   dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/tabela_n_obs_validadas.rds"))
+    "/data/tabela_n_obs_validadas.rds"))
 )
 }
 \arguments{

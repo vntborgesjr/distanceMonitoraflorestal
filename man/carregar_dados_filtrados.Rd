@@ -5,8 +5,7 @@
 \title{Carrega os dados filtrados a partir da UC's e da especie}
 \usage{
 carregar_dados_filtrados(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_completos.rds")),
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_completos.rds")),
   nome_uc = "Resex Tapajos-Arapiuns",
   nome_sp = "Dasyprocta croconota"
 )

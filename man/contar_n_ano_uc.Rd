@@ -5,8 +5,7 @@
 \title{Gera uma tabela com o numero total de anos em que cada UC foi amostrada}
 \usage{
 contar_n_ano_uc(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_selecionados.rds"))
 )
 }
 \arguments{

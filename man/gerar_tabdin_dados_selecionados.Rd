@@ -5,8 +5,7 @@
 \title{Gera uma tabela dinamica dos dados selecionados}
 \usage{
 gerar_tabdin_dados_selecionados(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados.rds")),
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_selecionados.rds")),
   n_linhas = 1:4500
 )
 }

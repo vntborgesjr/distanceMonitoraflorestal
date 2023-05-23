@@ -5,8 +5,7 @@
 \title{Carrega os dados selecionados a partir das observacoes validadas ao nivel de especie}
 \usage{
 carregar_dados_selecionados(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_completos.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_completos.rds"))
 )
 }
 \arguments{

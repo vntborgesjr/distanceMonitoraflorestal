@@ -5,7 +5,7 @@
 \title{Gera um grafico de barras interativo com o numero de observacoes por UC}
 \usage{
 plotar_n_obs_uc_interativo(
-  dados = readr::read_rds(file = paste0(here::here(), "/inst/extdata/n_obs_uc.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/n_obs_uc.rds"))
 )
 }
 \arguments{

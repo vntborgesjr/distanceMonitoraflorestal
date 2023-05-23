@@ -2,11 +2,10 @@
 % Please edit documentation in R/minhas_funcoes.R
 \name{contar_n_sp}
 \alias{contar_n_sp}
-\title{Fornece o numero total de especies na base de dados selecionados}
+\title{Fornece o numero total de especies validadas na base de dados selecionados}
 \usage{
 contar_n_sp(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_selecionados.rds"))
 )
 }
 \arguments{

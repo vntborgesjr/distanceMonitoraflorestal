@@ -6,7 +6,7 @@
 \usage{
 gerar_tabdin_n_obs_sp_uc_estacao_ano(
   dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/n_obs_sp_uc_estacao_ano.rds"))
+    "/data/n_obs_sp_uc_estacao_ano.rds"))
 )
 }
 \arguments{

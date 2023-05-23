@@ -5,8 +5,7 @@
 \title{Gera uma tabela dinamica dos dados selecionados e filtrados por UC e especie}
 \usage{
 gerar_tabdin_dados_filtrados(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados.rds")),
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_selecionados.rds")),
   nome_uc = "Resex Tapajos-Arapiuns",
   nome_sp = "Dasyprocta croconota",
   n_linhas = 1:4500

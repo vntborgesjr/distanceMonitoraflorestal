@@ -5,8 +5,7 @@
 \title{Gera uma tabela com o numero total de observacoes validadas por nivel taxonomico}
 \usage{
 contar_n_obs_validadas(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_completos.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_completos.rds"))
 )
 }
 \arguments{

@@ -5,7 +5,7 @@
 \title{Carrega os dados brutos selecionando, trasformando e renomeando as colunas}
 \usage{
 carregar_dados_completos(
-  dados = readr::read_rds(file = paste0(here::here(), "/inst/extdata/dados_brutos.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data-raw/dados_brutos.rds"))
 )
 }
 \arguments{
@@ -19,6 +19,7 @@ A funcao \code{carregar_dados_completos()} carrega os dados brutos em formato .r
 }
 \details{
 A funcao \code{carregar_dados_completos()} disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, selecionando, transformando e renomeando suas colunas. (Fornecer mais detalhes sobre as transformacoes operadas).
+Avisar que distancias de trilhas percorridas estao sendo imputadas quando os valores estao ausentes.
 }
 \examples{
 \dontrun{carregar_dados_completos()}

@@ -16,7 +16,7 @@
 
 # Adicionar descricao ao pacote -------------------------------------------
 
-# devtools::create()
+# devtools::create(getwd())
 
 # Adicionar a versao do pacote --------------------------------------------
 

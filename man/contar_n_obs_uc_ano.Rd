@@ -5,8 +5,7 @@
 \title{Gera uma tabela com o numero total de observacoes por UC em cada ano}
 \usage{
 contar_n_obs_uc_ano(
-  dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_selecionados.rds"))
 )
 }
 \arguments{

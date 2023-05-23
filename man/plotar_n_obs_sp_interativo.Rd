@@ -5,7 +5,7 @@
 \title{Gera graficos de barras interativos com o numero de observacoes por especie}
 \usage{
 plotar_n_obs_sp_interativo(
-  dados = readr::read_rds(file = paste0(here::here(), "/inst/extdata/n_obs_sp.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/n_obs_sp.rds"))
 )
 }
 \arguments{

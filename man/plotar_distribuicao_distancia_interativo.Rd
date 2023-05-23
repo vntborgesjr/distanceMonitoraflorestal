@@ -6,7 +6,8 @@
 \usage{
 plotar_distribuicao_distancia_interativo(
   dados = readr::read_rds(file = paste0(here::here(),
-    "/inst/extdata/dados_selecionados_transformados_dist_r.rds"))
+    "/data/dados_selecionados_transformados_dist_r.rds")),
+  largura_caixa = 1
 )
 }
 \arguments{

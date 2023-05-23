@@ -5,7 +5,7 @@
 \title{Gera uma tabela dinamica do numero de observacoes por especie, em cada UC}
 \usage{
 gerar_tabdin_n_obs_sp_uc(
-  dados = readr::read_rds(file = paste0(here::here(), "/inst/extdata/n_obs_sp_uc.rds"))
+  dados = readr::read_rds(file = paste0(here::here(), "/data/n_obs_sp_uc.rds"))
 )
 }
 \arguments{
