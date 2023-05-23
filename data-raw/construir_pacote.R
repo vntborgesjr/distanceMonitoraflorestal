@@ -59,8 +59,8 @@
 # rodar na primeira vez ou sempre que inserir uma nova funcao
 # minhas_funcoes <- c(
 #  "carregar_dados_brutos_xlsx"
-#)
-# usethis::use_test("minhas_funcoes.R")
+# )
+# usethis::use_test(minhas_funcoes)
 #
 # rodar quando quiser repetir os testes existentes. para adicionar novos testest, rodar as linha anteriores
 # devtools::test()
