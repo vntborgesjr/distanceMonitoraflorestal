@@ -144,7 +144,7 @@ ajuste_modelos_distance_unif <- function(
 #' @param dados recebe o caminho para o diretório onde se encontra o arquivo .xlsx dos dados brutos.
 #'
 #' @details
-#' A funcao \code{carregar_dados_brutos_xlsx()} carrega e disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, contendo  as infromacoes sobre as amostragens por distancia (\emph{distance samplig}) de aves e pequenos e medios mamiferos realizadas desde 2014 em 40 Unidades de Conservacao do Brasil. O novo arquivo gerado fica disponivel para carregamento a partir do uso da funcao \code{carregar_dados_brutos_rds()}.
+#' A funcao \code{carregar_dados_brutos_xlsx()} carrega e disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, contendo  as infromacoes sobre as amostragens por distancia (\emph{distance samplig}) de aves e pequenos e medios mamiferos realizadas desde 2014 em 40 Unidades de Conservacao do Brasil.
 #'
 #' @return Retorna um objeto do tipo \code{tibble} contendo os dados brutos do Projeto Monitora Componente Florestal a partir do formato .xlsx.
 #' @author
