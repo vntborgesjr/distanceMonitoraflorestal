@@ -139,10 +139,9 @@ ajuste_modelos_distance_unif <- function(
 #' Carrega os dados brutos originais em formato .xlsx
 #'
 #' @description
-#' A funcao \code{carregar_dados_brutos_xlsx()} carrega o arquivo da planilha de dados originais, \code{"monitora_masto_aves_2023_04_04.xlsx"} e gera um novo arquivo \code{dados_brutos.rds}.
+#' A funcao \code{carregar_dados_brutos_xlsx()} carrega o arquivo da planilha de dados originais, \code{"monitora_masto_aves_2023_04_04.xlsx"}.
 #'
-#' @param dados recebe o caminho para carregar um arquivo .xlsx. Por configuracao, carrega os dados brutos dos Projeto Monitora Componente Florestal \code{"monitora_masto_aves_2023_04_04.xlsx"}. A versao dos dados brutos corresponde ao arquivo "Planilha Oficial consolidada de Masto-aves 2014-21 Validada CEMAVE CPB CENAP.xlsx"
-# enviada por whatsapp no dia 08/03/2023
+#' @param dados recebe o caminho para o diretório onde se encontra o arquivo .xlsx dos dados brutos.
 #'
 #' @details
 #' A funcao \code{carregar_dados_brutos_xlsx()} carrega e disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, contendo  as infromacoes sobre as amostragens por distancia (\emph{distance samplig}) de aves e pequenos e medios mamiferos realizadas desde 2014 em 40 Unidades de Conservacao do Brasil. O novo arquivo gerado fica disponivel para carregamento a partir do uso da funcao \code{carregar_dados_brutos_rds()}.
@@ -155,22 +154,14 @@ ajuste_modelos_distance_unif <- function(
 #'
 #' @examples \dontrun{carregar_dados_brutos_xlsx()}
 carregar_dados_brutos_xlsx <- function(
-    dados = readxl::read_excel(
-      path = paste0(
-        here::here(),
-        "/data-raw/monitora_masto_aves_2023_04_04.xlsx"
-      ),
-      sheet = "dados brutos"
-    )
+    caminho,
+    planilha = NULL
 ) {
   # grava uma versao dados_brutos.rds no diretorio inst/extdata
-  # readr::write_rds(
-  #   dados,
-  #   file = paste0(
-  #     here::here(),
-  #     "/data-raw/dados_brutos.rds"
-  #   )
-  # )
+  dados <- readxl::read_excel(
+    path = caminho,
+    sheet = planilha
+  )
 
   # retorna os dados butos
   return(dados)
