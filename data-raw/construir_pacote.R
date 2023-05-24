@@ -41,7 +41,7 @@
 # devtools::load_all()
 
 # Checar o funcionamento do pacote ----------------------------------------
-
+# nessa etapa o arquivo NAMESPACE e recriado
 # devtools::check()
 
 # Controle de versao com Git a GitHub -------------------------------------
