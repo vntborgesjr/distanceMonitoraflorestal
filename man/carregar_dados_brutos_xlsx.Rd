@@ -19,7 +19,7 @@ A funcao \code{carregar_dados_brutos_xlsx()} carrega o arquivo da planilha de da
 A funcao \code{carregar_dados_brutos_xlsx()} carrega e disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, contendo  as infromacoes sobre as amostragens por distancia (\emph{distance samplig}) de aves e pequenos e medios mamiferos realizadas desde 2014 em 40 Unidades de Conservacao do Brasil.
 }
 \examples{
-\dontrun{carregar_dados_brutos_xlsx()}
+\dontrun{carregar_dados_brutos_xlsx("data-raw/dados_brutos.xlsx")}
 }
 \author{
 Vitor N. T. Borges-Junior
