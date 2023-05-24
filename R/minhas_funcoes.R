@@ -378,32 +378,19 @@ gerar_dados_completos <- function(dados) {
 #'
 #' @examples \dontrun{gerar_dados_filtrados()}
 gerar_dados_filtrados <- function(
-    dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/data/dados_completos.rds"
-      )
-    ),
-    nome_uc = "Resex Tapajos-Arapiuns",
-    nome_sp = "Dasyprocta croconota"
+    dados,
+    nome_uc,
+    nome_sp
 ) {
-  # gerar o data.frame desejado
+
+  # gerar o tibble filtrado por UC e especie
   dados_filtrados <- dados |>
     dplyr::filter(
       uc_name == nome_uc,
       sp_name == nome_sp
     )
 
-  # grava uma versao dados_filtrados.rds no diretorio inst/extdata
-  # readr::write_rds(
-  #   dados_filtrados,
-  #   file = paste0(
-  #     here::here(),
-  #     "/data/dados_filtrados.rds"
-  #   )
-  # )
-
-  # retornar o data.frame
+  # retornar o tibble com os dados filtrados
   return(dados_filtrados)
 }
 
