@@ -414,7 +414,7 @@ gerar_dados_filtrados <- function(
 #' @export
 #'
 #' @examples \dontrun{gerar_dados_selecionados(dados = dados_completos)}
-carregar_dados_selecionados <- function(dados) {
+gerar_dados_selecionados <- function(dados) {
 
   # gerar o tibble com os dados selecioandos
   dados_selecionados <- dados |>
