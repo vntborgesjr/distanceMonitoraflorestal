@@ -4,9 +4,7 @@
 \alias{carregar_dados_selecionados}
 \title{Carrega os dados selecionados a partir das observacoes validadas ao nivel de especie}
 \usage{
-carregar_dados_selecionados(
-  dados = readr::read_rds(file = paste0(here::here(), "/data/dados_completos.rds"))
-)
+carregar_dados_selecionados(dados)
 }
 \arguments{
 \item{dados}{Descircao}
@@ -21,7 +19,7 @@ A funcao \code{} ...
 Additional details...
 }
 \examples{
-\dontrun{carregar_dados_selecionados()}
+\dontrun{gerar_dados_selecionados(dados = dados_completos)}
 }
 \author{
 Vitor N. T. Borges-Junior
