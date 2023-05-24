@@ -7,6 +7,7 @@ library(forcats)
 library(ggpubr)
 library(ggplot2)
 library(here)
+library(janitor)
 library(lubridate)
 library(mrds)
 library(plotly)
@@ -152,7 +153,7 @@ ajuste_modelos_distance_unif <- function(
 #' Luciana A. Fusinatto
 #' @export
 #'
-#' @examples \dontrun{carregar_dados_brutos_xlsx()}
+#' @examples \dontrun{carregar_dados_brutos_xlsx("data-raw/dados_brutos.xlsx")}
 carregar_dados_brutos_xlsx <- function(
     caminho,
     planilha = NULL
@@ -167,45 +168,16 @@ carregar_dados_brutos_xlsx <- function(
   return(dados)
 }
 
-# Documentacao da funcao carregar_dados_brutos_rds() ----------------------
-#' Carrega os dados brutos originais em formato .rds
+# Documentacao da funcao gerar_dados_completos() ----------------------
+#' Selecionando, trasforma e renomea as colunas e observacoes nos dados brutos
 #'
 #' @description
-#' A funcao \code{carregar_dados_brutos_rds()} carrega os dados brutos em formato .rds.
+#' A funcao \code{gerar_dados_completos()} carrega os dados brutos em formato .rds, selecionando, transformando e renomeando suas colunas.
 #'
 #'
 #' @param dados recebe o caminho para carregar um arquivo .rds. Por configuracao, carrega os dados brutos dos Projeto Monitora Componente Florestal a partir do formato .rds
 #' @details
-#' A funcao \code{carregar_dados_brutos_rds()} carrega e disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, contendo  as infromacoes sobre as amostragens por distancia (\emph{distance samplig}) de aves e pequenos e medios mamiferos realizadas desde 2014 em 40 Unidades de Conservacao do Brasil.
-#'
-#' @return Retorna um objeto do tipo \code{tibble} contendo os dados brutos do Projeto Monitora Componente Florestal.
-#' @export
-#' @author
-#' Vitor N. T. Borges-Junior
-#' Luciana A. Fusinatto
-#' @examples \dontrun{carregar_dados_brutos_rds()}
-carregar_dados_brutos_rds <- function(
-    dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/data-raw/dados_brutos.rds"
-      )
-    )
-) {
-  # retorna os dados butos
-  return(dados)
-}
-
-# Documentacao da funcao carregar_dados_completos() ----------------------
-#' Carrega os dados brutos selecionando, trasformando e renomeando as colunas
-#'
-#' @description
-#' A funcao \code{carregar_dados_completos()} carrega os dados brutos em formato .rds, selecionando, transformando e renomeando suas colunas.
-#'
-#'
-#' @param dados recebe o caminho para carregar um arquivo .rds. Por configuracao, carrega os dados brutos dos Projeto Monitora Componente Florestal a partir do formato .rds
-#' @details
-#' A funcao \code{carregar_dados_completos()} disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, selecionando, transformando e renomeando suas colunas. (Fornecer mais detalhes sobre as transformacoes operadas).
+#' A funcao \code{gerar_dados_completos()} disponibiliza ao usario os dados brutos do Projeto Monitora Componente Florestal, selecionando, transformando e renomeando suas colunas. (Fornecer mais detalhes sobre as transformacoes operadas).
 #' Avisar que distancias de trilhas percorridas estao sendo imputadas quando os valores estao ausentes.
 #'
 #' @return Retorna um objeto do tipo \code{tibble} contendo uma selecao de colunas transformadas e renomeadas a partir dos dados brutos do Projeto Monitora Componente Florestal.
@@ -213,15 +185,9 @@ carregar_dados_brutos_rds <- function(
 #' @author
 #' Vitor N. T. Borges-Junior
 #' Luciana A. Fusinatto
-#' @examples \dontrun{carregar_dados_completos()}
-carregar_dados_completos <- function(
-    dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        '/data-raw/dados_brutos.rds'
-      )
-    )
-) {
+#' @examples \dontrun{gerar_dados_completos(dados = dados_brutos)}
+gerar_dados_completos <- function(dados) {
+
   # padronizar separadores
   # gerar o data.frame desejado
   dados_completos <- dados |>
@@ -379,39 +345,30 @@ carregar_dados_completos <- function(
       total_effort,
       .after = day_effort
     ) |>
-    group_by(
+    dplyr::group_by(
       uc_name,
       ea_name
     ) |>
-    filter(day_effort == max(day_effort))  |>
-    ungroup()
-
-  # grava uma versao dados_completos.rds no diretorio inst/extdata
-  # readr::write_rds(
-  #   dados_completos,
-  #   file = paste0(
-  #     here::here(),
-  #     "/data/dados_completos.rds"
-  #   )
-  # )
+    dplyr::filter(day_effort == max(day_effort))  |>
+    dplyr::ungroup()
 
   # retornar o data.frame
   return(dados_completos)
 }
 
-# Documentacao funcao carregar_dados_filtrados() --------------------------
+# Documentacao funcao gerar_dados_filtrados() --------------------------
 
-#' Carrega os dados filtrados a partir da UC's e da especie
+#' Gerar dados filtrados a partir da UC's e da especie
 #'
 #' @description
-#' A funcao \code{carregar_dados_filtrados()} carrega o arquivo de dados completos, \code{"dados_completos.rds"} e gera um novo arquivo \code{dados_filtrados.rds}.
+#' A funcao \code{gerar_dados_filtrados()} carrega o arquivo de dados completos, \code{"dados_completos.rds"} e gera um novo arquivo \code{dados_filtrados.rds}.
 #'
 #' @param dados recebe o caminho para carregar um arquivo .rds. Por configuracao, carrega os dados filtrados pela Resex Tapajos-Arapiuns e especie \emph{Dsyprocta croconota} do Projeto Monitora Componente Florestal a partir doa arquivo \code{"dados_completos.rds"}.
 #' @param nome_uc description
 #' @param nome_sp descricao
 #'
 #' @details
-#' A funcao \code{carregar_dados_filtrados()} carrega e disponibiliza ao usario os dados filtrados do Projeto Monitora Componente Florestal, contendo ...
+#' A funcao \code{gerar_dados_filtrados()} carrega e disponibiliza ao usario os dados filtrados do Projeto Monitora Componente Florestal, contendo ...
 #'
 #' @return Retorna um objeto do tipo \code{tibble} contendo os dados filtrados do Projeto Monitora Componente Florestal.
 #' @author
@@ -419,8 +376,8 @@ carregar_dados_completos <- function(
 #' Luciana A. Fusinatto
 #' @export
 #'
-#' @examples \dontrun{carregar_dados_filtrados()}
-carregar_dados_filtrados <- function(
+#' @examples \dontrun{gerar_dados_filtrados()}
+gerar_dados_filtrados <- function(
     dados = readr::read_rds(
       file = paste0(
         here::here(),
