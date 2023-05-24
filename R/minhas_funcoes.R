@@ -394,7 +394,7 @@ gerar_dados_filtrados <- function(
   return(dados_filtrados)
 }
 
-# Documentacao da funcao carregar_dados_selecionados() --------------------
+# Documentacao da funcao gerar_dados_selecionados() --------------------
 
 #' Carrega os dados selecionados a partir das observacoes validadas ao nivel de especie
 #'
@@ -413,29 +413,14 @@ gerar_dados_filtrados <- function(
 #'
 #' @export
 #'
-#' @examples \dontrun{carregar_dados_selecionados()}
-carregar_dados_selecionados <- function(
-    dados = readr::read_rds(
-      file = paste0(
-        here::here(),
-        "/data/dados_completos.rds"
-      )
-    )
-) {
-  # gerar o data.frame desejado
+#' @examples \dontrun{gerar_dados_selecionados(dados = dados_completos)}
+carregar_dados_selecionados <- function(dados) {
+
+  # gerar o tibble com os dados selecioandos
   dados_selecionados <- dados |>
     dplyr::filter(validation == "Especie")
 
-  # grava uma versao dados_completos.rds no diretorio inst/extdata
-  # readr::write_rds(
-  #   dados_selecionados,
-  #   file = paste0(
-  #     here::here(),
-  #     "/data/dados_selecionados.rds"
-  #   )
-  # )
-
-  # retornar o data.frame
+  # retornar o tibble com os dados selecionados
   return(dados_selecionados)
 }
 
