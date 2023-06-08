@@ -61,17 +61,21 @@
 # usethis::use_test("contar_n_obs_sp_uc.R")
 # testthat::test_file("tests/testthat/test-contar_n_obs_sp_uc.R")
 #
-# usethis::use_r("contar_n_obs_uc_ano.R")
-# usethis::use_test("contar_n_obs_uc_ano.R")
-# testthat::test_file("tests/testthat/test-contar_n_obs_uc_ano.R")
+# usethis::use_r("contar_n_obs_sp_uc_ano.R")
+# usethis::use_test("contar_n_obs_sp_uc_ano.R")
+# testthat::test_file("tests/testthat/test-contar_n_obs_sp_uc_ano.R")
+#
+# usethis::use_r("contar_n_obs_sp_uc_estacao_ano.R")
+# usethis::use_test("contar_n_obs_sp_uc_estacao_ano.R")
+# testthat::test_file("tests/testthat/test-contar_n_obs_sp_uc_estacao_ano.R")
 #
 # usethis::use_r("contar_n_obs_uc.R")
 # usethis::use_test("contar_n_obs_uc.R")
 # testthat::test_file("tests/testthat/test-contar_n_obs_uc.R")
 #
-# usethis::use_r("contar_n_obs_sp_uc_estacao_ano.R")
-# usethis::use_test("contar_n_obs_sp_uc_estacao_ano.R")
-# testthat::test_file("tests/testthat/test-contar_n_obs_sp_uc_estacao_ano.R")
+# usethis::use_r("contar_n_obs_uc_ano.R")
+# usethis::use_test("contar_n_obs_uc_ano.R")
+# testthat::test_file("tests/testthat/test-contar_n_obs_uc_ano.R")
 #
 # usethis::use_r("contar_n_obs_validadas.R")
 # usethis::use_test("contar_n_obs_validadas.R")
@@ -81,6 +85,10 @@
 # usethis::use_test("contar_n_sp.R")
 # testthat::test_file("tests/testthat/test-contar_n_sp.R")
 #
+# usethis::use_r("contar_n_uc.R")
+# usethis::use_test("contar_n_uc.R")
+# testthat::test_file("tests/testthat/test-contar_n_uc.R")
+#
 # usethis::use_r("contar_n_uc_ano.R")
 # usethis::use_test("contar_n_uc_ano.R")
 # testthat::test_file("tests/testthat/test-contar_n_uc_ano.R")
@@ -89,9 +97,9 @@
 # usethis::use_test("filtrar_dados.R")
 # testthat::test_file("tests/testthat/test-filtrar_dados.R")
 #
-# usethis::use_r("gera_dados_Distance.R")
-# usethis::use_test("gera_dados_Distance.R")
-# testthat::test_file("tests/testthat/test-gera_dados_Distance.R")
+# usethis::use_r("transformar_dados_formato_Distance.R")
+# usethis::use_test("transformar_dados_formato_Distance.R")
+# testthat::test_file("tests/testthat/test-transformar_dados_formato_Distance.R")
 #
 # usethis::use_r("gerar_tabdin.R")
 # usethis::use_test("gerar_tabdin.R")
