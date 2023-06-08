@@ -1,8 +1,6 @@
 Package: distanceMonitoraflorestal
-Title: Estima a densidade de médios e grandes mamíferos e aves em UC's do Brasil
+Title: Estima a densidade de aves e médios e grandes mamíferos em Unidades de Conservação do Brasil
 Version: 0.0.0.9000
-Depends: R (>= 4.2.3)
-Imports: Distance (>= 1.0.7), dplyr (>= 1.1.1), DT (>= 0.27), forcats (>= 1.0.0), ggpubr (>= 0.6.0), ggplot2 (>= 3.4.2), here (>= 1.0.1), janitor(<= 2.2.0), lubridate (>= 1.9.2), plotly (>= 4.10.1), purrr (>= 1.0.1), readr (>= 2.1.4), readxl (>= 1.4.2), stringi (>= 1.7.12), stringr (>= 1.4.9), tidyr (>= 1.3.0), tidyselect (>= 1.2.0)
 Authors@R: 
     c(
     person(
@@ -25,17 +23,17 @@ Authors@R:
     role = c("fnd")
     )       
     )
-Description: Funcionalidades para carregar, selecionar, transformar, visualizar e estimar a densidade de médios e grandes mamíferos e aves de 40 Unidades de Conservação do Brasil, a partir dos dados do Projeto Monitora Componente Florestal.
+Description: Funcionalidades para selecionar, transformar, visualizar e estimar a abundância e densidade de aves e médios e grandes mamíferos de 40 Unidades de Conservação do Brasil, a partir dos dados do Projeto Monitora Componente Florestal.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    DT
+Depends: 
+    R (>= 2.10)
+LazyData: true
 Suggests: 
-    knitr,
-    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-VignetteBuilder: knitr
-LazyData: true
-URL: https://github.com/vntborgesjr/distanceMonitoraflorestal
-BugReports: https://github.com/vntborgesjr/distanceMonitoraflorestal/issues

@@ -5,11 +5,11 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-O objetivo do distanceMonitoraflorestal e fornecer ferramentas que facilitem a selecao, visualizacao e analise de abundancia e/ou densidade das especies de aves e mamiferos de medio e grande porte a partir dos dados brutos do Programa Monitora Componente Florestal do ICMBio/CENAP/CEMAVE. 
+O objetivo do distanceMonitoraflorestal é fornecer ferramentas que facilitem a seleção, visualização e análise de abundância e/ou densidade das espécies de aves e mamíferos de médio e grande porte, a partir dos dados brutos do Programa Monitora Componente Florestal do ICMBio/CENAP/CEMAVE. 
 
-## Instalacao
+## Instalação
 
-Voce pode instalar a versao de desenvolvimento do distanceMonitoraflorestal utilizando o seguinte codigo:
+Você pode instalar a versão de desenvolvimento do distanceMonitoraflorestal utilizando o seguinte codigo:
 
 ``` r
 devtools::install_github("vntborgesjr/distanceMonitoraflorestal")
@@ -17,7 +17,7 @@ devtools::install_github("vntborgesjr/distanceMonitoraflorestal")
 
 ## Exemplo
 
-Esse e um exemplo basico de como vc pode visualizar a distribuicao de distancias da especie com o maior numero de observacoes na base de dados, *Dasypoctra croconota* na Resex Tapajos-Arapiuns.
+Esse é um exemplo basico de como você pode visualizar a distribuição de distâncias da espécie com o maior número de observações na base de dados, *Dasypoctra croconota* na Resex Tapajós-Arapiuns.
 
 ``` r
 library(distanceMonitoraflorestal)
