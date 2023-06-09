@@ -107,7 +107,7 @@ transformar_dados_formato_Distance <- function(
     # juntar as duas data.frames para obter as datas com maior n de obs
     # em cada ano e excluir datas de amostragem repitidas na mesma estacao
     # e ano
-    dados_para_filtrar_por_data_quase_sem_repeticao <- n_obs_data |>
+    dados_para_filtrar_por_data_sem_repeticao <- n_obs_data |>
       dplyr::semi_join(
         data_com_maior_n_obs,
         dplyr::join_by(Sample.Label, year, season, n == n_max),
@@ -121,13 +121,15 @@ transformar_dados_formato_Distance <- function(
       filter(day == min(day))
 
     # gerar o filtro de datas
-    filtro_datas_quase_sem_repeticao <- dados_para_filtrar_por_data_quase_sem_repeticao$sampling_day
+    filtro_datas_sem_repeticao <- dados_para_filtrar_por_data_sem_repeticao$sampling_day
 
     # eliminar amostras repetidas
-    dados_formato_distance <- dados_formato_distance_sem_repeticao |>
-      dplyr::filter(sampling_day %in% filtro_datas_quase_sem_repeticao) |>
-      # gerar coluna object
-      dplyr::mutate(object = seq_along(dados_formato_distance_sem_repeticao$Region.Label))
+    dados_formato_distance <- dados_formato_distance |>
+      dplyr::filter(sampling_day %in% filtro_datas_sem_repeticao)
+
+    # gerar coluna object
+    dados_formato_distance <- dados_formato_distance |>
+      dplyr::mutate(object = seq_along(dados_formato_distance$Region.Label))
 
    }
 
@@ -153,14 +155,14 @@ utils::globalVariables(
     "cense_time",
     "Area",
     "object",
-    "dados_formato_distance_sem_repeticao",
+    "dados_formato_distance",
     "n_obs_data",
     "data_com_maior_n_obs",
-    "dados_para_filtrar_por_data_quase_sem_repeticao",
+    "dados_para_filtrar_por_data_sem_repeticao",
     "n",
     "n_max",
     "day",
     "month",
-    "filtro_datas_quase_sem_repeticao"
+    "filtro_datas_sem_repeticao"
   )
 )
