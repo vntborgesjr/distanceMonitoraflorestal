@@ -10,10 +10,13 @@
 #'  @details
 #'  Quando o agrumento `amostras_repetidas = FALSE` será selecionado o dia em que foi registrado o maior número de observações em uma estação amostral.
 #'
-#' @return Retorna um objeto do tipo `tibble` contendo a base de dados configurada para ajustar os modelos do pacote `Distance`.
+#' @return Retorna um objeto do tipo `tibble` contendo a base de dados configurada para ajustar os modelos do pacote `Distance` a partir da função [ajustar_modelo_distance().
 #' @export
 #'
 #' @examples
+#' # carregar pacote
+#' library(dplyr)
+#'
 #' # gerar os dados filtrados
 #' dados_filtrados <- filtrar_dados(
 #'   nome_uc = "resex_tapajos_arapiuns",
@@ -24,11 +27,15 @@
 #' # gerar os dados transformados com repeticao
 #' dados_distance_com_repeticao <- transformar_dados_formato_Distance(dados = dados_filtrados)
 #'
+#' glimpse(dados_distance_com_repeticao)
+#'
 #' # gerar os dados transformados com repeticao
 #' dados_distance_com_repeticao <- transformar_dados_formato_Distance(
 #'   dados = dados_filtrados,
 #'   amostras_repetidas = FALSE
 #' )
+#'
+#' glimpse(dados_distance_sem_repeticao)
 transformar_dados_formato_Distance <- function(
     dados = monitora_aves_masto_florestal,
     amostras_repetidas = TRUE
