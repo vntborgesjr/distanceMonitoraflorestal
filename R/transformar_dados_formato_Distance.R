@@ -45,7 +45,7 @@ transformar_dados_formato_Distance <- function(
   if (amostras_repetidas == TRUE) {
 
     # tranformar dados mantendo as amostras repetidas
-    dados_formato_distance_com_repeticao <- dados |>
+    dados_formato_distance <- dados |>
       dplyr::select(
         Region.Label = nome_uc,
         Sample.Label = nome_ea,
@@ -66,13 +66,10 @@ transformar_dados_formato_Distance <- function(
         .before = Sample.Label
       )
 
-    # retorna os dados mantendo as amostras repetidas
-    return(dados_formato_distance_com_repeticao)
-
   } else {
 
     # transforma dados para formato distance R
-    dados_formato_distance_sem_repeticao <- dados |>
+    dados_formato_distance <- dados |>
       dplyr::select(
         Region.Label = nome_uc,
         Sample.Label = nome_ea,
@@ -95,13 +92,13 @@ transformar_dados_formato_Distance <- function(
 
     # gerar filtro para eliminar amostras repetidas mantendo o dia com o maior n de obs
     # gerar o n de obs por data de amostragem
-    n_obs_data <- dados_formato_distance_sem_repeticao |>
+    n_obs_data <- dados_formato_distance |>
       dplyr::group_by(Sample.Label, sampling_day, year, season) |>
       dplyr::count(sampling_day) |>
       dplyr::ungroup()
 
     # gerar as datas com maior n de obs em cada estacao e ano
-    data_com_maior_n_obs <- dados_formato_distance_sem_repeticao |>
+    data_com_maior_n_obs <- dados_formato_distance |>
       dplyr::group_by(Sample.Label, year, season) |>
       dplyr::count(sampling_day) |>
       dplyr::reframe(n_max = max(n)) |>
@@ -127,18 +124,15 @@ transformar_dados_formato_Distance <- function(
     filtro_datas_quase_sem_repeticao <- dados_para_filtrar_por_data_quase_sem_repeticao$sampling_day
 
     # eliminar amostras repetidas
-    dados_formato_distance_sem_repeticao <- dados_formato_distance_sem_repeticao |>
-      dplyr::filter(sampling_day %in% filtro_datas_quase_sem_repeticao)
-
-    # gerar coluna object
-    dados_formato_distance_sem_repeticao <- dados_formato_distance_sem_repeticao |>
+    dados_formato_distance <- dados_formato_distance_sem_repeticao |>
+      dplyr::filter(sampling_day %in% filtro_datas_quase_sem_repeticao) |>
+      # gerar coluna object
       dplyr::mutate(object = seq_along(dados_formato_distance_sem_repeticao$Region.Label))
 
-    # retorna os dados removendo as amostras repetidas
-    return(dados_formato_distance_sem_repeticao)
+   }
 
-  }
-
+  # retorna os dados mantendo as amostras repetidas
+  return(dados_formato_distance)
 
 }
 
