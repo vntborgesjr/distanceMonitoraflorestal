@@ -117,8 +117,8 @@ transformar_dados_formato_Distance <- function(
         day = lubridate::day(sampling_day),
         month = lubridate::month(sampling_day)
       ) |>
-      group_by(season, year) |>
-      filter(day == min(day))
+      dplyr::group_by(season, year) |>
+      dplyr::filter(day == min(day))
 
     # gerar o filtro de datas
     filtro_datas_sem_repeticao <- dados_para_filtrar_por_data_sem_repeticao$sampling_day
