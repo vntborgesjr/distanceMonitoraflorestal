@@ -37,12 +37,24 @@
 #' dados_dasy_croc_tap_arap_com_repeticao <- transformar_dados_formato_Distance(dados_filtrados)
 #'
 #' # definir intervalos de distância (binagem)
-#' dados_dasy_croc_tap_arap_com_repeticao_binados <- dados_distance_com_repeticao |>
+#' dados_dasy_croc_tap_arap_com_repeticao_binados <- dados_dasy_croc_tap_arap_com_repeticao |>
 #'   definir_intervalos_distancia(intervalos_distancia = seq(
 #'     from = 0,
 #'     to  = 50,
 #'     by = 1.5
 #'   ))
+#'
+#' glimpse(dados_dasy_croc_tap_arap_com_repeticao_binados)
+#' # definir intervalos de distância diferentes
+#'
+#' dados_dasy_croc_tap_arap_com_repeticao_binados_diferentes <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' definir_intervalos_distancia(
+#'     intervalos_distancia = c(0, seq(
+#'       from = 1,
+#'       to = 55,
+#'       by = 1.4
+#'     ))
+#'   )
 #'
 #' glimpse(dados_dasy_croc_tap_arap_com_repeticao_binados)
 definir_intervalos_distancia <- function(
