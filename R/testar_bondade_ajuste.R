@@ -17,23 +17,33 @@
 #' @export
 #'
 #' @examples
+# gerar dados filtrados para a uma espécie e uma UC e transformar para o
+#' # formato para a análise no pacote Distance
+#' dados_dasy_croc_tap_arap <- filtrar_dados(
+#'   dados = monitora_aves_masto_florestal,
+#'   nome_ucs = "resex_tapajos_arapiuns",
+#'   nome_sps = "dasyprocta_croconota",
+#'   validacao_obs = "especie"
+#' ) |>
+#'   transformar_dados_formato_Distance(amostras_repetidas = FALSE)
+#'
 #' # ajustar modelos com funções chave diferentes
 #' # modelo Half-normal
-#' modelo_hn <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' modelo_hn <- dados_dasy_croc_tap_arap |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "hn",
 #'     truncamento = 15
 #'   )
 #'
 #' # modelo Hazard-rate
-#' modelo_hr <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' modelo_hr <- dados_dasy_croc_tap_arap |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "hr",
 #'     truncamento = 15
 #'   )
 #'
 #' # modelo Uniform
-#' modelo_unif <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' modelo_unif <- dados_dasy_croc_tap_arap |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "unif",
 #'     truncamento = 15
