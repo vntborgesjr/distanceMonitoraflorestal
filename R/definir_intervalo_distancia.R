@@ -27,27 +27,28 @@
 #' library(dplyr)
 #'
 #' # gerar dados filtrados
-#' dados_filtrados <- filtrar_dados(
+#' dasy_croc_tap_arap_repeticao <- filtrar_dados(
 #'   nome_uc = "resex_tapajos_arapiuns",
 #'   nome_sps = "dasyprocta_croconota",
 #'   validacao_obs = "especie"
+#' ) |>
+#' transformar_dados_formato_Distance(
+#'   dados_filtrados
 #' )
 #'
-#' # gerar os dados transformados com repetição
-#' dados_dasy_croc_tap_arap_com_repeticao <- transformar_dados_formato_Distance(dados_filtrados)
-#'
 #' # definir intervalos de distância (binagem)
-#' dados_dasy_croc_tap_arap_com_repeticao_binados <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' dasy_croc_tap_arap_repeticao_binados <- dasy_croc_tap_arap_repeticao |>
 #'   definir_intervalos_distancia(intervalos_distancia = seq(
 #'     from = 0,
 #'     to  = 50,
 #'     by = 1.5
 #'   ))
 #'
-#' glimpse(dados_dasy_croc_tap_arap_com_repeticao_binados)
+#' glimpse(dasy_croc_tap_arap_repeticao_binados)
+#'
 #' # definir intervalos de distância diferentes
 #'
-#' dados_dasy_croc_tap_arap_com_repeticao_binados_diferentes <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' dasy_croc_tap_arap_repeticao_binados2 <- dasy_croc_tap_arap_repeticao |>
 #' definir_intervalos_distancia(
 #'     intervalos_distancia = c(0, seq(
 #'       from = 1,
@@ -56,7 +57,7 @@
 #'     ))
 #'   )
 #'
-#' glimpse(dados_dasy_croc_tap_arap_com_repeticao_binados)
+#' glimpse(dasy_croc_tap_arap_repeticao_binados2)
 definir_intervalos_distancia <- function(
     dados,
     intervalos_distancia
