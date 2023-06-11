@@ -25,7 +25,7 @@
 #'   nome_sps = "dasyprocta_croconota",
 #'   validacao_obs = "especie"
 #' ) |>
-#' transformar_dados_formato_Distance(dados_filtrados)
+#' transformar_dados_formato_Distance()
 #'
 #' # ajustar modelos com funções chave diferentes
 #' # modelo Half-normal
