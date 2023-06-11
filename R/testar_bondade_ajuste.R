@@ -4,16 +4,16 @@
 #' @description
 #' A short description...
 #'
-#' @param dados
-#' @param plot
-#' @param chisq
-#' @param nc
-#' @param intervalos_distancia
+#' @param dados breve descrição sobre o argumento
+#' @param plot breve descrição sobre o argumento
+#' @param chisq breve descrição sobre o argumento
+#' @param nc breve descrição sobre o argumento
+#' @param intervalos_distancia breve descrição sobre o argumento
 #'
 #' @details
 #' Additional details...
 #'
-#' @return
+#' @return breve descrição sobre o objeto de saída
 #' @export
 #'
 #' @examples
@@ -47,7 +47,9 @@
 #' )
 #'
 #' # gerar a tabela de seleção com o resumo comparativo dos modelos
-#' selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(lista_modelos_ajustados)
+#' selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(
+#'   lista_modelos_ajustados
+#' )
 #'
 #' # teste de bondade de ajuste dos modelos e Q-Q plots
 #' bondade_ajuste <- testar_bondade_ajuste(
