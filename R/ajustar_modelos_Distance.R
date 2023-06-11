@@ -1,16 +1,16 @@
-# Documentação da função ajustar_modelo_distance() -----------------------
+# Documentação da função ajustar_modelo_Distance() -----------------------
 #' Ajusta modelos de detecção com diferentes funções chave e termos de ajuste
 #'
 #' @description
-#' A função `ajustar_modelos_distance()` ajusta aos dados modelos com diferentes
+#' A função `ajustar_modelos_Distance()` ajusta aos dados modelos com diferentes
 #' funções chave e termos de ajuste.
 #'
-#' @usage ajustar_modelos_distance(
+#' @usage ajustar_modelos_Distance(
 #'          dados,
 #'          funcao_chave = c("hn", "hr", "unif"),
 #'          termos_ajuste = NULL,
 #'          truncamento = NULL,
-#'          formula = ~ 1,
+#'          formula = ~ 1
 #'        )
 #'
 #' @param dados recebe a \code{tibble} gerada pela função [transformar_dados_formato_Distance()].
@@ -21,8 +21,8 @@
 #' `"herm"` - Hermet polynomial; e `"poly"` - Polinomial simples. Quando `NULL`
 #' diferentes modelos são ajustados para função chave escolhida utilizando
 #' diferentes termos de ajuste. Veja Details.
-#' @param truncamento
-#' @param ...
+#' @param truncamento breve descrição do argumento
+#' @param formula breve descrição do argumento
 #'
 #' @details
 #' Quando `termo_ajuste = NULL` modelos com diferente termos de ajuste serão
@@ -38,8 +38,9 @@
 #' @export
 #'
 #' @examples
-#' # gerar dados filtrados para a uma espécie e uma UC e transformar para o formato para a análise no pacote Distance
-#' dados_dasyp_croco_sem_repeticao <- filtrar_dados(
+#' # gerar dados filtrados para a uma espécie e uma UC e transformar para o
+#' # formato para a análise no pacote Distance
+#' dados_dasy_croc_tap_arap <- filtrar_dados(
 #'   dados = monitora_aves_masto_florestal,
 #'   nome_ucs = "resex_tapajos_arapiuns",
 #'   nome_sps = "dasyprocta_croconota",
@@ -47,15 +48,40 @@
 #' ) |>
 #'   transformar_dados_formato_Distance(amostras_repetidas = FALSE)
 #'
-#' # ajustar modelo com função chave Half-normal e todas os termos de ajsute possíveis
-#' modelo_hn_dasyp_croco_resex_tap_arap <- dados_dasyp_croco_sem_repeticao |>
+#' # ajustar modelo com função chave Half-normal e todas os termos de ajuste
+#' # possíveis
+#' dasyp_croc_resex_tap_arap_hn <- dados_dasy_croc_tap_arap |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "hn",
 #'     termos_ajuste = NULL,
 #'     truncamento = "10%"
 #'   )
 #'
-#' modelo_hn_dasyp_croco_resex_tap_arap
+#' dasyp_croc_resex_tap_arap_hn
+#'
+#' # ajustando a função de detecção half-normal, sem termo de ajuste para um
+#' # truncamento de 10% dos dados e uma covariável
+#' dasy_croc_tap_arap_hn_cov1 <- dados_dasy_croc_tap_arap |>
+#'   ajustar_modelos_Distance(
+#'     funcao_chave = "hn",
+#'     termos_ajuste = NULL,
+#'     truncamento = "10%",
+#'     formula = ~ size
+#'   )
+#'
+#' dasy_croc_tap_arap_hn_cov1
+#'
+#' # ajustando a função de detecção half-normal, sem termo de ajuste para um
+#' # truncamento de 10% dos dados e duas covariáveis
+#' dasy_croc_tap_arap_hn_cov2 <- dados_dasy_croc_tap_arap |>
+#'   ajustar_modelos_Distance(
+#'     funcao_chave = "hn",
+#'     termos_ajuste = NULL,
+#'     truncamento = "10%",
+#'     formula = ~ size + cense_time
+#'   )
+#'
+#' dasy_croc_tap_arap_hn_cov2
 ajustar_modelos_Distance <- function(
     dados,
     funcao_chave = c("hn", "hr", "unif"),
