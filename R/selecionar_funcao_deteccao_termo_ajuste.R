@@ -108,6 +108,8 @@ utils::globalVariables(
     "distancia_categorizada",
     "tabela_selecao_funcao_deteccao_termo_ajuste",
     "Modelo",
-    "C-vM p-valor"
+    "Key function",
+    "C-vM p-valor",
+    "C-vM p-value"
   )
 )
