@@ -32,9 +32,7 @@
 #'   nome_sps = "dasyprocta_croconota",
 #'   validacao_obs = "especie"
 #' ) |>
-#' transformar_dados_formato_Distance(
-#'   dados_filtrados
-#' )
+#' transformar_dados_formato_Distance()
 #'
 #' # definir intervalos de distância (binagem)
 #' dasy_croc_tap_arap_repeticao_binados <- dasy_croc_tap_arap_repeticao |>
