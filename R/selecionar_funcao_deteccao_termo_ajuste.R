@@ -9,33 +9,41 @@
 #'          distancia_categorizada = FALSE
 #'        )
 #'
-#' @param dados
-#' @param distancia_categorizada
+#' @param dados breve descrição sobre o argumento
+#' @param distancia_categorizada breve descrição sobre o argumento
 #'
 #' @details
 #' Additional details...
 #'
-#' @return
+#' @return breve descrição sobre o objeto de saída
 #' @export
 #'
 #' @examples
+#' # gerar os dados transformados com repetição
+#' dasy_croc_tap_arap_com_repeticao <- filtrar_dados(
+#'   nome_uc = "resex_tapajos_arapiuns",
+#'   nome_sps = "dasyprocta_croconota",
+#'   validacao_obs = "especie"
+#' ) |>
+#' transformar_dados_formato_Distance(dados_filtrados)
+#'
 #' # ajustar modelos com funções chave diferentes
 #' # modelo Half-normal
-#' modelo_hn <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' modelo_hn <- dasy_croc_tap_arap_com_repeticao |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "hn",
 #'     truncamento = 15
 #'   )
 #'
 #' # modelo Hazard-rate
-#' modelo_hr <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' modelo_hr <- dasy_croc_tap_arap_com_repeticao |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "hr",
 #'     truncamento = 15
 #'   )
 #'
 #' # modelo Uniform
-#' modelo_unif <- dados_dasy_croc_tap_arap_com_repeticao |>
+#' modelo_unif <- dasy_croc_tap_arap_com_repeticao |>
 #'   ajustar_modelos_Distance(
 #'     funcao_chave = "unif",
 #'     truncamento = 15
@@ -49,7 +57,9 @@
 #' )
 #'
 #' # gerar a tabela de seleção com o resumo comparativo dos modelos
-#' selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(lista_modelos_ajustados)
+#' selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(
+#'   lista_modelos_ajustados
+#' )
 #'
 #' selecao_funcao_deteccao_termo_ajuste
 selecionar_funcao_deteccao_termo_ajuste <- function(
