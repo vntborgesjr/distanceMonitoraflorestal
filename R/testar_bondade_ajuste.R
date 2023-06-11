@@ -123,6 +123,7 @@ utils::globalVariables(
     "chisq",
     "nc",
     "breaks",
-    "intervalos_distancia"
+    "intervalos_distancia",
+    "W"
   )
 )
