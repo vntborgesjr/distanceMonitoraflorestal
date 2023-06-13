@@ -45,6 +45,7 @@ ajuste \code{NULL} (sem termos), \code{"cos"} e \code{"poly"}; e para \code{func
 são utilizados so termos de ajuste \code{"cos"} e \code{"poly"}
 }
 \examples{
+\dontrun{
 # gerar dados filtrados para a uma espécie e uma UC e transformar para o
 # formato para a análise no pacote Distance
 dados_dasy_croc_tap_arap <- filtrar_dados(
@@ -89,4 +90,5 @@ dasy_croc_tap_arap_hn_cov2 <- dados_dasy_croc_tap_arap |>
   )
 
 dasy_croc_tap_arap_hn_cov2
+}
 }

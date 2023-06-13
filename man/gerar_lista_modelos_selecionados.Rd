@@ -21,6 +21,7 @@ A função \code{gerar_lista_modelos_selecionados()} gera uma lista contendo os
 modelos selecionados e seus respectivos nomes.
 }
 \examples{
+\dontrun{
 # gerar dados filtrados
 dados_filtrados <- filtrar_dados(
   nome_uc = "resex_tapajos_arapiuns",
@@ -75,4 +76,5 @@ lista_modelos_selecionados <- gerar_lista_modelos_selecionados(
 )
 
 lista_modelos_selecionados
+}
 }

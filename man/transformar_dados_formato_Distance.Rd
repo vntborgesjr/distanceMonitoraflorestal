@@ -40,7 +40,7 @@ dados_distance_com_repeticao <- transformar_dados_formato_Distance(dados = dados
 glimpse(dados_distance_com_repeticao)
 
 # gerar os dados transformados com repeticao
-dados_distance_com_repeticao <- transformar_dados_formato_Distance(
+dados_distance_sem_repeticao <- transformar_dados_formato_Distance(
   dados = dados_filtrados,
   amostras_repetidas = FALSE
 )
