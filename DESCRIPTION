@@ -32,7 +32,9 @@ Imports:
     Distance,
     dplyr,
     DT,
+    ggplot2,
     lubridate,
+    plotly,
     purrr,
     tidyr
 Depends: 
