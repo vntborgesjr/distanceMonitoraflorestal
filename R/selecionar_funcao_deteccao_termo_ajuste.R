@@ -1,21 +1,27 @@
 # Documentacao da funcao selecionar_funcao_deteccao_termo_ajuste() ------------------
-#' Title
+#' Seleção de modelos a partir do valor de AIC
 #'
 #' @description
-#' A short description...
+#' A função `selecionar_funcao_deteccao_termo_ajuste()` gera uma tabela de
+#' seleção de modelos para avaliar qual combinação entre função chave e termo
+#' de ajuste melhor se ajustam aos dados.Os modelos são ordenados pelo valor de
+#' AAIC e, portanto não permitem modelos com diferentes distâncias de truncagem
+#' nem diferentes categorização de distâncias.
 #'
 #' @usage selecionar_funcao_deteccao_termo_ajuste(
-#'          dados,
+#'          ...,
 #'          distancia_categorizada = FALSE
 #'        )
 #'
-#' @param dados breve descrição sobre o argumento
-#' @param distancia_categorizada breve descrição sobre o argumento
+#' @param ... recebe os objetos que aramazenam os modelos a serem sumarizados
+#' @param distancia_categorizada lógico, se `TRUE` informa que as distâncias
+#' foram categorizadas. Por configuração, assume que as distâncias são contínuas
 #'
-#' @details
-#' Additional details...
+#' @return retorna um `data.frame` contendo os modelos ordenados de acordo com o
+#' valor de AIC e outras informações adicionais como a presença ou não de
+#' covariáveis, p-valor da estatística utilizada (Chi-quadrado, ou Cramer-von
+#' Mises).
 #'
-#' @return breve descrição sobre o objeto de saída
 #' @export
 #'
 #' @examples
@@ -49,34 +55,27 @@
 #'     truncamento = 15
 #'   )
 #'
-#' # gerar lista contendo todos os modelos ajsutados aos dados
-#' lista_modelos_ajustados <- list(
-#'   `half-normal` = modelo_hn,
-#'   `hazard-rate` = modelo_hr,
-#'   `uniforme` = modelo_unif
-#' )
-#'
 #' # gerar a tabela de seleção com o resumo comparativo dos modelos
 #' selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(
-#'   lista_modelos_ajustados
+#'   modelo_hn$`Sem termo`,
+#'   modelo_hn$Cosseno,
+#'   modelo_hn$`Hermite polinomial`,
+#'   modelo_hr$`Sem termo`,
+#'   modelo_hr$Cosseno,
+#'   modelo_hr$`Polinomial simples`,
+#'   modelo_unif$Cosseno,
+#'   modelo_unif$`Polinomial simples`
 #' )
 #'
 #' selecao_funcao_deteccao_termo_ajuste
 selecionar_funcao_deteccao_termo_ajuste <- function(
-    dados,
+    ...,
     distancia_categorizada = FALSE
 ) {
 
   # gerar rank das funcoes de deteccao e termos de ajuste
   selecao_funcao_deteccao_termo_ajuste <- Distance::summarize_ds_models(
-    dados$`half-normal`$`Sem termo`,
-    dados$`half-normal`$Cosseno,
-    dados$`half-normal`$`Hermite polinomial`,
-    dados$`hazard-rate`$`Sem termo`,
-    dados$`hazard-rate`$Cosseno,
-    dados$`hazard-rate`$`Polinomial simples`,
-    dados$uniforme$Cosseno,
-    dados$uniforme$`Polinomial simples`,
+    ...,
     delta_only = FALSE
   )
 
@@ -112,6 +111,7 @@ selecionar_funcao_deteccao_termo_ajuste <- function(
 
 utils::globalVariables(
   c(
+    "...",
     "selecao_funcao_deteccao_termo_ajuste",
     "dados",
     "delta_only",
