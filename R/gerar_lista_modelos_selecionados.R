@@ -13,7 +13,7 @@
 #' W e de p do teste de Von Cramer.
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
 #' # gerar dados filtrados
 #' dados_filtrados <- filtrar_dados(
 #'   nome_uc = "resex_tapajos_arapiuns",
@@ -68,6 +68,7 @@
 #' )
 #'
 #' lista_modelos_selecionados
+#' }
 gerar_lista_modelos_selecionados <- function(
     ...,
     nome_modelos_selecionados

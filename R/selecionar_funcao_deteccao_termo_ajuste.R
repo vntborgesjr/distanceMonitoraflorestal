@@ -24,7 +24,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
 #' # gerar os dados transformados com repetição
 #' dasy_croc_tap_arap_com_repeticao <- filtrar_dados(
 #'   nome_uc = "resex_tapajos_arapiuns",
@@ -68,6 +68,7 @@
 #' )
 #'
 #' selecao_funcao_deteccao_termo_ajuste
+#' }
 selecionar_funcao_deteccao_termo_ajuste <- function(
     ...,
     distancia_categorizada = FALSE

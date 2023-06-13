@@ -37,7 +37,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
 #' # gerar dados filtrados para a uma espécie e uma UC e transformar para o
 #' # formato para a análise no pacote Distance
 #' dados_dasy_croc_tap_arap <- filtrar_dados(
@@ -82,6 +82,7 @@
 #'   )
 #'
 #' dasy_croc_tap_arap_hn_cov2
+#' }
 ajustar_modelos_Distance <- function(
     dados,
     funcao_chave = c("hn", "hr", "unif"),

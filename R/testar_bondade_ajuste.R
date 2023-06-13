@@ -38,8 +38,8 @@
 #' @return retorna uma lista contendo objetos da classe `dsmodel`
 #' @export
 #'
-#' @examples
-# gerar dados filtrados para a uma espécie e uma UC e transformar para o
+#' @examples \dontrun{
+#' # gerar dados filtrados para a uma espécie e uma UC e transformar para o
 #' # formato para a análise no pacote Distance
 #' dados_dasy_croc_tap_arap <- filtrar_dados(
 #'   dados = monitora_aves_masto_florestal,
@@ -102,6 +102,7 @@
 #' )
 #'
 #' bondade_ajuste
+#' }
 testar_bondade_ajuste <- function(
     dados,
     plot = FALSE,
