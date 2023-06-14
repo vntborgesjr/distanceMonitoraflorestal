@@ -100,3 +100,11 @@ plotar_funcao_deteccao_modelos_selecionados <- function(
     )
 }
 
+utils::globalVariables(
+  c(
+    "dados",
+    ".x",
+    "nc",
+    "intervalos_distancia"
+  )
+)
