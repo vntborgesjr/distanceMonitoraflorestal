@@ -13,7 +13,7 @@
 #'        )
 #'
 #' @param dados recebe uma lista nomeada gerada pela função
-#' [gerar_lista_nomeada()] contendo os modelos de funções de detecção
+#' [gerar_lista_modelos_selecionados()] contendo os modelos de funções de detecção
 #' @param nc número de colunas com o mesmo intervalo de distância
 #' @param intervalos_distancia  intervalos de distância definidos pelo usuário
 #'
