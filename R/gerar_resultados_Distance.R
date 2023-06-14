@@ -145,7 +145,7 @@ gerar_resultados_Distance <- function(
         Modelo = rep(
           resultado_selecao_modelos$Model,
           each = length(
-            unique(resultados_Distance$`Estacao amostral`)
+            unique(resultados_Distance$`Estação amostral`)
           )
         )
       ) |> # pode ser um argumento da função
