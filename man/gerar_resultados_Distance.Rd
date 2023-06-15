@@ -2,12 +2,14 @@
 % Please edit documentation in R/gerar_resultados_Distance.R
 \name{gerar_resultados_Distance}
 \alias{gerar_resultados_Distance}
-\title{Title}
+\title{Resultados sobre a área, abundância e densidade estimada, detecção e
+coeficiente de variação}
 \usage{
 gerar_resultados_Distance(
   dados,
   resultado_selecao_modelos,
-  tipo_de_resultado = c("area_estudo", "abundancia", "densidade")
+  tipo_de_resultado = c("area_estudo", "abundancia", "densidade"),
+  estratificacao = FALSE
 )
 }
 \arguments{
@@ -20,6 +22,9 @@ detecção}
 
 \item{tipo_de_resultado}{caracter que define o tipo do resultado desejado
 pelo usuário}
+
+\item{estratificacao}{lógico, indica se os modelos informados contém ou não
+estratificação}
 }
 \value{
 Retorna uma \code{tibble}.
