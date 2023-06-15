@@ -13,7 +13,8 @@ ajustar_modelos_Distance(
        )
 }
 \arguments{
-\item{dados}{recebe a \code{tibble} gerada pela função \code{\link[=transformar_dados_formato_Distance]{transformar_dados_formato_Distance()}}.}
+\item{dados}{recebe a \code{tibble} gerada pela função
+\code{\link[=transformar_dados_formato_Distance]{transformar_dados_formato_Distance()}}.}
 
 \item{funcao_chave}{recebe uma dentre três funções utilizadas para modelar a
 detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
@@ -24,9 +25,17 @@ detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
 diferentes modelos são ajustados para função chave escolhida utilizando
 diferentes termos de ajuste. Veja Details.}
 
-\item{truncamento}{breve descrição do argumento}
+\item{truncamento}{recebe uma lista contendo as distâncias de truncagem
+de forma numérica (ex. 20), ou como porcentagem (como um caracter, ex. 25\%).
+Também pode ser alimentada no formato de lista, com os elementos \code{left} e
+\code{right} (ex. list(left = 1, right =20)) se a truncagem a esquerda for
+necessária. Por configuração, a distância máxima é utilizada como valor de
+truncagem a direita. Quando os dados estão categorizados, a truncagem a
+direita é o valor final da última coluna. O valor de truncagem a esquerda
+é zero, por configuração.}
 
-\item{formula}{breve descrição do argumento}
+\item{formula}{a fórmula para o parâmetro de escala. Para análise CDS manter
+a configuração original ~ 1.}
 }
 \value{
 Retorna uma lista contendo a estimativa de abundância para região
