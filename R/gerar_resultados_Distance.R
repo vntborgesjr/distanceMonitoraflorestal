@@ -1,5 +1,6 @@
 # Documentacao da funcao gerar_resultados_Distance() --------
-#' Title
+#' Resultados sobre a área, abundância e densidade estimada, detecção e
+#' coeficiente de variação
 #'
 #' @param dados recebe uma lista nomeada gerada pela função
 #' [gerar_lista_modelos_selecionados()] contendo os modelos de função de
