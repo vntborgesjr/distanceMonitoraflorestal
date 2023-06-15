@@ -6,7 +6,8 @@
 \usage{
 selecionar_funcao_deteccao_termo_ajuste(
          ...,
-         distancia_categorizada = FALSE
+         distancia_categorizada = FALSE,
+         delta = FALSE
        )
 }
 \arguments{
@@ -14,6 +15,8 @@ selecionar_funcao_deteccao_termo_ajuste(
 
 \item{distancia_categorizada}{lógico, se \code{TRUE} informa que as distâncias
 foram categorizadas. Por configuração, assume que as distâncias são contínuas}
+
+\item{delta}{adicionar descrição...}
 }
 \value{
 retorna um \code{data.frame} contendo os modelos ordenados de acordo com o
