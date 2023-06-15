@@ -1,0 +1,342 @@
+---
+title: "Ajuste dos modelos - Fluxo1: distâncias exatas com repetições"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(distanceMonitoraflorestal)
+```
+
+## Fluxo de análise dos dados:
+
+A seguir, apresentamos o fluxo de análise dos dados que envolve a fase
+exploratória, truncamento, ajuste e avaliação de modelos e estimativas
+de abundância e densidade para as espécies que selecionamos como modelo.
+Usamos como critérios de seleção tanto o número de observações por
+Unidade de Conservação quanto a distribuição das frequências de
+observação, nos casos em que isso foi possível. De forma geral, as
+espécies com número satisfatório de observações ($>$60), apresentaram
+pico de observações próximos a zero.
+
+Nós usamos como modelo para este fluxo os dados da cutia *Dasyprocta
+croconota* coletados na Resex Tapajós-Arapiuns entre 2014 e 2021, pelo
+grande número de observações para uma mesma UC. Os dados de distâncias perpendiculares para essa espécie apresentam três características indesejadas: número excessivo de repetições amostrais numa mesma estação amostral, pico de distâncias próximo a zero e empilhamento de observações em uma mesma distância.
+
+Para lidar com as repetições, testamos a análise dos dados com todas as
+repetições e com o número de repetições reduzidas. Para lidar com os
+picos de distância próximos a zero, testamos o uso dos dados com distâncias exatas e distâncias agrupadas. Essas estratégias estão descritas nos Fluxos 1-3. No primeiro fluxo, comentamos também as escolhas feitas e os resultados obtidos. Os demais fluxos são repetições deste primeiro fluxo, porém com mudança na estrutura dos dados.
+
+Espécies com maior número de observações/UC possibilitam testar, posteriormente, estratificações nos dados, preservando um número de observações satisfatório dentro dos estratos. Por isso, começamos apresentando um fluxo completo de análise, incluindo **Amostragem por Distância Convencional**, **Amostragem por Distância com Múltiplas Covariáveis** e **Amostragem por Distância com Estratificação** nos dados com as espécies com maior número de observações. Por isso, selecionamos como modelo a espécie com o maior número de observações para uma mesma UC e a terceira com o maior número total de observações.
+
+## Espécie Modelo - *Dasyprocta croconota* - Resex Tapajós Arapiuns
+
+![Fonte: biolib.cz](https://www.biolib.cz/IMG/GAL/BIG/205849.jpg)
+
+Essa é a espécie com o maior número de observações para uma mesma UC.
+Apresentou, como a maioria das espécies em diferentes UCs, um pico de
+observações próximo a dsitância zero. Também apresentou efeito de empilhamento sobre as distâncias 5, 10, 15 e 20m, indicando que os dados foram arrendondados para essas distâncias.
+
+### Obter os dados para as análises
+
+É possível obter as observações da espécie e Unidade de Conservação de interesse e torná-las analisáveis pelo pacote `Distance` utilizando duas funções: `filtrar_dados()` e `transformar_dados_formato_Distance()`. A primeira filtra a base de dados original a partir da espécie e UC desejada eplos argumentos `nome_sps` e `nome_ucs`, enquanto a segunda transforma os dados para o formato do pacote `Distance`.
+
+```{r}
+# carregar dados
+cutia_tap_arap <- filtrar_dados(
+  nome_ucs = "resex_tapajos_arapiuns",
+  nome_sps = "dasyprocta_croconota"
+) |> 
+  transformar_dados_formato_Distance()
+
+cutia_tap_arap
+```
+
+### Amostragem por Distância Convencional
+
+#### Fluxo 1 - Distâncias exatas com todas as repetições
+
+##### Plotando o histograma das frequências de observações pela distância
+
+O histograma interativo está disponível no aplicativo em Shiny
+`app_distancia_interativo.R` em `piper3d_monitora_florestal\apps`.
+
+A distribuição dos dados no histograma permite observar um pico de
+observações próximo a zero, assim como picos de observação em 5, 10, 15
+e 20m, além de uma considerável perda em detectabilidade a partir dos
+20m. É possível alterar a binagem dos histogramas através do argumento
+`largura_caixa`. Neste exemplo ajustamos para 1, o que facilita a
+observação de picos de detecação e efeitos de *heaping* nos dados.
+
+```{r, fig.height=15, fig.width=10, warning=FALSE}
+cutia_tap_arap |> 
+  tidyr::drop_na(distance) |> 
+plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+Para eliminar as observações feitas a distâncias com baixa
+detectabilidade, vamos testar diferentes proporções de truncamento.
+
+##### Testando distância de truncamento (*w*)
+
+Vamos explorar diferentes distâncias de truncamento para um mesmo modelo
+de função chave com distribuição half-normal. Optamos por truncar os
+dados pela percentagem para padronizar a rotina para diferentes
+espécies. Buckland et al. (2001) sugere um corte entre 5-10% das
+observações detectadas nas maiores distâncias. Vamos selecionar o valor
+de corte pelo modelo com melhor ajuste utilizando a função `selecionar_distancia_truncamento()`. Para automatizar a avaliação da
+truncagem para qualquer conjunto de dados, implementamos no código o
+teste para as seguintes proporções de corte: 5, 10, 15, 20 e 25% das
+observações mais distantes. Contudo, os valores de corte podem ser alterados pelo usuário fornecendo uma lista com novos valores ao argumento `dist_truncamento`. A função gera uma tabela comparando os modelos e
+também plotamos os gráficos dos modelos ajustados para os dados
+truncados usando a função plotar_.
+
+###### Tabela com resumo comparativo dos modelos
+
+```{r}
+# conduz a selecao da melhor distancia de truncamento a partir do ajsute de modelos com funcao de deteccao half-normal sem termos de ajuste
+cutia_tap_arap_dist_trunc <- cutia_tap_arap |> 
+  selecionar_distancia_truncamento()
+
+cutia_tap_arap_dist_trunc$selecao
+```
+
+Os critérios de ajuste dos modelos servem aqui como uma informação
+complementar, mas não serão decisivos na escolha da distância de
+truncamento. Naturalmente, eliminando os dados das distãncias de menor
+detectabilidade, os modelos tendem a ter um melhor ajuste pela menor
+variabilidade dos dados. Além disso, nesse caso os valores de deltaAIC
+serão sempre zero, pois não é possível comparar valores de AIC para
+conjuntos de dados diferentes (nesse caso os dados diferem em número de
+observações).
+
+###### Plotando o histograma com os dados truncados.
+
+Histogramas resultantes dos modelos, com todas as distâncias de
+truncagem, para auxiliar na seleção da melhor distãncia.
+
+```{r}
+plotar_funcao_deteccao_selecao_distancia_truncamento(cutia_tap_arap_dist_trunc)
+```
+
+Após avaliar tanto o ajuste dos modelos quanto os gráficos, optamos por
+truncar 10% das observações feitas nas maiores distâncias. Apesar dos
+melhores valores de AIC e de ajuste do Cramér-von Mises para 25%, os
+histogramas com modelos ajustados para 25%, 20% e 15% apresentaram
+modelos quase lineares e com uma grande probabilidade de deteção nos
+últimos intervalos de distância. O modelo com corte de 10% apresentou
+uma curva decrescente e não tendeu a zero nas últimas distâncias. Já no
+modelos para 5% as funções de deteção tendem a zero nos últimos
+intervalos de distância. O corte de 10% das observações mais distantes
+resultou em uma distância de truncamento de 15m.
+
+##### Ajustando diferentes modelos de funções de detecção
+
+As funções de detecção são ajustadas através da função `ds()` no pacote
+Distence para o R. Para otimizar o fluxo de ajuste de diferentes modelos
+de função de detecção, empacotamos as diferentes combinações de funções
+chave (uniforme, half-normal e hazard-rate) e termos de ajustes
+(cosseno, polinomial simples e polinomial de Hermite) na função
+`ajustar_modelos_distance()`.
+
+Para definir a distância de truncamento dos dados é necessário fornecer
+o argumento `truncamento`, que pode ser definido tanto em percentagem de
+corte dos dados quanto em valor de distãncia.
+
+###### Uniforme com termos de ajuste Cosseno e polinomial simples
+
+```{r}
+# ajustando a função de detecção uniforme para um truncamento de 10% dos dados
+cutia_tap_arap_unif <- cutia_tap_arap |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "unif",
+    truncamento = "10%")
+
+```
+
+Dentre as combinações de termos de ajustes para a função chave de
+distribuição uniforme, o Distance selecionou o modelo uniforme com
+ajuste polinomial simples, com as ordens 2, 4 e 6. Ele mantém esse
+modelo, e descarta os demais. Os *Warnings* indicando que a função de
+detecção não é estritamente monotônica avisam que os dados não foram
+constrangidos para a monotonicidade. Isso porque o uso de termos de
+ajustes, especialmente de ordens acima de 2, podem levar à perda da
+monotonidade (a curva pode se tornar crescente em algum momento, o que
+não é desejado). É preciso avaliar se a falta desse constragimento levou
+efetivamente à perda da monotonicidade ao olhar os gráficos de ajuste
+dos modelos.
+
+###### Half-Normal sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutia_tap_arap_hn <- cutia_tap_arap |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    truncamento = "10%")
+```
+
+Neste caso, o modelo selecionado pelo Distance foi o Half-normal sem
+nenhum termo de ajuste.
+
+###### Hazard-rate sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
+
+```{r}
+# ajustando a função de detecção hazard-rate para um truncamento de 10% dos dados
+cutia_tap_arap_hr <- cutia_tap_arap |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hr",
+    truncamento = "10%")
+```
+
+Aqui o melhor modelo selecionado pelo `Distance` foi o Hazard-rate sem os
+termos de ajuste. Nesse caso, também há um *warning* para o problema na
+distribuição dos dados, que apresentam um pico próximo a distância zero
+e não são bem ajustados pelo modelo hazard-hate.
+
+##### Comparando os modelos
+
+Para comparar os modelos é preciso avaliar três critérios: AIC, ajuste e
+forma das funções nos gráficos e bondade de ajuste. O pacote `Distance`
+possui a função `summarize_ds_models` que gera uma tabela com os modelos
+para comparação de alguns parâmetros: a primeira coluna **Model**,
+indica as funções chaves e respectivos termos de ajuste; a coluna
+**Formula** apresenta as covariáveis, quando incluídas no modelo, ou
+~ 1, quando não há covariáveis; **C-vM p-value** vai apresentar os
+valores de p para o teste de bondade de ajuste de Cramér-von Mises;
+$\hat{P_a}$ apresenta a probalidade de deteção global estimada para cada
+modelo; **se**($\hat{P_a}$) apresenta o erro padrão para as estimativas
+de probabilidade de detecção; e $\Delta$AIC apresenta os valores de
+diferença entre os AIC's de modelos subsequentes.
+
+###### Tabela com o resumo comparativo dos modelos
+
+```{r}
+fluxo1_selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(
+  cutia_tap_arap_hn$`Sem termo`,
+  cutia_tap_arap_hn$Cosseno,
+  cutia_tap_arap_hn$`Hermite polinomial`,
+  cutia_tap_arap_hr$`Sem termo`,
+  cutia_tap_arap_hr$Cosseno,
+  cutia_tap_arap_hr$`Polinomial simples`,
+  cutia_tap_arap_unif$Cosseno,
+  cutia_tap_arap_unif$`Polinomial simples`
+)
+
+fluxo1_selecao_funcao_deteccao_termo_ajuste
+```
+
+Dentre os modelos testados, o que apresentou melhor valor de ajuste e
+AIC foi o hazard-rate. O ajuste do Cramér-von Mises foi consideravelmente maior que os demais (para esse tipo de teste, quanto maior o valor de p, melhor o ajuste), assim como as diferenças no delta AIC foram bastante elevadas.
+
+###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
+
+```{r}
+# gerar uma lista com os modelos selecionados ordenados do melhor para o pior modelo
+fluxo1_modelos_selecionados <- gerar_lista_modelos_selecionados(
+  cutia_tap_arap_hr$`Sem termo`,
+  cutia_tap_arap_unif$`Cosseno`,
+  cutia_tap_arap_hn$`Cosseno`,
+  cutia_tap_arap_unif$`Polinomial simples`,
+  cutia_tap_arap_hn$`Sem termo`, 
+  nome_modelos_selecionados = fluxo1_selecao_funcao_deteccao_termo_ajuste
+)
+
+# plotar a probabilidade de detecção observada (barras) e a esperada (linhas e pontos)
+plotar_funcao_deteccao_modelos_selecionados(fluxo1_modelos_selecionados)
+```
+
+Olhando para os histogramas com modelos ajustados, é possível observar o
+efeito do acúmulo de observações próximo a zero. O modelo com a função
+chave hazard-hate sem termos de ajuste, apesar de ter apresentado o
+melhor valor de ajuste pelo Cramér-von Mises e o melhor valor de AIC,
+apresentou dois problemas. As probalidades de deteção estimadas por
+intevalo de distância (barras verdes), ficaram muito baixas. Além disso,
+a curva da função de deteção apresenta pico na distância próxima a zero,
+decaindo rapidamente e se aproximando de zero ao longo do eixo das
+distãncias. Todos os outros quatro modelos tiveram ajuste e AIC bastante
+inferiores ao hazard-hate. Entretanto as curvas estão relativamente
+melhores. As curvas do segundo e terceiro modelo, uniforme com ajuste
+cosseno e half-normal com ajuste cosseno, respectivamente, tendem à
+perda de monotonicidade. As duas últimas curvas, para os modelos
+uniforme com ajuste polinomial simples e half-normal sem ajuste, não
+perdem a monotonicidade. De forma geral, as probabilidades de detecção
+não têm um bom ajuste abaixo da curva, e não apresentam um decaimento
+gradual com a distância. Esses são problemas inerentes à distribuição
+dos dados.
+
+###### Teste de bondade de ajuste dos modelos e Q-Q plots
+
+```{r}
+bondade_ajuste_fluxo1 <- testar_bondade_ajuste(
+  fluxo1_modelos_selecionados, 
+  plot = TRUE,
+  chisq = TRUE, 
+  intervalos_distancia  =  NULL
+)
+
+bondade_ajuste_fluxo1
+```
+
+Aqui são gerados Q-Q plots que permitem avaliar a qualidade do ajuste
+dos modelos. E também uma tabela com os resultados do Carmér-von Mises,
+onde W é o valor do teste e p seu valor de significância. Nesse caso,
+quanto maior o valor de p, melhor o ajuste do modelo.
+
+##### Avaliando as estimativas de Abundância e Densidade
+
+Aqui, são resumidos os dados de taxa de encontro, abundância e densidade
+em três tabelas.
+
+###### Características da área de estudo e da taxa de encontro
+
+```{r}
+# gera resultados área de estudo e taxa de encontro
+fluxo1_caracteristicas_area_estudo_taxa_encontro <- gerar_resultados_Distance(
+  dados = fluxo1_modelos_selecionados,
+  resultado_selecao_modelos = fluxo1_selecao_funcao_deteccao_termo_ajuste,
+  tipo_de_resultado = "area_estudo", 
+  estratificacao = FALSE
+)
+
+fluxo1_caracteristicas_area_estudo_taxa_encontro
+```
+
+###### Características de abundância, esforço e detecção
+
+```{r}
+# gerar resultados abundância e detecção
+fluxo1_caracteristicas_esforco_abundancia_deteccao <- gerar_resultados_Distance(
+  dados = fluxo1_modelos_selecionados,
+  resultado_selecao_modelos = fluxo1_selecao_funcao_deteccao_termo_ajuste,
+  tipo_de_resultado = "abundancia", 
+  estratificacao = FALSE
+)
+
+fluxo1_caracteristicas_esforco_abundancia_deteccao
+```
+
+###### Características de densidade
+
+```{r}
+# gerar resultados densidade e coeficiente de variação
+fluxo1_caracteristicas_densidade <- gerar_resultados_Distance(
+  dados = fluxo1_modelos_selecionados,
+  resultado_selecao_modelos = fluxo1_selecao_funcao_deteccao_termo_ajuste,
+  tipo_de_resultado = "densidade", 
+  estratificacao = FALSE
+)
+
+fluxo1_caracteristicas_densidade
+```
+
