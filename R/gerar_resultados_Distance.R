@@ -8,6 +8,8 @@
 #' [selecionar_funcao_deteccao_termo_ajuste()]
 #' @param tipo_de_resultado caracter que define o tipo do resultado desejado
 #' pelo usuário
+#' @param estratificacao lógico, indica se os modelos informados contém ou não
+#' estratificação
 #'
 #' @description
 #' Descrever o que cada opção retorna
@@ -96,82 +98,173 @@
 gerar_resultados_Distance <- function(
     dados,
     resultado_selecao_modelos,
-    tipo_de_resultado = c("area_estudo", "abundancia", "densidade")
+    tipo_de_resultado = c("area_estudo", "abundancia", "densidade"),
+    estratificacao = FALSE
 ) {
 
   # definir o tipo de resultado fornecido pelo usuário
   tipo_de_resultado <- match.arg(tipo_de_resultado)
 
-  # controlar o tipo de resultado selecionado pelo usuário
-  if (tipo_de_resultado == "area_estudo") {
+  if (estratificacao == TRUE) {
 
-    # gerar resultados sobre a área total, densidade estimada e coeficiente
-    # de variação
-    resultados_Distance <- dados |>
-      purrr::map(
-        \(.x) .x$dht$individuals$summary[1:9]
-      ) |>
-      purrr::list_rbind() |>
-      dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |>
-      dplyr::relocate(Modelo, .before = Region) |>
-      dplyr::rename(
-        Região = Region,
-        `Area coberta` = CoveredArea,
-        Esforco = Effort,
-        `Taxa de encontro` = ER,
-        `ep da Taxa de encontro` = se.ER,
-        `cv. da Taxa de encontro` = cv.ER
-      )
+    # controlar o tipo de resultado selecionado pelo usuário para modelos com
+    # estratificacao
+    if(tipo_de_resultado == "area_estudo") {
 
-  } else if (tipo_de_resultado == "abundancia") {
-
-    # gerar resultados sobre abundância estimada e detecção
-    resultados_Distance <- dados |>
-      purrr::map(
-        \(.x) .x$dht$individuals$Nhat.by.sample[1:8]
-      ) |>
-      purrr::list_rbind() |>
-      dplyr::select(!c(Label, CoveredArea)) |>
-      dplyr::rename(
-        Região = Region.Label,
-        `Estação amostral` = Sample.Label,
-        Esforço = Effort.x,
-        `Abundância estimada` = Nhat,
-        `N de detecções` = n
-      )
-
-    resultados_Distance <- resultados_Distance |>
-      dplyr::mutate(
-        Modelo = rep(
-          resultado_selecao_modelos$Model,
-          each = length(
-            unique(resultados_Distance$`Estação amostral`)
+      # gerar resultados sobre a área total, densidade estimada e coeficiente
+      # de variação para modelos estratificados
+      resultados_Distance <- dados |>
+        purrr::map(
+          \(.x) .x$dht$individuals$summary[1:9]
+        ) |>
+        purrr::list_rbind() |>
+        dplyr::mutate(
+          Modelo = rep(
+            resultado_selecao_modelos$Model,
+            each = length(resultado_selecao_modelos$Model)
           )
+        ) |>
+        dplyr::relocate(Modelo, .before = Region) |>
+        dplyr::rename(
+          Região = Region,
+          `Area coberta` = CoveredArea,
+          Esforco = Effort,
+          `Taxa de encontro` = ER,
+          `ep da Taxa de encontro` = se.ER,
+          `cv. da Taxa de encontro` = cv.ER
         )
-      ) |> # pode ser um argumento da função
-      dplyr::relocate(Modelo, .before = Região)
+
+    } else if (tipo_de_resultado == "abundancia") {
+
+      # gerar resultados sobre abundância estimada e detecção para modelos
+      # estratificados
+      resultados_Distance <- dados |>
+        purrr::map(
+          \(.x) .x$dht$individuals$Nhat.by.sample[1:8]
+        ) |>
+        purrr::list_rbind() |>
+        dplyr::select(!c(Label, CoveredArea)) |>
+        dplyr::rename(
+          Região = Region.Label,
+          `Estação amostral` = Sample.Label,
+          Esforço = Effort.x,
+          `Abundância estimada` = Nhat,
+          `N de detecções` = n
+        )
+
+      resultados_Distance <- resultados_Distance |>
+        dplyr::mutate(
+          Modelo = rep(
+            resultado_selecao_modelos$Model,
+            each = length(
+              resultados_Distance$`Estação amostral`[1:18]
+            )
+          )
+        ) |> # pode ser um argumento da função
+        dplyr::relocate(Modelo, .before = Região)
+
+    } else {
+
+      # gerar reesultados sobre densidade estimada e detecção para modelos
+      # estratificados
+      resultados_Distance <- dados |>
+        purrr::map(
+          \(.x) .x$dht$individuals$D
+        ) |>
+        purrr::list_rbind() |>
+        dplyr::mutate(Modelo = rep(
+          resultado_selecao_modelos$Model,
+          each = length(resultado_selecao_modelos$Model)
+        )
+        ) |> # pode ser um argumento da função
+        dplyr::relocate(Modelo, .before = Label) |>
+        dplyr::rename(
+          Rotulo = Label,
+          `Estimativa de densidade` = Estimate,
+          `Erro padrão` = se,
+          `Coeficiente de variação` = cv,
+          `Intervalo de confiança inferior` = lcl,
+          `Intervalo de confiança superior` = ucl,
+          `Graus de liberdade` = df
+        )
+
+    }
 
   } else {
 
-    # gerar reesultados sobre densidade estimada
-    resultados_Distance <- dados |>
-      purrr::map(
-        \(.x) .x$dht$individuals$D
-      ) |>
-      purrr::list_rbind() |>
-      dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |> # pode ser um argumento da função
-      dplyr::relocate(Modelo, .before = Label) |>
-      dplyr::rename(
-        Rotulo = Label,
-        `Estimativa de densidade` = Estimate,
-        `Erro padrão` = se,
-        `Coeficiente de variação` = cv,
-        `Intervalo de confiança inferior` = lcl,
-        `Intervalo de confiança superior` = ucl,
-        `Graus de liberdade` = df
-      )
+    if (tipo_de_resultado == "area_estudo") {
+
+      # gerar resultados sobre a área total, densidade estimada e coeficiente
+      # de variação para modelos não estratificados
+      resultados_Distance <- dados |>
+        purrr::map(
+          \(.x) .x$dht$individuals$summary[1:9]
+        ) |>
+        purrr::list_rbind() |>
+        dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |>
+        dplyr::relocate(Modelo, .before = Region) |>
+        dplyr::rename(
+          Região = Region,
+          `Area coberta` = CoveredArea,
+          Esforco = Effort,
+          `Taxa de encontro` = ER,
+          `ep da Taxa de encontro` = se.ER,
+          `cv. da Taxa de encontro` = cv.ER
+        )
+
+    } else if (tipo_de_resultado == "abundancia") {
+
+      # gerar resultados sobre abundância estimada e detecção para modelos não
+      # estratificados
+      resultados_Distance <- dados |>
+        purrr::map(
+          \(.x) .x$dht$individuals$Nhat.by.sample[1:8]
+        ) |>
+        purrr::list_rbind() |>
+        dplyr::select(!c(Label, CoveredArea)) |>
+        dplyr::rename(
+          Região = Region.Label,
+          `Estação amostral` = Sample.Label,
+          Esforço = Effort.x,
+          `Abundância estimada` = Nhat,
+          `N de detecções` = n
+        )
+
+      resultados_Distance <- resultados_Distance |>
+        dplyr::mutate(
+          Modelo = rep(
+            resultado_selecao_modelos$Model,
+            each = length(
+              unique(resultados_Distance$`Estação amostral`)
+            )
+          )
+        ) |>
+        dplyr::relocate(Modelo, .before = Região)
+
+    } else {
+
+      # gerar resultados sobre densidade estimada para modelos não estratificados
+      resultados_Distance <- dados |>
+        purrr::map(
+          \(.x) .x$dht$individuals$D
+        ) |>
+        purrr::list_rbind() |>
+        dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |> # pode ser um argumento da função
+        dplyr::relocate(Modelo, .before = Label) |>
+        dplyr::rename(
+          Rotulo = Label,
+          `Estimativa de densidade` = Estimate,
+          `Erro padrão` = se,
+          `Coeficiente de variação` = cv,
+          `Intervalo de confiança inferior` = lcl,
+          `Intervalo de confiança superior` = ucl,
+          `Graus de liberdade` = df
+        )
+
+    }
 
   }
+
 
   # retorna o resultado selecionado pelo usuário
   return(resultados_Distance)
