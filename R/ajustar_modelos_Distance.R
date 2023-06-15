@@ -13,7 +13,8 @@
 #'          formula = ~ 1
 #'        )
 #'
-#' @param dados recebe a \code{tibble} gerada pela função [transformar_dados_formato_Distance()].
+#' @param dados recebe a \code{tibble} gerada pela função
+#' [transformar_dados_formato_Distance()].
 #' @param funcao_chave recebe uma dentre três funções utilizadas para modelar a
 #' detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
 #' "unif" - Uniform
@@ -21,8 +22,16 @@
 #' `"herm"` - Hermet polynomial; e `"poly"` - Polinomial simples. Quando `NULL`
 #' diferentes modelos são ajustados para função chave escolhida utilizando
 #' diferentes termos de ajuste. Veja Details.
-#' @param truncamento breve descrição do argumento
-#' @param formula breve descrição do argumento
+#' @param truncamento recebe uma lista contendo as distâncias de truncagem
+#' de forma numérica (ex. 20), ou como porcentagem (como um caracter, ex. 25%).
+#' Também pode ser alimentada no formato de lista, com os elementos `left` e
+#' `right` (ex. list(left = 1, right =20)) se a truncagem a esquerda for
+#' necessária. Por configuração, a distância máxima é utilizada como valor de
+#' truncagem a direita. Quando os dados estão categorizados, a truncagem a
+#' direita é o valor final da última coluna. O valor de truncagem a esquerda
+#' é zero, por configuração.
+#' @param formula a fórmula para o parâmetro de escala. Para análise CDS manter
+#' a configuração original ~ 1.
 #'
 #' @details
 #' Quando `termo_ajuste = NULL` modelos com diferente termos de ajuste serão
