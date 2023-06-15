@@ -1,6 +1,6 @@
 # Documentacao da funcao gerar_resultados_Distance() --------
-#' Resultados sobre a área, abundância e densidade estimada, detecção e
-#' coeficiente de variação
+#' Resultados sobre a Area, Abundancia e densidade estimada, detecção e
+#' coeficiente de variacao
 #'
 #' @param dados recebe uma lista nomeada gerada pela função
 #' [gerar_lista_modelos_selecionados()] contendo os modelos de função de
@@ -27,7 +27,8 @@
 #' )
 #'
 #' # gerar os dados transformados com repeticao
-#' dados_distance_com_repeticao <- transformar_dados_formato_Distance(dados_filtrados)
+#' dados_distance_com_repeticao <- dados_filtrados |>
+#'   transformar_dados_formato_Distance()
 #'
 #' # modelo Half-normal
 #' modelo_hn <- dados_distance_com_repeticao |>
@@ -112,8 +113,8 @@ gerar_resultados_Distance <- function(
     # estratificacao
     if(tipo_de_resultado == "area_estudo") {
 
-      # gerar resultados sobre a área total, densidade estimada e coeficiente
-      # de variação para modelos estratificados
+      # gerar resultados sobre a Area total, densidade estimada e coeficiente
+      # de variacao para modelos estratificados
       resultados_Distance <- dados |>
         purrr::map(
           \(.x) .x$dht$individuals$summary[1:9]
@@ -127,7 +128,7 @@ gerar_resultados_Distance <- function(
         ) |>
         dplyr::relocate(Modelo, .before = Region) |>
         dplyr::rename(
-          Região = Region,
+          Regiao = Region,
           `Area coberta` = CoveredArea,
           Esforco = Effort,
           `Taxa de encontro` = ER,
@@ -137,7 +138,7 @@ gerar_resultados_Distance <- function(
 
     } else if (tipo_de_resultado == "abundancia") {
 
-      # gerar resultados sobre abundância estimada e detecção para modelos
+      # gerar resultados sobre Abundancia estimada e detecção para modelos
       # estratificados
       resultados_Distance <- dados |>
         purrr::map(
@@ -146,11 +147,11 @@ gerar_resultados_Distance <- function(
         purrr::list_rbind() |>
         dplyr::select(!c(Label, CoveredArea)) |>
         dplyr::rename(
-          Região = Region.Label,
-          `Estação amostral` = Sample.Label,
-          Esforço = Effort.x,
-          `Abundância estimada` = Nhat,
-          `N de detecções` = n
+          Regiao = Region.Label,
+          `Estacao amostral` = Sample.Label,
+          Esforco = Effort.x,
+          `Abundancia estimada` = Nhat,
+          `N de deteccoes` = n
         )
 
       resultados_Distance <- resultados_Distance |>
@@ -158,11 +159,11 @@ gerar_resultados_Distance <- function(
           Modelo = rep(
             resultado_selecao_modelos$Model,
             each = length(
-              resultados_Distance$`Estação amostral`[1:18]
+              resultados_Distance$`Estacao amostral`[1:18]
             )
           )
         ) |> # pode ser um argumento da função
-        dplyr::relocate(Modelo, .before = Região)
+        dplyr::relocate(Modelo, .before = Regiao)
 
     } else {
 
@@ -182,10 +183,10 @@ gerar_resultados_Distance <- function(
         dplyr::rename(
           Rotulo = Label,
           `Estimativa de densidade` = Estimate,
-          `Erro padrão` = se,
-          `Coeficiente de variação` = cv,
-          `Intervalo de confiança inferior` = lcl,
-          `Intervalo de confiança superior` = ucl,
+          `Erro padrao` = se,
+          `Coeficiente de variacao` = cv,
+          `Intervalo de confianca inferior` = lcl,
+          `Intervalo de confianca superior` = ucl,
           `Graus de liberdade` = df
         )
 
@@ -195,8 +196,8 @@ gerar_resultados_Distance <- function(
 
     if (tipo_de_resultado == "area_estudo") {
 
-      # gerar resultados sobre a área total, densidade estimada e coeficiente
-      # de variação para modelos não estratificados
+      # gerar resultados sobre a Area total, densidade estimada e coeficiente
+      # de variacao para modelos não estratificados
       resultados_Distance <- dados |>
         purrr::map(
           \(.x) .x$dht$individuals$summary[1:9]
@@ -205,7 +206,7 @@ gerar_resultados_Distance <- function(
         dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |>
         dplyr::relocate(Modelo, .before = Region) |>
         dplyr::rename(
-          Região = Region,
+          Regiao = Region,
           `Area coberta` = CoveredArea,
           Esforco = Effort,
           `Taxa de encontro` = ER,
@@ -215,7 +216,7 @@ gerar_resultados_Distance <- function(
 
     } else if (tipo_de_resultado == "abundancia") {
 
-      # gerar resultados sobre abundância estimada e detecção para modelos não
+      # gerar resultados sobre Abundancia estimada e detecção para modelos não
       # estratificados
       resultados_Distance <- dados |>
         purrr::map(
@@ -224,11 +225,11 @@ gerar_resultados_Distance <- function(
         purrr::list_rbind() |>
         dplyr::select(!c(Label, CoveredArea)) |>
         dplyr::rename(
-          Região = Region.Label,
-          `Estação amostral` = Sample.Label,
-          Esforço = Effort.x,
-          `Abundância estimada` = Nhat,
-          `N de detecções` = n
+          Regiao = Region.Label,
+          `Estacao amostral` = Sample.Label,
+          Esforco = Effort.x,
+          `Abundancia estimada` = Nhat,
+          `N de deteccoes` = n
         )
 
       resultados_Distance <- resultados_Distance |>
@@ -236,11 +237,11 @@ gerar_resultados_Distance <- function(
           Modelo = rep(
             resultado_selecao_modelos$Model,
             each = length(
-              unique(resultados_Distance$`Estação amostral`)
+              unique(resultados_Distance$`Estacao amostral`)
             )
           )
         ) |>
-        dplyr::relocate(Modelo, .before = Região)
+        dplyr::relocate(Modelo, .before = Regiao)
 
     } else {
 
@@ -255,10 +256,10 @@ gerar_resultados_Distance <- function(
         dplyr::rename(
           Rotulo = Label,
           `Estimativa de densidade` = Estimate,
-          `Erro padrão` = se,
-          `Coeficiente de variação` = cv,
-          `Intervalo de confiança inferior` = lcl,
-          `Intervalo de confiança superior` = ucl,
+          `Erro padrao` = se,
+          `Coeficiente de variacao` = cv,
+          `Intervalo de confianca inferior` = lcl,
+          `Intervalo de confianca superior` = ucl,
           `Graus de liberdade` = df
         )
 
@@ -279,10 +280,10 @@ utils::globalVariables(
     ".x",
     "Modelo",
     "Region",
-    "Região",
-    "Área",
+    "Regiao",
+    "Area",
     "CoveredArea",
-    "Esforço",
+    "Esforco",
     "Effort",
     "Taxa de encontro",
     "ER",
@@ -292,23 +293,23 @@ utils::globalVariables(
     "cv.ER",
     "Label",
     "Region.Label",
-    "Estação amostral",
+    "Estacao amostral",
     "Sample.Label",
     "Effort.x",
-    "Abundância estimada",
+    "Abundancia estimada",
     "Nhat",
-    "N de detecções",
+    "N de deteccoes",
     "n",
     "Rotulo",
     "Estimativa de densidade",
     "Estimate",
-    "Erro padrão",
+    "Erro padrao",
     "se",
-    "Coeficiente de variação",
+    "Coeficiente de variacao",
     "cv",
-    "Intervalo de confiança inferior",
+    "Intervalo de confianca inferior",
     "lcl",
-    "Intervalo de confiança superior",
+    "Intervalo de confianca superior",
     "ucl",
     "Graus de liberdade",
     "df"
