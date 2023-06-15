@@ -10,7 +10,8 @@
 #'
 #' @usage selecionar_funcao_deteccao_termo_ajuste(
 #'          ...,
-#'          distancia_categorizada = FALSE
+#'          distancia_categorizada = FALSE,
+#'          delta = FALSE
 #'        )
 #'
 #' @param ... recebe os objetos que aramazenam os modelos a serem sumarizados
