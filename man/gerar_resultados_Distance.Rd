@@ -2,8 +2,8 @@
 % Please edit documentation in R/gerar_resultados_Distance.R
 \name{gerar_resultados_Distance}
 \alias{gerar_resultados_Distance}
-\title{Resultados sobre a área, abundância e densidade estimada, detecção e
-coeficiente de variação}
+\title{Resultados sobre a Area, Abundancia e densidade estimada, detecção e
+coeficiente de variacao}
 \usage{
 gerar_resultados_Distance(
   dados,
@@ -42,7 +42,8 @@ dados_filtrados <- filtrar_dados(
 )
 
 # gerar os dados transformados com repeticao
-dados_distance_com_repeticao <- transformar_dados_formato_Distance(dados_filtrados)
+dados_distance_com_repeticao <- dados_filtrados |>
+  transformar_dados_formato_Distance()
 
 # modelo Half-normal
 modelo_hn <- dados_distance_com_repeticao |>
