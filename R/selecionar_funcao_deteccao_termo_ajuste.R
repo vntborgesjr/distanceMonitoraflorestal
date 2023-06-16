@@ -10,14 +10,12 @@
 #'
 #' @usage selecionar_funcao_deteccao_termo_ajuste(
 #'          ...,
-#'          distancia_categorizada = FALSE,
-#'          delta = FALSE
+#'          distancia_categorizada = FALSE
 #'        )
 #'
 #' @param ... recebe os objetos que aramazenam os modelos a serem sumarizados
 #' @param distancia_categorizada lógico, se `TRUE` informa que as distâncias
 #' foram categorizadas. Por configuração, assume que as distâncias são contínuas
-#' @param delta adicionar descrição...
 #'
 #' @return retorna um `data.frame` contendo os modelos ordenados de acordo com o
 #' valor de AIC e outras informações adicionais como a presença ou não de
@@ -73,14 +71,13 @@
 #' }
 selecionar_funcao_deteccao_termo_ajuste <- function(
     ...,
-    distancia_categorizada = FALSE,
-    delta = FALSE
+    distancia_categorizada = FALSE
 ) {
 
   # gerar rank das funcoes de deteccao e termos de ajuste
   selecao_funcao_deteccao_termo_ajuste <- Distance::summarize_ds_models(
     ...,
-    delta_only = delta
+    delta_only = FALSE
   )
 
   # controlar para a presença de dados categorizados
