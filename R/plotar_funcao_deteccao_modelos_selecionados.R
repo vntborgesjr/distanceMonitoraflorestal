@@ -92,7 +92,7 @@ plotar_funcao_deteccao_modelos_selecionados <- function(
       \(.x) plot(
         .x,
         nc = nc,
-        intervalos_distancia = intervalos_distancia,
+        breaks = intervalos_distancia,
         xlab = "Distancia (m)",
         ylab = "Probabilidade de detecacao",
         pl.col = "chartreuse4"
