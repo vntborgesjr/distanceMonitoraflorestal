@@ -93,13 +93,13 @@ transformar_dados_formato_Distance <- function(
     # gerar filtro para eliminar amostras repetidas mantendo o dia com o maior n de obs
     # gerar o n de obs por data de amostragem
     n_obs_data <- dados_formato_distance |>
-      dplyr::group_by(Sample.Label, sampling_day, year, season) |>
+      dplyr::group_by(Region.Label, Sample.Label, sampling_day, year, season) |>
       dplyr::count(sampling_day) |>
       dplyr::ungroup()
 
     # gerar as datas com maior n de obs em cada estacao e ano
     data_com_maior_n_obs <- dados_formato_distance |>
-      dplyr::group_by(Sample.Label, year, season) |>
+      dplyr::group_by(Region.Label, Sample.Label, year, season) |>
       dplyr::count(sampling_day) |>
       dplyr::reframe(n_max = max(n)) |>
       dplyr::ungroup()
@@ -110,14 +110,14 @@ transformar_dados_formato_Distance <- function(
     dados_para_filtrar_por_data_sem_repeticao <- n_obs_data |>
       dplyr::semi_join(
         data_com_maior_n_obs,
-        dplyr::join_by(Sample.Label, year, season, n == n_max),
+        dplyr::join_by(Region.Label, Sample.Label, year, season, n == n_max),
       ) |>
-      dplyr::distinct(sampling_day, year, season) |>
+      dplyr::distinct(Sample.Label, sampling_day, year, season) |>
       dplyr::mutate(
         day = lubridate::day(sampling_day),
         month = lubridate::month(sampling_day)
       ) |>
-      dplyr::group_by(season, year) |>
+      dplyr::group_by(Sample.Label, season, year) |>
       dplyr::filter(day == min(day))
 
     # gerar o filtro de datas
