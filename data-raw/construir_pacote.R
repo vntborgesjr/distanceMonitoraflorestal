@@ -49,6 +49,10 @@
 # usethis::use_test("ajustar_modelos_Distance.R")
 # testthat::test_file("tests/testthat/test-ajustar_modelos_Distance.R")
 #
+# usethis::use_r("comparar_aic_modelo_estratificado.R")
+# usethis::use_test("comparar_aic_modelo_estratificado.R")
+# testthat::test_file("tests/testthat/test-comparar_aic_modelo_estratificado.R")
+#
 # usethis::use_r("contar_n_ano_uc.R")
 # usethis::use_test("contar_n_ano_uc.R")
 # testthat::test_file("tests/testthat/test-contar_n_ano_uc.R")
@@ -133,6 +137,22 @@
 # usethis::use_test("plotar_funcao_deteccao_selecao_distancia_truncamento.R")
 # testthat::test_file("tests/testthat/test-plotar_funcao_deteccao_selecao_distancia_truncamento.R")
 #
+# usethis::use_r("plotar_n_obs_sp_interativo.R")
+# usethis::use_test("plotar_n_obs_sp_interativo.R")
+# testthat::test_file("tests/testthat/test-plotar_n_obs_sp_interativo.R")
+#
+# usethis::use_r("plotar_n_obs_sp_uc_interativo.R")
+# usethis::use_test("plotar_n_obs_sp_uc_interativo.R")
+# testthat::test_file("tests/testthat/test-plotar_n_obs_sp_uc_interativo.R")
+#
+# usethis::use_r("plotar_n_obs_uc_interativo.R")
+# usethis::use_test("plotar_n_obs_uc_interativo.R")
+# testthat::test_file("tests/testthat/test-plotar_n_obs_uc_interativo.R")
+#
+# usethis::use_r("plotar_n_obs_validadas_interativo.R")
+# usethis::use_test("plotar_n_obs_validadas_interativo.R")
+# testthat::test_file("tests/testthat/test-plotar_n_obs_validadas_interativo.R")
+#
 # usethis::use_r("selecionar_distancia_truncamento.R")
 # usethis::use_test("selecionar_distancia_truncamento.R")
 # testthat::test_file("tests/testthat/test-selecionar_distancia_truncamento.R")
@@ -194,6 +214,9 @@
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo3-distancias-agrupadas-com-repeticoes")
+# usethis::use_vignette("Ajuste-dos-modelos-fluxo4-amostragem-por-distancia-com-multiplas-covariaveis")
+# usethis::use_vignette("Ajuste-dos-modelos-fluxo5-amostragem-por-distancia-estratificada-por-unidade-de-conservacao")
+# usethis::use_vignette("Ajuste-dos-modelos-fluxo6-amostragem-por-distancia-estratificada-por-ano")
 #
 # construir o html para ser chamado usando vignettes()
 # devtools::build_vignettes()
@@ -242,6 +265,9 @@
 # teste e documentacao
 # 13 - função plotar_funcao_deteccao_modelos_selecionados() sem teste
 # 14 - gerar resultados distance sem documenação e sem teste
+# 15 - bootstrap para estimar coeficiente de variação em modelos com coveriáveis
+# ver exemplo dos amakiis com covariáveis, se não me engano capítulo 6 de
+# exercícios do curso de distance
 
 # Aspectos importantes para revisão final do texto do tutorial_fluxo_analises.Rmd
 # 1 - padronizar Unidade de Conservação ou UC
