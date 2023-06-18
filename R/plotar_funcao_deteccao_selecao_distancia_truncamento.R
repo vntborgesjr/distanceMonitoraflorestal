@@ -21,3 +21,8 @@ plotar_funcao_deteccao_selecao_distancia_truncamento <- function(dados) {
     )
 }
 
+utils::globalVariables(
+  c(
+    ""
+  )
+)
