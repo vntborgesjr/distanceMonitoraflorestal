@@ -1,13 +1,12 @@
 ---
-title: "Fluxo de trabalho: de producao dos codigos dos dados de Amostragem por Distancia
-  - Programa Monitora ICMBio/MMA"
+title: "Fluxo de trabalho: de producao dos codigos dos dados de Amostragem por Distancia - Programa Monitora ICMBio/MMA"
 author: "Luciana Fusinatto \n Vitor Borges-Júnior"
 date: Criado em 31 de março de 2023, atualizado em `r format(Sys.time(), '%d de %B
   de %Y')`
 output:
   html_notebook:
     toc: yes
-    toc_depth: 5
+    toc_depth: 6
     toc_float: no
     number_section: yes
     code_folding: show
@@ -498,7 +497,7 @@ dasy_croc_sem_rep
 ```
 
 
-# **PARTE IV -- Explorando e selecionando os dados para as análises**
+# **PARTE III -- Explorando e selecionando os dados para as análises**
 
 Apresentamos abaixo um conjunto de ferramentas que permite diversas
 formas de explorar todo o conjunto de dados.
@@ -526,7 +525,7 @@ n_ucs_ano
 Gerar função para tabela dinâmica.
 
 ```{r}
-gerar_tabdin_n_uc_ano()
+gerar_tabdin(n_ucs_ano)
 ```
 
 ### Unidades de conservação amostradas em um maior número de anos
@@ -537,7 +536,7 @@ n_ano_uc
 ```
 
 ```{r}
-gerar_tabdin_n_ano_uc()
+gerar_tabdin(n_ano_uc)
 ```
 
 ### Total de observações por Unidade de Conservação
@@ -545,14 +544,23 @@ gerar_tabdin_n_ano_uc()
 ```{r}
 # contar número de observações por UC
 n_obs_uc <- contar_n_obs_uc()
-
-# gerar tabdin
-gerar_tabdin_n_obs_uc()
+n_obs_uc
 ```
+
+```{r}
+# gerar tabdin
+gerar_tabdin(n_obs_uc)
+```
+
+```{r}
+# gerar tabdin
+gerar_tabdin(n_obs_uc)
+```
+
 
 ```{r, fig.height=20, fig.align='center'}
 # plotar o número de observações por UC
-plotar_n_obs_uc_interativo()
+plotar_n_obs_uc_interativo(n_obs_uc)
 ```
 
 ### Número de observações realizadas por UC em cada ano
@@ -566,7 +574,7 @@ Tabela interativa para consultar quantas observações foram realizadas
 por ano em cada UC
 
 ```{r}
-gerar_tabdin_n_obs_uc_ano()
+gerar_tabdin(n_obs_uc_ano)
 ```
 
 ### Total de observações validadas por nível taxonômico
@@ -588,18 +596,7 @@ somando um total `r n_obs_validadas[1]` observações.
 
 ```{r}
 # gerar gráfico com número observações validadas para cada nível taxonômico
-plotar_n_obs_validadas_interativo()
-```
-
-Finalmente chegamos ao subconjunto dos dados que será utilizado para
-selecionar quais espécies serão analisadas.
-
-```{r}
-# gerar tabela de dados selecionados
-dados_selecionados <- carregar_dados_selecionados()
-
-# gerar tabdin dados_selecionados 
-gerar_tabdin_dados_selecionados()
+plotar_n_obs_validadas_interativo(n_obs_validadas)
 ```
 
 ### Total de espécies registradas
@@ -675,18 +672,12 @@ n_obs_sp
 
 ```{r}
 # gerar tabela dinâmica com o número total de obsevações por espécie
-gerar_tabdin_n_obs_sp()
+gerar_tabdin(n_obs_sp)
 ```
 
 ```{r, fig.height=20}
 # plotar o o número de observações por UC
-plotar_n_obs_sp_interativo()
-```
-
-Tabela interativa para consulta do número de observações por espécie.
-
-```{r}
-gerar_tabdin_n_obs_sp()
+plotar_n_obs_sp_interativo(n_obs_sp)
 ```
 
 #### Número de observações para cada espécie por unidade de conservação
@@ -698,7 +689,7 @@ n_obs_sp_uc
 ```
 
 ```{r}
-gerar_tabdin_n_obs_sp_uc()
+gerar_tabdin(n_obs_sp_uc)
 ```
 
 #### Número de observações para cada espécies por ano
@@ -712,7 +703,7 @@ Tabela interativa para consultar quantas observações foram realizadas
 para cada espécie em cada ano
 
 ```{r}
-gerar_tabdin_n_obs_sp_ano()
+gerar_tabdin(n_obs_sp_ano)
 ```
 
 #### Número de observações para cada espécies por UC e por ano
@@ -726,7 +717,7 @@ Tabela interativa para consultar quantas observações foram realizadas
 para cada espécie em cada ano
 
 ```{r}
-gerar_tabdin_n_obs_sp_uc_ano()
+gerar_tabdin(n_obs_sp_uc_ano)
 ```
 
 #### Número de observações para cada espécies por UC, por estação do ano e por ano
@@ -737,7 +728,7 @@ n_obs_sp_uc_estacao_ano
 ```
 
 ```{r}
-gerar_tabdin_n_obs_sp_uc_estacao_ano()
+gerar_tabdin(n_obs_sp_uc_estacao_ano)
 ```
 
 ###INCLUIR **Réplicas e Repetições**
@@ -827,7 +818,7 @@ grupos é o chamado viés de tamanho. A tendência é que a pequenas
 distâncias todos os grupos sejam detectáveis, mas somente os grupos
 maiores serão detectados a distâncias maiores.
 
-# **PARTE V -- Ajustando os modelos**
+# **PARTE IV -- Ajustando os modelos**
 
 ## Fluxo de análise dos dados:
 
@@ -1810,85 +1801,150 @@ fluxo3.3_caracteristicas_densidade <- fluxo3.3_modelos_selecionados |>
 fluxo3.3_caracteristicas_densidade
 ```
 
-### Amostragem por Distância com Múltiplas Covariáveis
+### Fluxo 4 - Amostragem por Distância com Múltiplas Covariáveis
 
-Aqui vamos usar a abordagem do Fluxo 2, com amostragens reduzidas, para
-o ajuste de covariáveis. Vamos usar o tamanho do grupo (size) como exemplo de covariável.
+Aqui vamos usar a abordagem do Fluxo 2, sem amostragens repetidas, para
+o ajuste de covariáveis. Vamos usar o tamanho do grupo (size) e tempo de denso percorrido até cada observação como exemplo de covariáveis.
 
-##### Ajustando diferentes modelos com covariáveis
+#### Carregando os dados
+
+Aqui vamos trabalhar com os dados filtrados, sem repetições. O número de observações total foi de 55.
+
+```{r}
+cutias_cov <- filtrar_dados(
+  nome_ucs = "resex_tapajos_arapiuns", 
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+)
+
+cutias_cov_distance <- transformar_dados_formato_Distance(
+  cutias_cov,
+  amostras_repetidas = FALSE)
+
+cutias_cov_distance
+```
+
+#### Plotando o histograma
+
+```{r}
+cutias_cov_distance |> 
+plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+
+```
+
+#### Ajustando diferentes modelos com covariáveis
 
 Para o uso de coveriáveis, podemos usar somente as distribuições
 half-normal ou hazard-rate, pois ambas possuem o parâmetro escalar (sigma) pelo
 qual o vetor das covariáveis será multiplicado. Não é recomendável o uso
 de termos de ajuste com o uso de covariáveis pela grande chance de perda
 de monotonicidade nas curvas das funções de detecção. Assim, vamos
-trabalhar com as seguintes combinações de modelos
+trabalhar com as seguintes combinações de modelos.
 
-###### Half-normal sem termos de ajuste (HN)
+##### Half-normal sem termos de ajuste (HN)
 
 ```{r}
 # ajustando a função de detecção half-normal, sem covariável, para um truncamento de 10% dos dados
-cutia_tap_arap_quase_sem_repeticao_hn_scov <- cutia_tap_arap_quase_sem_repeticao |> 
+cutias_cov_distance_hn <- cutias_cov_distance |> 
   ajustar_modelos_Distance(
     funcao_chave = "hn",
     truncamento = "10%"
     )
 
+cutias_cov_distance_hn$`Sem termo`
 ```
 
-###### HN + Tamanho do grupo (HN + S)
+##### HN + Tamanho do grupo (HN + S)
+
 ```{r}
 # ajustando a função de detecção half-normal, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
-
-cutia_tap_arap_quase_sem_repeticao_hn_size <- cutia_tap_arap_quase_sem_repeticao |> 
+cutias_cov_distance_hn_size <- cutias_cov_distance |> 
   ajustar_modelos_Distance(
     funcao_chave = "hn",
     truncamento = "10%",
-    formula = ~size
+    formula = ~ size
     )
 
+cutias_cov_distance_hn_size
 ```
-###### Hazard-rate sem termos de ajuste (HZ)
+
+##### HN + Tamanho do grupo (HN + S)
 
 ```{r}
+# ajustando a função de detecção half-normal, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
+cutias_cov_distance_hn_size_time <- cutias_cov_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    truncamento = "10%",
+    formula = ~ size + cense_time
+    )
 
-cutia_tap_arap_quase_sem_repeticao_hr_scov <- cutia_tap_arap_quase_sem_repeticao |> 
+cutias_cov_distance_hn_size_time
+```
+
+##### Hazard-rate sem termos de ajuste (HZ)
+
+```{r}
+# ajustando a função de detecção hazard-rate, sem covariável, para um truncamento de 10% dos dados
+cutias_cov_distance_hr <- cutias_cov_distance |> 
   ajustar_modelos_Distance(
     funcao_chave = "hr",
     truncamento = "10%"
     )
 
+cutias_cov_distance_hr$`Sem termo`
 ```
 
 ###### HZ + Tamanho do grupo (HZ + S)
 
 ```{r}
-
-cutia_tap_arap_quase_sem_repeticao_hr_size <- cutia_tap_arap_quase_sem_repeticao |> 
+# ajustando a função de detecção hazard-rate, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
+cutias_cov_distance_hr_size <- cutias_cov_distance |> 
   ajustar_modelos_Distance(
     funcao_chave = "hr",
     truncamento = "10%",
-    formula = ~size
+    formula = ~ size
     )
 
+cutias_cov_distance_hr_size
 ```
 
-##### VOLTAR AQUI Comparando os modelos
+###### HZ + Tamanho do grupo (HZ + S)
+
+```{r}
+# ajustando a função de detecção hazard-rate, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
+cutias_cov_distance_hr_size_time <- cutias_cov_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hr",
+    truncamento = "10%",
+    formula = ~ size + cense_time
+    )
+
+cutias_cov_distance_hr_size_time
+```
+
+##### Comparando os modelos
 
 ###### Tabela com o resumo comparativo dos modelos
 
-Ainda estamos ajustando a função para poder gerar a tabela com o resumo
-dos resultados. A função criada para gerar tabela ainda não comporta os
-dados de modelos com covariáveis.
+Aqui, vamos selecionar somente os modelos sem termos de ajuste, com e sem covariáveis.
 
 ```{r}
-cov_lista_modelos_ajustados <- list(
-  `half-normal` = cutia_tap_arap_quase_sem_repeticao_hn_scov, 
-  `hazard-rate` = cutia_tap_arap_quase_sem_repeticao_hr_scov
+cutias_cov_distance_melhor_modelo <- 
+  selecionar_funcao_deteccao_termo_ajuste(
+  cutias_cov_distance_hn$`Sem termo`,
+  cutias_cov_distance_hn_size,
+  cutias_cov_distance_hn_size_time,
+  cutias_cov_distance_hr$`Sem termo`,
+  cutias_cov_distance_hr_size,
+  cutias_cov_distance_hr_size_time
 )
 
-cov_selecao_funcao_deteccao_termo_ajuste <- selecionar_funcao_deteccao_termo_ajuste(cov_lista_modelos_ajustados)
+cutias_cov_distance_melhor_modelo
+
 ```
+
+Observe que nesse caso as covariávies alteraram pouco o ajuste dos modelos.
 
 ###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
 
@@ -1897,12 +1953,19 @@ modelos com covariáveis. A função criada para os gráficos ainda não
 comporta os dados de modelos com covariáveis.
 
 ```{r}
-cov_modelos_selecionados <- list(
-  cutia_cov_hn$`Sem termo`,
-  cutia_cov_hr$`Sem termo`
-)
+modelos_cutias_cov_distance <-
+  gerar_lista_modelos_selecionados(
+    cutias_cov_distance_hr_size_time,
+    cutias_cov_distance_hn_size_time,
+    cutias_cov_distance_hn$`Sem termo`,
+    cutias_cov_distance_hn_size,
+    cutias_cov_distance_hr_size,
+    cutias_cov_distance_hr$`Sem termo`,
+    nome_modelos_selecionados = cutias_cov_distance_melhor_modelo
+  )
 
-plotar_funcao_deteccao_modelos_selecionados(cov_modelos_selecionados)
+plotar_funcao_deteccao_modelos_selecionados(modelos_cutias_cov_distance)
+
 ```
 
 ###### Teste de bondade de ajuste dos modelos e Q-Q plots
@@ -1913,8 +1976,12 @@ covariáveis. A função criada para gerar tabela e os Q-Q plots ainda não
 comporta os dados de modelos com covariáveis.
 
 ```{r}
-bondade_ajuste_cov <- testar_bondade_ajuste(cov_modelos_selecionados, plot = TRUE)
-bondade_ajuste_cov
+testar_bondade_ajuste(
+  modelos_cutias_cov_distance,
+  plot = TRUE,
+  nboot = 100
+)
+
 ```
 
 ##### Avaliando as estimativas de Abundância e Densidade
@@ -1924,19 +1991,53 @@ ser feitas através do bootstrap (função `bootdht` do Distance). Ainda
 estamos implementando o bootstrap em nosso fluxo de estimativas de taxa
 de encontro, abundância e densidade.
 
-### Amostragem por Distância com Estratificação
-
-A estratificação dos dados a partir do pacote Distance para o R só é possível através da variável `Region.Label`, para dados espaciais. Assim, apresentamos um fluxo de estratificação utilizando ainda os dados da cutia, *Dasyprocta croconota*, para mais de uma unidade de conservação. 
-
-#### Explorando os dados dentro de cada estrato espacial:
-
-Na PARTE IV -- Explorando e selecionando os dados para as análises, filtramos os dados de *Dasyprocta croconota*. A espécie foi observada em quatro Unidades de Conservação, com os respectivos números de ocorrência: Resex Tapajós-Arapiuns (1395), Parna da Serra do Pardo (257), Esec da Terra do Meio (235), e Resex Riozinho do Anfrísio (225). Em todas as UCs o número de observações é alto, de modo que incluímos todas as UCs na análise de dados. 
-
-### VOLTAR AQUI Carregar Dados
-
+###### **Área coberta pela Amostragem**
 
 ```{r}
 
+gerar_resultados_Distance(
+  modelos_cutias_cov_distance,
+  cutias_cov_distance_melhor_modelo,
+  tipo_de_resultado = "area_estudo"
+  )
+
+```
+
+###### **Ábundância**
+
+```{r}
+
+gerar_resultados_Distance(
+  modelos_cutias_cov_distance,
+  cutias_cov_distance_melhor_modelo,
+  tipo_de_resultado = "abundancia"
+  )
+
+```
+
+###### **Densidade**
+
+```{r}
+
+gerar_resultados_Distance(
+  modelos_cutias_cov_distance,
+  cutias_cov_distance_melhor_modelo,
+  tipo_de_resultado = "densidade"
+  )
+
+```
+
+### Fluxo 5 - Amostragem por distância com estratificação por Unidade de Conservação
+
+A estratificação dos dados a partir do pacote Distance para o R só é possível através da variável `Region.Label`. Assim, apresentamos um fluxo de estratificação utilizando ainda os dados da cutia, *Dasyprocta croconota*, para mais de uma unidade de conservação. 
+
+#### Explorando os dados dentro de cada estrato espacial:
+
+Na PARTE IV - Explorando e selecionando os dados para as análises, filtramos os dados de *Dasyprocta croconota*. A espécie foi observada em quatro Unidades de Conservação, com os respectivos números de ocorrência: Resex Tapajós-Arapiuns (n = 1395), Parna da Serra do Pardo (n = 257), Esec da Terra do Meio (n = 235), e Resex Riozinho do Anfrísio (n = 225). Em todas as UCs o número de observações é alto, de modo que incluímos todas as UCs na análise de dados. 
+
+### Carregar Dados
+
+```{r}
 # filtrar dados das cutias para as quatro UCS onde ocorre:
 cutias <- filtrar_dados(
   nome_ucs = c(
@@ -1949,100 +2050,767 @@ cutias <- filtrar_dados(
   validacao_obs = "especie"
 )
 
-
-cutias <- transformar_dados_formato_Distance(
+cutias_distance <- transformar_dados_formato_Distance(
   cutias,
-  amostras_repetidas = FALSE)
+  amostras_repetidas = TRUE)
 
-
-
+cutias_distance
 ```
 
 
-
 ##### Plotando o histograma das frequências de ocorrência pela distância
+###### Dados Globais
 
-O histograma interativo está disponível no app em Shiny `app_distancia_interativo.R`. A distribuição dos dados no histograma permite observar um pico de observações próximo a zero, além de uma considerável perda em detectabilidade a partir dos 20m. Vamos testar diferentes proporções de truncamento.
+Plotando o histograma para os dados globais.
 
-##### Testando distância de truncamento (*w*)
+```{r}
+cutias_distance |> 
+  tidyr::drop_na(distance) |> 
+plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
 
-Vamos explorar diferentes distâncias de truncamento para um mesmo modelo de distribuição half-normal. Optamos por truncar os dados pela percentagem para padronizar a rotina para diferentes espécies. Buckland et al. (2001) sugere um corte entre 5-10% das observações detectadas nas maiores distãncias. Vamos selecionar o valor de corte pelo modelo com melhor ajuste.
+###### Por Estrato
 
-###### Tabela com resumo comparativo dos modelos
+Plotando o histograma para cada uma das UCS
 
-###### Plotando o histograma com os dados truncados.
+####### **Resex Tapajós-Arapiuns**
+
+```{r}
+cutias_tap_distance <- filtrar_dados(
+  nome_ucs = "resex_tapajos_arapiuns",
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+) |> 
+  transformar_dados_formato_Distance(amostras_repetidas = TRUE)
+
+cutias_tap_distance |> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **Parna Serra do Pardo**
+
+```{r}
+cutias_par_distance <- filtrar_dados(
+  nome_ucs = "parna_da_serra_do_pardo",
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+)|> 
+  transformar_dados_formato_Distance(amostras_repetidas = TRUE)
+
+cutias_par_distance |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **Esec da Terra do Meio**
+
+```{r}
+cutias_ter_distance <- filtrar_dados(
+  nome_ucs = "esec_da_terra_do_meio",
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+) |> 
+  transformar_dados_formato_Distance(amostras_repetidas = TRUE)
+
+cutias_ter_distance |> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **Resex Riozinho do Anfrísio**
+
+```{r}
+cutias_anf_distance <- filtrar_dados(
+  nome_ucs = "resex_riozinho_do_anfrisio",
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+) |> 
+  transformar_dados_formato_Distance(amostras_repetidas = TRUE)
+
+cutias_anf_distance |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
 
 ##### Ajustando diferentes modelos para dados Globais
 
-\#**AQUI A GENTE PRECISA TOMAR UMA DECISÃO IMPORTANTE**
+Para ajustar os modelos aos dados globais e estratificados, mantivemos a mesma distância de truncamento para os dados das cutias na Resex Tapajós-Arapiuns, de 10%, uma vez que a distrbuição dos dados é semelhante tanto nos dados globais como nas UCs analisadas.
 
-É necessário testar os quatro fluxos: todas/poucas repetições x distancias exatas/agrupadas? Preciso ver os resultados dos fluxos anteriores para planejar melhor esta etapa.
+###### Uniforme com termos de ajuste Cosseno e polinomial simples
 
-Para a estratificação, vamos testar diretamento os modelos com e sem covariáveis. Vamos nos limitar às distribuições half-normal e hazard-rate, pois são as únicas que comportam o uso das covariáveis.
+```{r}
+# ajustando a função de detecção uniforme para um truncamento de 10% dos dados
+cutias_distance_unif <- cutias_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "unif",
+    truncamento = "10%")
+```
 
-###### Half-normal sem termos de ajuste (HN)
+###### Half-Normal sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
 
-###### HN + Tamanho do grupo (HN + S)
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_distance_hn <- cutias_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    truncamento = "10%")
+```
 
-###### HN + Minutos após o início da amostragem (HN + M)
+###### Hazard-rate sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
 
-###### HN + Tamanho do grupo + Minutos após início da amostragem (HN + S + M)
-
-###### Hazard-rate sem termos de ajuste (HZ)
-
-###### HZ + Tamanho do grupo (HZ + S)
-
-###### HZ + Minutos após o início da amostragem (HZ + M)
-
-###### HZ + Tamanho do grupo + Minutos após início da amostragem (HZ + S + M)
-
-##### Comparando os modelos
-
-###### Tabela com o resumo comparativo dos modelos
-
-###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
-
-###### Teste de bondade de ajuste dos modelos e Q-Q plots
-
-##### Avaliando as estimativas de Abundância e Densidade
-
-Para modelos com covariáveis as estimativas de abundância e densidade devem ser feitas por bootstrap
-
-##### Ajustando diferentes modelos para os dados Estratificados
-
-A redução no tamanho amostral geralmente faz com que os modelos para os dados globais tenham um ajuste melhor que os modelos ajustados aos estratos. Um critério para avaliar este ajuste é comparar o somatório dos valores de AIC para cada estrato com o valor de AIC do modelo global. Se a soma dos valores de AIC dos estratos for menor que o AIC global, significa que o ajuste foi melhor para os dados estratificados.
-
-\#**AQUI TAMBÉM PRECISA TOMAR UMA DECISÃO IMPORTANTE**
-
-Rodamos todos os modelos para os dados estratificados? Ou partimos do melhor modelo para dados globais?
-
-###### Half-normal sem termos de ajuste (HN)
-
-###### HN + Tamanho do grupo (HN + S)
-
-###### HN + Minutos após o início da amostragem (HN + M)
-
-###### HN + Tamanho do grupo + Minutos após início da amostragem (HN + S + M)
-
-###### Hazard-rate sem termos de ajuste (HZ)
-
-###### HZ + Tamanho do grupo (HZ + S)
-
-###### HZ + Minutos após o início da amostragem (HZ + M)
-
-###### HZ + Tamanho do grupo + Minutos após início da amostragem (HZ + S + M)
+```{r}
+# ajustando a função de detecção hazard-rate para um truncamento de 10% dos dados
+cutias_distance_hr <- cutias_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hr",
+    truncamento = "10%")
+```
 
 ##### Comparando os modelos
 
 ###### Tabela com o resumo comparativo dos modelos
 
-Olhar também valores brutos de AIC dos modelos globais e comparar com os estratificados.
+```{r}
+melhor_modelo_cutias <- selecionar_funcao_deteccao_termo_ajuste(
+  cutias_distance_unif$Cosseno,
+  cutias_distance_unif$`Polinomial simples`,
+  cutias_distance_hn$`Sem termo`,
+  cutias_distance_hn$Cosseno,
+  cutias_distance_hn$`Hermite polinomial`,
+  cutias_distance_hr$`Sem termo`,
+  cutias_distance_hr$Cosseno,
+  cutias_distance_hr$`Polinomial simples`
+)
+
+melhor_modelo_cutias
+```
 
 ###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
 
+```{r}
+modelos_cutias <- gerar_lista_modelos_selecionados(
+  cutias_distance_hr$`Sem termo`,
+  cutias_distance_hn$Cosseno,
+  cutias_distance_unif$Cosseno,
+  cutias_distance_unif$`Polinomial simples`,
+  cutias_distance_hn$`Sem termo`,
+  nome_modelos_selecionados = melhor_modelo_cutias
+)
+
+plotar_funcao_deteccao_modelos_selecionados(modelos_cutias)
+```
+
 ###### Teste de bondade de ajuste dos modelos e Q-Q plots
+
+```{r}
+#criar uma lista com os modelos selecionados, na ordem de seleção
+testar_bondade_ajuste(
+  modelos_cutias,
+  plot = TRUE,
+  chisq = FALSE,
+)
+  
+```
+
+Aqui são gerados Q-Q plots que permitem avaliar a qualidade do ajuste
+dos modelos. E também uma tabela com os resultados do Carmér-von Mises,
+onde W é o valor do teste e p seu valor de significância. Nesse caso,
+quanto maior o valor de p, melhor o ajuste do modelo.
 
 ##### Avaliando as estimativas de Abundância e Densidade
 
-Para modelos com covariáveis as estimativas de abundância e densidade devem ser feitas por bootstrap
+Aqui, são resumidos os dados de taxa de encontro, abundância e densidade
+em três tabelas.
+
+###### **Área coberta pela Amostragem**
+
+```{r}
+gerar_resultados_Distance(
+  dados = modelos_cutias,
+  resultado_selecao_modelos = melhor_modelo_cutias,
+  tipo_de_resultado = "area_estudo", 
+  estratificacao = TRUE
+)
+```
+
+###### **Ábundância**
+
+```{r}
+
+gerar_resultados_Distance(
+  dados = modelos_cutias,
+  resultado_selecao_modelos = melhor_modelo_cutias,
+  tipo_de_resultado = "abundancia", 
+  estratificacao = TRUE
+)
+
+```
+
+###### **Densidade**
+
+```{r}
+
+gerar_resultados_Distance(
+  dados = modelos_cutias,
+  resultado_selecao_modelos = melhor_modelo_cutias,
+  tipo_de_resultado = "densidade", 
+  estratificacao = TRUE
+)
+
+```
+
+##### Ajustando modelos para cada estrato espacial (Unidade de Conservação)
+
+A redução no tamanho amostral geralmente faz com que os modelos para os dados globais tenham um ajuste melhor que os modelos ajustados aos estratos. Entretanto, para os dados do Monitora, considerando alguns ruídos amostrais sobre a distribuição dos dados, o excesso de repetições, resultados melhores de ajuste têm sido obtidos para conjutnos de dados menores.
+
+Nas análises anteriores, os parâmetros de ajuste dos modelos e valores de AIC foram gerados somente para os dados globais. Porém, as estimativas relacionadas a área de estudo, abundância e densidade, foram geradas para cada estrato.
+
+Um critério para avaliar se o ajuste das funções para os dados estratificados foi melhor que para os dados globais é a comparação do somatório dos valores de AIC para cada estrato com o valor de AIC do modelo global. Se a soma dos valores de AIC dos estratos for menor que o AIC global, significa que o ajuste foi melhor para os dados estratificados.
+
+Assim, escolhemos um dos modelos testados anteriormente para os dados globais, que foi o Half-normal. Escolhemos o segundo melhor modelo porque consideramos que o ajuste do Hazard-rate, apesar de apresentar os melhores valores de AIC e teste de ajuste de bondade, foi sensível ao pico de observações próximo a zero, substimando as estimativas de probabilidade de detecção. Assim, vamos comparar o AIC global para o modelo do tipo Half-normal com os AICs das funções ajustadas para os dados de cada Unidade de Conservação.
+
+
+###### Half-Normal
+
+####### **Dados Globais**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_distance_hn <- cutias_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **Resex Tapajós-Arapiuns**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_tap_distance_hn <- cutias_tap_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **Resex Tapajós-Arapiuns**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_tap_distance_hn <- cutias_tap_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+
+####### **Parna Serra do Pardo**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_par_distance_hn <- cutias_par_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **Esec da Terra do Meio**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_ter_distance_hn <- cutias_ter_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **Resex Riozinho do Anfrísio**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_anf_distance_hn <- cutias_anf_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+
+##### Comparando os modelos
+
+###### Tabela com o resumo comparativo dos modelos
+
+```{r}
+modelo_cutias_estrat <- comparar_aic_modelo_estratificado(
+  cutias_distance_hn$Cosseno,
+  cutias_tap_distance_hn,
+  cutias_par_distance_hn,
+  cutias_ter_distance_hn,
+  cutias_anf_distance_hn, 
+  nome_modelos = c(
+ "Global",
+ "Resex Tapajós-Arapiuns",
+ "Parna Serra do Prado",
+ "Esec da Terra do Meio",
+ "Resex do Riozinho do Anfrísio"
+  )
+)
+
+
+modelo_cutias_estrat
+```
+
+###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
+
+```{r, eval=FALSE}
+modelos_cutias_estrat <- gerar_lista_modelos_selecionados(
+  cutias_distance_hn$Cosseno,
+  cutias_tap_distance_hn,
+  cutias_par_distance_hn,
+  cutias_ter_distance_hn,
+  cutias_anf_distance_hn,
+  nome_modelos_selecionados = modelo_cutias_estrat
+)
+
+plotar_funcao_deteccao_modelos_selecionados(modelos_cutias_estrat)
+```
+
+### Fluxo 6 - Amostragem por distância estratificada por ano
+
+Para obter as estimativas anuais de densidade continuaremos utilizando a abordagem do Fluxo 2, com amostragens sem repetição.
+
+#### Carregando os dados
+
+Aqui vamos trabalhar com os dados filtrados, sem repetições. O número de observações total foi de 55.
+
+```{r}
+cutias_year <- filtrar_dados(
+  nome_ucs = "resex_tapajos_arapiuns", 
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+)
+
+cutias_year_distance <- transformar_dados_formato_Distance(
+  cutias_year,
+  amostras_repetidas = FALSE)
+
+cutias_year_distance
+```
+
+##### Plotando o histograma das frequências de ocorrência pela distância
+###### Dados Globais
+
+Plotando o histograma para os dados globais.
+
+```{r}
+cutias_year_distance |> 
+  tidyr::drop_na(distance) |> 
+plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+###### Por Estrato
+
+Plotando o histograma para cada ano.
+
+####### **2014**
+
+```{r}
+cutia_2014 <- cutias_year_distance |> 
+  dplyr::filter(year == 2014)
+
+cutia_2014 |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2015*
+
+```{r}
+cutia_2015 <- cutias_year_distance |> 
+  dplyr::filter(year == 2015)
+
+cutia_2015 |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2016**
+
+```{r}
+cutia_2016 <- cutias_year_distance |> 
+  dplyr::filter(year == 2016)
+
+cutia_2016 |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2017**
+
+```{r}
+cutia_2017 <- cutias_year_distance |> 
+  dplyr::filter(year == 2017)
+
+cutia_2017 |> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2018**
+
+```{r}
+cutia_2018 <- cutias_year_distance |> 
+  dplyr::filter(year == 2018)
+
+cutia_2018 |> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2019**
+
+```{r}
+cutia_2019 <- cutias_year_distance |> 
+  dplyr::filter(year == 2019)
+
+cutia_2019 |> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2020**
+
+```{r}
+cutia_2020 <- cutias_year_distance |> 
+  dplyr::filter(year == 2020)
+
+cutia_2020|> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+####### **2021**
+
+```{r}
+cutia_2021 <- cutias_year_distance |> 
+  dplyr::filter(year == 2021)
+
+cutia_2021 |> 
+  tidyr::drop_na(distance) |> 
+  plotar_distribuicao_distancia_interativo(largura_caixa = 1)
+```
+
+##### Ajustando diferentes modelos para dados Globais
+
+**Para ajustar os modelos aos dados globais e estratificados, mantivemos a mesma distância de truncamento para os dados das cutias na Resex Tapajós-Arapiuns, de 10%, uma vez que a distrbuição dos dados é semelhante tanto nos dados globais como nas UCs analisadas.**
+
+###### Uniforme com termos de ajuste Cosseno e polinomial simples
+
+```{r}
+# ajustando a função de detecção uniforme para um truncamento de 10% dos dados
+cutias_distance_unif_year <- cutias_year_distance |>
+  dplyr::filter(year != 2014) |> 
+  dplyr::mutate(Region.Label = year) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "unif",
+    truncamento = "10%")
+```
+
+###### Half-Normal sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_distance_hn_year <- cutias_year_distance |> 
+  dplyr::filter(year != 2014) |> 
+  dplyr::mutate(Region.Label = year) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    truncamento = "10%")
+```
+
+###### Hazard-rate sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
+
+```{r}
+# ajustando a função de detecção hazard-rate para um truncamento de 10% dos dados
+cutias_distance_hr_year <- cutias_year_distance |> 
+  dplyr::filter(year != 2014) |> 
+  dplyr::mutate(Region.Label = year) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hr",
+    truncamento = "10%")
+```
+
+##### Comparando os modelos
+
+###### Tabela com o resumo comparativo dos modelos
+
+```{r}
+melhor_modelo_cutias_year <- selecionar_funcao_deteccao_termo_ajuste(
+  cutias_distance_unif_year$Cosseno,
+  cutias_distance_unif_year$`Polinomial simples`,
+  cutias_distance_hn_year$`Sem termo`,
+  cutias_distance_hn_year$Cosseno,
+  cutias_distance_hn_year$`Hermite polinomial`,
+  cutias_distance_hr_year$`Sem termo`,
+  cutias_distance_hr_year$Cosseno,
+  cutias_distance_hr_year$`Polinomial simples`
+)
+
+melhor_modelo_cutias_year
+```
+
+###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
+
+```{r}
+modelos_cutias_year <- gerar_lista_modelos_selecionados(
+  cutias_distance_hn_year$Cosseno,
+  cutias_distance_hr_year$`Sem termo`,
+  cutias_distance_unif_year$Cosseno,
+  cutias_distance_unif_year$`Polinomial simples`,
+  cutias_distance_hn_year$`Sem termo`,
+  nome_modelos_selecionados = melhor_modelo_cutias_year
+)
+
+plotar_funcao_deteccao_modelos_selecionados(modelos_cutias_year)
+```
+
+###### Teste de bondade de ajuste dos modelos e Q-Q plots
+
+```{r}
+#criar uma lista com os modelos selecionados, na ordem de seleção
+testar_bondade_ajuste(
+  modelos_cutias_year,
+  plot = TRUE,
+  chisq = FALSE,
+)
+  
+```
+
+Aqui são gerados Q-Q plots que permitem avaliar a qualidade do ajuste
+dos modelos. E também uma tabela com os resultados do Carmér-von Mises,
+onde W é o valor do teste e p seu valor de significância. Nesse caso,
+quanto maior o valor de p, melhor o ajuste do modelo.
+
+##### Avaliando as estimativas de Abundância e Densidade
+
+Aqui, são resumidos os dados de taxa de encontro, abundância e densidade
+em três tabelas.
+
+###### **Área coberta pela Amostragem**
+
+```{r}
+gerar_resultados_Distance(
+  dados = modelos_cutias_year,
+  resultado_selecao_modelos = melhor_modelo_cutias_year,
+  tipo_de_resultado = "area_estudo", 
+  estratificacao = TRUE
+)
+```
+
+###### **Ábundância**
+
+```{r}
+resultado_abundancia <- 
+gerar_resultados_Distance(
+  dados = modelos_cutias_year,
+  resultado_selecao_modelos = melhor_modelo_cutias_year,
+  tipo_de_resultado = "abundancia", 
+  estratificacao = TRUE
+)
+
+resultado_abundancia
+```
+
+```{r}
+resultado_abundancia |>
+  dplyr::mutate(ano = as.integer(Regiao)) |> 
+  dplyr::group_by(ano) |> 
+  dplyr::summarise(n = sum(`Abundancia estimada`)) |> 
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = ano,
+    y = n
+  ) + 
+  ggplot2::geom_line() +
+  ggplot2::theme_minimal()
+```
+
+###### **Densidade**
+
+```{r}
+resultados_densidade <- 
+gerar_resultados_Distance(
+  dados = modelos_cutias_year,
+  resultado_selecao_modelos = melhor_modelo_cutias_year,
+  tipo_de_resultado = "densidade", 
+  estratificacao = TRUE
+)
+
+resultados_densidade
+```
+
+```{r}
+resultados_densidade |>
+  dplyr::filter(Rotulo != "Total") |> 
+  dplyr::mutate(ano = as.integer(Rotulo)) |> 
+  ggplot2::ggplot() +
+  ggplot2::aes(
+    x = ano,
+    y = `Estimativa de densidade`
+  ) + 
+  ggplot2::geom_line() +
+  ggplot2::facet_wrap(facets = ggplot2::vars(Modelo)) +
+  ggplot2::theme_minimal()
+```
+
+##### Ajustando modelos para cada estrato temporal (ano)
+
+###### Half-Normal
+
+####### **Dados Globais**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_distance_year_hn <- cutias_year_distance |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **2015**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2015_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2015) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **2016**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2016_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2016) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+
+####### **2017**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2017_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2017) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **2018**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2018_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2018) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+```
+
+####### **2019**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2019_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2019) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+
+```
+
+####### **2020**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2020_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2020) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+
+```
+
+####### **2021**
+
+```{r}
+# ajustando a função de detecção half-normal para um truncamento de 10% dos dados
+cutias_2021_distance_hn <- cutias_year_distance |> 
+  dplyr::filter(year == 2021) |> 
+  ajustar_modelos_Distance(
+    funcao_chave = "hn",
+    termos_ajuste = "cos",
+    truncamento = "10%")
+
+```
+
+##### Comparando os modelos
+
+###### Tabela com o resumo comparativo dos modelos
+
+```{r}
+modelo_cutias_estrat_year <- comparar_aic_modelo_estratificado(
+  cutias_distance_year_hn,
+  cutias_2015_distance_hn,
+  cutias_2016_distance_hn,
+  cutias_2017_distance_hn,
+  cutias_2018_distance_hn, 
+  cutias_2019_distance_hn, 
+  cutias_2020_distance_hn, 
+  cutias_2021_distance_hn, 
+  nome_modelos = c(
+ "Global",
+ "2015",
+ "2016",
+ "2017",
+ "2018",
+ "2019",
+ "2020",
+ "2021"
+  )
+)
+
+
+modelo_cutias_estrat_year
+```
+
+###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
+
+```{r, eval=FALSE}
+modelos_cutias_estrat <- gerar_lista_modelos_selecionados(
+  cutias_distance_year_hn,
+  cutias_2015_distance_hn,
+  cutias_2016_distance_hn,
+  cutias_2017_distance_hn,
+  cutias_2018_distance_hn,
+  cutias_2019_distance_hn,
+  cutias_2020_distance_hn,
+  cutias_2021_distance_hn,
+  nome_modelos_selecionados = modelo_cutias_estrat
+)
+
+plotar_funcao_deteccao_modelos_selecionados(modelos_cutias_estrat)
+```
 
