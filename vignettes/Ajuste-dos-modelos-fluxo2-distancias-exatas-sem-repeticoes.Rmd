@@ -1,5 +1,5 @@
 ---
-title: "Ajuste dos modelos fluxo2 distâncias exatas sem repetições"
+title: "Ajuste dos modelos: Fluxo2 - distâncias exatas sem repetições"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes}
