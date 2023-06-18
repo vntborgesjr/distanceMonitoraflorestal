@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>", 
+  eval = FALSE
 )
 ```
 
@@ -18,15 +19,15 @@ knitr::opts_chunk$set(
 library(distanceMonitoraflorestal)
 ```
 
-### Fluxo 5 - Amostragem por distância com estratificação por Unidade de Conservação
+# Fluxo 5 - Amostragem por distância com estratificação por Unidade de Conservação
 
 A estratificação dos dados a partir do pacote Distance para o R só é possível através da variável `Region.Label`. Assim, apresentamos um fluxo de estratificação utilizando ainda os dados da cutia, *Dasyprocta croconota*, para mais de uma unidade de conservação. 
 
-#### Explorando os dados dentro de cada estrato espacial:
+## Explorando os dados dentro de cada estrato espacial:
 
 Na PARTE IV - Explorando e selecionando os dados para as análises, filtramos os dados de *Dasyprocta croconota*. A espécie foi observada em quatro Unidades de Conservação, com os respectivos números de ocorrência: Resex Tapajós-Arapiuns (n = 1395), Parna da Serra do Pardo (n = 257), Esec da Terra do Meio (n = 235), e Resex Riozinho do Anfrísio (n = 225). Em todas as UCs o número de observações é alto, de modo que incluímos todas as UCs na análise de dados. 
 
-### Carregar Dados
+## Carregar Dados
 
 ```{r}
 # filtrar dados das cutias para as quatro UCS onde ocorre:
@@ -49,8 +50,9 @@ cutias_distance
 ```
 
 
-##### Plotando o histograma das frequências de ocorrência pela distância
-###### Dados Globais
+### Plotando o histograma das frequências de ocorrência pela distância
+
+#### Dados Globais
 
 Plotando o histograma para os dados globais.
 
@@ -60,11 +62,11 @@ cutias_distance |>
 plotar_distribuicao_distancia_interativo(largura_caixa = 1)
 ```
 
-###### Por Estrato
+##### Por Estrato
 
 Plotando o histograma para cada uma das UCS
 
-####### **Resex Tapajós-Arapiuns**
+###### **Resex Tapajós-Arapiuns**
 
 ```{r}
 cutias_tap_distance <- filtrar_dados(
@@ -79,7 +81,7 @@ cutias_tap_distance |>
   plotar_distribuicao_distancia_interativo(largura_caixa = 1)
 ```
 
-####### **Parna Serra do Pardo**
+###### **Parna Serra do Pardo**
 
 ```{r}
 cutias_par_distance <- filtrar_dados(
@@ -93,7 +95,7 @@ cutias_par_distance |>
   plotar_distribuicao_distancia_interativo(largura_caixa = 1)
 ```
 
-####### **Esec da Terra do Meio**
+###### **Esec da Terra do Meio**
 
 ```{r}
 cutias_ter_distance <- filtrar_dados(
@@ -108,7 +110,7 @@ cutias_ter_distance |>
   plotar_distribuicao_distancia_interativo(largura_caixa = 1)
 ```
 
-####### **Resex Riozinho do Anfrísio**
+###### **Resex Riozinho do Anfrísio**
 
 ```{r}
 cutias_anf_distance <- filtrar_dados(
@@ -122,11 +124,11 @@ cutias_anf_distance |>
   plotar_distribuicao_distancia_interativo(largura_caixa = 1)
 ```
 
-##### Ajustando diferentes modelos para dados Globais
+## Ajustando diferentes modelos para dados Globais
 
 Para ajustar os modelos aos dados globais e estratificados, mantivemos a mesma distância de truncamento para os dados das cutias na Resex Tapajós-Arapiuns, de 10%, uma vez que a distrbuição dos dados é semelhante tanto nos dados globais como nas UCs analisadas.
 
-###### Uniforme com termos de ajuste Cosseno e polinomial simples
+### Uniforme com termos de ajuste Cosseno e polinomial simples
 
 ```{r}
 # ajustando a função de detecção uniforme para um truncamento de 10% dos dados
@@ -136,7 +138,7 @@ cutias_distance_unif <- cutias_distance |>
     truncamento = "10%")
 ```
 
-###### Half-Normal sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
+### Half-Normal sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -146,7 +148,7 @@ cutias_distance_hn <- cutias_distance |>
     truncamento = "10%")
 ```
 
-###### Hazard-rate sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
+### Hazard-rate sem termos de ajuste e com termos de ajuste Cosseno e Polinomial de Hermite
 
 ```{r}
 # ajustando a função de detecção hazard-rate para um truncamento de 10% dos dados
@@ -156,9 +158,9 @@ cutias_distance_hr <- cutias_distance |>
     truncamento = "10%")
 ```
 
-##### Comparando os modelos
+## Comparando os modelos
 
-###### Tabela com o resumo comparativo dos modelos
+### Tabela com o resumo comparativo dos modelos
 
 ```{r}
 melhor_modelo_cutias <- selecionar_funcao_deteccao_termo_ajuste(
@@ -175,7 +177,7 @@ melhor_modelo_cutias <- selecionar_funcao_deteccao_termo_ajuste(
 melhor_modelo_cutias
 ```
 
-###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
+### Gráficos de ajuste das funções de deteção às probabilidades de deteção
 
 ```{r}
 modelos_cutias <- gerar_lista_modelos_selecionados(
@@ -190,7 +192,7 @@ modelos_cutias <- gerar_lista_modelos_selecionados(
 plotar_funcao_deteccao_modelos_selecionados(modelos_cutias)
 ```
 
-###### Teste de bondade de ajuste dos modelos e Q-Q plots
+### Teste de bondade de ajuste dos modelos e Q-Q plots
 
 ```{r}
 #criar uma lista com os modelos selecionados, na ordem de seleção
@@ -207,12 +209,12 @@ dos modelos. E também uma tabela com os resultados do Carmér-von Mises,
 onde W é o valor do teste e p seu valor de significância. Nesse caso,
 quanto maior o valor de p, melhor o ajuste do modelo.
 
-##### Avaliando as estimativas de Abundância e Densidade
+## Avaliando as estimativas de Abundância e Densidade
 
 Aqui, são resumidos os dados de taxa de encontro, abundância e densidade
 em três tabelas.
 
-###### **Área coberta pela Amostragem**
+### **Área coberta pela Amostragem**
 
 ```{r}
 gerar_resultados_Distance(
@@ -223,7 +225,7 @@ gerar_resultados_Distance(
 )
 ```
 
-###### **Ábundância**
+### **Ábundância**
 
 ```{r}
 
@@ -236,7 +238,7 @@ gerar_resultados_Distance(
 
 ```
 
-###### **Densidade**
+### **Densidade**
 
 ```{r}
 
@@ -249,7 +251,7 @@ gerar_resultados_Distance(
 
 ```
 
-##### Ajustando modelos para cada estrato espacial (Unidade de Conservação)
+## Ajustando modelos para cada estrato espacial (Unidade de Conservação)
 
 A redução no tamanho amostral geralmente faz com que os modelos para os dados globais tenham um ajuste melhor que os modelos ajustados aos estratos. Entretanto, para os dados do Monitora, considerando alguns ruídos amostrais sobre a distribuição dos dados, o excesso de repetições, resultados melhores de ajuste têm sido obtidos para conjutnos de dados menores.
 
@@ -260,9 +262,9 @@ Um critério para avaliar se o ajuste das funções para os dados estratificados
 Assim, escolhemos um dos modelos testados anteriormente para os dados globais, que foi o Half-normal. Escolhemos o segundo melhor modelo porque consideramos que o ajuste do Hazard-rate, apesar de apresentar os melhores valores de AIC e teste de ajuste de bondade, foi sensível ao pico de observações próximo a zero, substimando as estimativas de probabilidade de detecção. Assim, vamos comparar o AIC global para o modelo do tipo Half-normal com os AICs das funções ajustadas para os dados de cada Unidade de Conservação.
 
 
-###### Half-Normal
+### Half-Normal
 
-####### **Dados Globais**
+#### **Dados Globais**
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -273,7 +275,7 @@ cutias_distance_hn <- cutias_distance |>
     truncamento = "10%")
 ```
 
-####### **Resex Tapajós-Arapiuns**
+##### **Resex Tapajós-Arapiuns**
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -284,7 +286,7 @@ cutias_tap_distance_hn <- cutias_tap_distance |>
     truncamento = "10%")
 ```
 
-####### **Resex Tapajós-Arapiuns**
+##### **Resex Tapajós-Arapiuns**
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -295,8 +297,7 @@ cutias_tap_distance_hn <- cutias_tap_distance |>
     truncamento = "10%")
 ```
 
-
-####### **Parna Serra do Pardo**
+##### **Parna Serra do Pardo**
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -307,7 +308,7 @@ cutias_par_distance_hn <- cutias_par_distance |>
     truncamento = "10%")
 ```
 
-####### **Esec da Terra do Meio**
+##### **Esec da Terra do Meio**
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -318,7 +319,7 @@ cutias_ter_distance_hn <- cutias_ter_distance |>
     truncamento = "10%")
 ```
 
-####### **Resex Riozinho do Anfrísio**
+##### **Resex Riozinho do Anfrísio**
 
 ```{r}
 # ajustando a função de detecção half-normal para um truncamento de 10% dos dados
@@ -330,9 +331,9 @@ cutias_anf_distance_hn <- cutias_anf_distance |>
 ```
 
 
-##### Comparando os modelos
+### Comparando os modelos
 
-###### Tabela com o resumo comparativo dos modelos
+#### Tabela com o resumo comparativo dos modelos
 
 ```{r}
 modelo_cutias_estrat <- comparar_aic_modelo_estratificado(
@@ -354,7 +355,7 @@ modelo_cutias_estrat <- comparar_aic_modelo_estratificado(
 modelo_cutias_estrat
 ```
 
-###### Gráficos de ajuste das funções de deteção às probabilidades de deteção
+#### Gráficos de ajuste das funções de deteção às probabilidades de deteção
 
 ```{r, eval=FALSE}
 modelos_cutias_estrat <- gerar_lista_modelos_selecionados(
