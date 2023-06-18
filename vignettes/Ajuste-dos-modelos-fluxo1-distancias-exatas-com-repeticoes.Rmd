@@ -1,5 +1,5 @@
 ---
-title: "Ajuste dos modelos - Fluxo1: distâncias exatas com repetições"
+title: "Ajuste dos modelos: Fluxo1 - distâncias exatas com repetições"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes}
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 library(distanceMonitoraflorestal)
 ```
 
-## Fluxo de análise dos dados:
+## Fluxo de análise dos dados
 
 A seguir, apresentamos o fluxo de análise dos dados que envolve a fase
 exploratória, truncamento, ajuste e avaliação de modelos e estimativas
