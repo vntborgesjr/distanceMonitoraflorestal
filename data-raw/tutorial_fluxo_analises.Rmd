@@ -1868,11 +1868,12 @@ cutias_cov_distance_hn_size <- cutias_cov_distance |>
 cutias_cov_distance_hn_size
 ```
 
-##### HN + Tamanho do grupo (HN + S)
+##### HN + Tamanho do grupo + tempo decorrido desde o início das observações (HN + S + T)
 
 ```{r}
 # ajustando a função de detecção half-normal, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
 cutias_cov_distance_hn_size_time <- cutias_cov_distance |> 
+  tidyr::drop_na(cense_time) |> 
   ajustar_modelos_Distance(
     funcao_chave = "hn",
     truncamento = "10%",
@@ -1909,11 +1910,12 @@ cutias_cov_distance_hr_size <- cutias_cov_distance |>
 cutias_cov_distance_hr_size
 ```
 
-###### HZ + Tamanho do grupo (HZ + S)
+###### HZ + Tamanho do grupo + tempo decorrido desde o início das observações (HZ + S + T)
 
 ```{r}
 # ajustando a função de detecção hazard-rate, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
 cutias_cov_distance_hr_size_time <- cutias_cov_distance |> 
+  tidyr::drop_na(cense_time) |> 
   ajustar_modelos_Distance(
     funcao_chave = "hr",
     truncamento = "10%",
@@ -1957,10 +1959,10 @@ modelos_cutias_cov_distance <-
   gerar_lista_modelos_selecionados(
     cutias_cov_distance_hr_size_time,
     cutias_cov_distance_hn_size_time,
+    cutias_cov_distance_hr$`Sem termo`,
+    cutias_cov_distance_hr_size,
     cutias_cov_distance_hn$`Sem termo`,
     cutias_cov_distance_hn_size,
-    cutias_cov_distance_hr_size,
-    cutias_cov_distance_hr$`Sem termo`,
     nome_modelos_selecionados = cutias_cov_distance_melhor_modelo
   )
 
@@ -2003,7 +2005,10 @@ gerar_resultados_Distance(
 
 ```
 
-###### **Ábundância**
+```{r}
+```
+
+###### **Abundância**
 
 ```{r}
 
