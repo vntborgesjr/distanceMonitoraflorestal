@@ -32,10 +32,12 @@ Imports:
     Distance,
     dplyr,
     DT,
+    forcats,
     ggplot2,
     lubridate,
     plotly,
     purrr,
+    tibble,
     tidyr
 Depends: 
     R (>= 2.10)
