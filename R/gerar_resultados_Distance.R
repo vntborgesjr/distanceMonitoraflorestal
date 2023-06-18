@@ -119,11 +119,13 @@ gerar_resultados_Distance <- function(
         purrr::map(
           \(.x) .x$dht$individuals$summary[1:9]
         ) |>
-        purrr::list_rbind() |>
+        purrr::list_rbind()
+
+      resultados_Distance <- resultados_Distance |>
         dplyr::mutate(
           Modelo = rep(
             resultado_selecao_modelos$Model,
-            each = length(resultado_selecao_modelos$Model)
+            each = length(unique(resultados_Distance$Region))
           )
         ) |>
         dplyr::relocate(Modelo, .before = Region) |>
@@ -154,16 +156,16 @@ gerar_resultados_Distance <- function(
           `N de deteccoes` = n
         )
 
-      resultados_Distance <- resultados_Distance |>
-        dplyr::mutate(
-          Modelo = rep(
-            resultado_selecao_modelos$Model,
-            each = length(
-              resultados_Distance$`Estacao amostral`[1:18]
-            )
-          )
-        ) |> # pode ser um argumento da função
-        dplyr::relocate(Modelo, .before = Regiao)
+      # resultados_Distance <- resultados_Distance |>
+      #   dplyr::mutate(
+      #     Modelo = rep(
+      #       resultado_selecao_modelos$Model,
+      #       each = length(
+      #         resultados_Distance$`Estacao amostral`[1:18]
+      #       )
+      #     )
+      #   ) |> # pode ser um argumento da função
+      #   dplyr::relocate(Modelo, .before = Regiao)
 
     } else {
 
@@ -173,10 +175,12 @@ gerar_resultados_Distance <- function(
         purrr::map(
           \(.x) .x$dht$individuals$D
         ) |>
-        purrr::list_rbind() |>
+        purrr::list_rbind()
+
+      resultados_Distance <- resultados_Distance |>
         dplyr::mutate(Modelo = rep(
-          resultado_selecao_modelos$Model,
-          each = length(resultado_selecao_modelos$Model)
+          melhor_modelo_cutias$Model,
+          each = length(unique(resultados_Distance$Label))
         )
         ) |> # pode ser um argumento da função
         dplyr::relocate(Modelo, .before = Label) |>
@@ -312,6 +316,7 @@ utils::globalVariables(
     "Intervalo de confianca superior",
     "ucl",
     "Graus de liberdade",
-    "df"
+    "df",
+    "melhor_modelo_cutias"
   )
 )
