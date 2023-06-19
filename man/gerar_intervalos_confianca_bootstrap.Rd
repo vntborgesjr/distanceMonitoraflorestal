@@ -18,7 +18,7 @@ gerar_intervalos_confianca_bootstrap(
 \arguments{
 \item{dados}{recebe um conjunto de dados filtrados pela função
 \code{\link[=filtrar_dados]{filtrar_dados()}} e transformados pela função
-\code{\link[=transfomar_dados_formato_Distance]{transfomar_dados_formato_Distance()}}.}
+\code{\link[=transformar_dados_formato_Distance]{transformar_dados_formato_Distance()}}.}
 
 \item{funcao_chave}{recebe uma dentre três funções utilizadas para modelar a
 detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
@@ -67,6 +67,6 @@ são utilizados so termos de ajuste \code{"cos"} e \code{"poly"}.
 }
 \examples{
 \dontrun{
-
+gerar_intervalos_confianca_bootstrap()
 }
 }
