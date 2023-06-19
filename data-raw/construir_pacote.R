@@ -113,6 +113,10 @@
 # usethis::use_test("gerar_lista_modelos_selecionados.R")
 # testthat::test_file("tests/testthat/test-gerar_lista_modelos_selecionados.R")
 #
+# usethis::use_r("gerar_intervalos_confianca_bootstrap.R")
+# usethis::use_test("gerar_intervalos_confianca_bootstrap.R")
+# testthat::test_file("tests/testthat/test-gerar_intervalos_confianca_bootstrap.R")
+#
 # usethis::use_r("gerar_resultados_Distance.R")
 # usethis::use_test("gerar_resultados_Distance.R")
 # testthat::test_file("tests/testthat/test-gerar_resultados_Distance.R")
@@ -124,6 +128,10 @@
 # usethis::use_r("monitora_aves_masto_florestal.R")
 # usethis::use_test("monitora_aves_masto_florestal.R")
 # testthat::test_file("tests/testthat/test-monitora_aves_masto_florestal.R")
+#
+# usethis::use_r("plotar_distancia_covariavel.R")
+# usethis::use_test("plotar_distancia_covariavel.R")
+# testthat::test_file("tests/testthat/test-plotar_distancia_covariavel.R")
 #
 # usethis::use_r("plotar_distribuicao_distancia_interativo.R")
 # usethis::use_test("plotar_distribuicao_distancia_interativo.R")
@@ -272,3 +280,8 @@
 # Aspectos importantes para revisão final do texto do tutorial_fluxo_analises.Rmd
 # 1 - padronizar Unidade de Conservação ou UC
 # 2 - evitar estações amostrais com o mesmo nome
+
+# Melhorias nas funções ---------------------------------------------------
+# 1 - incluir uma coluna com as fórmulas na função gerar_resultados_Distance()
+# para análise de modelos com covariáveis
+# 2 - incluir uma opção para fazer bootstrap com múltiplos modelos
