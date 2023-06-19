@@ -18,7 +18,7 @@ ajustar_modelos_Distance(
 
 \item{funcao_chave}{recebe uma dentre três funções utilizadas para modelar a
 detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
-"unif" - Uniform}
+"unif" - Uniform.}
 
 \item{termos_ajuste}{recebe um dentre n termos de ajuste: \code{"cos"} - cosseno;
 \code{"herm"} - Hermet polynomial; e \code{"poly"} - Polinomial simples. Quando \code{NULL}
@@ -51,7 +51,7 @@ ajustados aos dados, a depender da função chave utilizada. Para
 \code{funcao_chave = "hn"}, são utilizados os termos de ajuste \code{NULL} (sem termos),
 \code{"cos"} e \code{"herm"}; para \code{funcao_chave = "hr"}, são utilizados os termos de
 ajuste \code{NULL} (sem termos), \code{"cos"} e \code{"poly"}; e para \code{funcao_chave  = "unif"},
-são utilizados so termos de ajuste \code{"cos"} e \code{"poly"}
+são utilizados so termos de ajuste \code{"cos"} e \code{"poly"}.
 }
 \examples{
 \dontrun{
