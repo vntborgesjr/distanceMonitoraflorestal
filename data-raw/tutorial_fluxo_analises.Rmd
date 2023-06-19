@@ -735,19 +735,60 @@ gerar_tabdin(n_obs_sp_uc_estacao_ano)
 
 #### Número de UCs para cada espécie
 
+```{r}
+dados <- filtrar_dados(validacao_obs = "especie")
+dados |> 
+  dplyr::group_by(nomes_sp) |> 
+  count(nomes_uc)
+```
+
 #### Número de réplicas (estações amostrais) para cada espécie
+
+```{r}
+dados |> 
+  dplyr::group_by(nomes_sp) |> 
+  count(nome_ea)
+```
 
 #### Número de réplicas (estações amostrais) para cada espécie por UC
 
+```{r}
+dados |> 
+  dplyr::group_by(nomes_uc) |> 
+  count(nome_ea)
+```
+
 ####Número de repetições por estação amostral para cada espécie
 
-####Número de repetições por estação amostral por UC para cada espécie
+```{r}
+dados |> 
+  dplyr::group_by(nomes_sp) |> 
+  count(nome_ea, data_amostragem)
+```
 
 ####Número de repetições por estação amostral por UC para cada espécie
-por ano
 
-####Número de repetições por estação amostral por UC para cada espécie
-por períod amostral (estações do ano/ano)
+```{r}
+dados |> 
+  dplyr::group_by(nomes_sp) |> 
+  count(data_amostragem, nome_ea, nome_uc)
+```
+
+####Número de repetições por estação amostral por UC para cada espécie por ano
+
+```{r}
+dados |> 
+  dplyr::group_by(nomes_sp) |> 
+  count(data_amostragem, nome_ea, nome_uc, ano)
+```
+
+####Número de repetições por estação amostral por UC para cada espécie por períod amostral (estações do ano/ano)
+
+```{r}
+dados |> 
+  dplyr::group_by(nomes_sp) |> 
+  count(data_amostragem, nome_ea, nome_uc, estacao)
+```
 
 ## **Distribuição das frequências de observações pela distância**
 
@@ -806,10 +847,21 @@ dos dados. É importante avaliar como fatores ambientais ou amostrais
 podem influenciar de forma significativa a detectabilidade dos animais.
 Para avaliar esse possível efeito, é necessário olhar a distribuição das
 covariáveis em relação à distância. Se houver viés das covariáveis em
-relação á distância, é possível que estejam influenciando na
+relação a distância, é possível que estejam influenciando na
 detectabilidade também. Por exemplo, se a atividade de um animal é
 influenciada pelo horário, é possível que ele seja detectado com maior
-frequência em distãncias maiores no seu horário de maior atividade.
+frequência em distâncias maiores no seu horário de maior atividade.
+
+```{r}
+dados_filtrados |> 
+  plotar_distancia_covariavel(
+    x = distancia,
+    y = -tempo_censo,
+    xlab = "Distância (m)",
+    ylab = "Tempo de censo (min)"
+  )
+```
+
 
 Para os dados do Programa Monitora, uma das principais covariáveis a ser
 considerada é o tamanho do grupo (s, que deve ser chamada de size para o
@@ -817,6 +869,16 @@ pacote Distance). Um dos efeitos esperados para espécies que formam
 grupos é o chamado viés de tamanho. A tendência é que a pequenas
 distâncias todos os grupos sejam detectáveis, mas somente os grupos
 maiores serão detectados a distâncias maiores.
+
+```{r}
+dados_filtrados |> 
+  plotar_distancia_covariavel(
+    x = distancia,
+    y = tamanho_grupo,
+    xlab = "Distância (m)",
+    ylab = "Tamanho do grupo"
+  )
+```
 
 # **PARTE IV -- Ajustando os modelos**
 
@@ -1828,6 +1890,7 @@ cutias_cov_distance
 
 ```{r}
 cutias_cov_distance |> 
+  tidyr::drop_na() |> 
 plotar_distribuicao_distancia_interativo(largura_caixa = 1)
 
 ```
@@ -1870,10 +1933,12 @@ cutias_cov_distance_hn_size
 
 ##### HN + Tamanho do grupo + tempo decorrido desde o início das observações (HN + S + T)
 
+É muito importante eliminar as observações ausentes (`NA`s) antes de ajustar os modelos com covariáveis caso contrário, o modelo não será ajustado.
+
 ```{r}
 # ajustando a função de detecção half-normal, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
 cutias_cov_distance_hn_size_time <- cutias_cov_distance |> 
-  tidyr::drop_na(cense_time) |> 
+  tidyr::drop_na(cense_time) |> # essa linha de comando elimina os NAs
   ajustar_modelos_Distance(
     funcao_chave = "hn",
     truncamento = "10%",
@@ -1912,10 +1977,12 @@ cutias_cov_distance_hr_size
 
 ###### HZ + Tamanho do grupo + tempo decorrido desde o início das observações (HZ + S + T)
 
+É muito importante eliminar as observações ausentes (`NA`s) antes de ajustar os modelos com covariáveis caso contrário, o modelo não será ajustado.
+
 ```{r}
 # ajustando a função de detecção hazard-rate, com tamanho do grupo como covariável, para um truncamento de 10% dos dados
 cutias_cov_distance_hr_size_time <- cutias_cov_distance |> 
-  tidyr::drop_na(cense_time) |> 
+  tidyr::drop_na(cense_time) |> # essa linha de comando elimina os NAs
   ajustar_modelos_Distance(
     funcao_chave = "hr",
     truncamento = "10%",
@@ -2005,9 +2072,6 @@ gerar_resultados_Distance(
 
 ```
 
-```{r}
-```
-
 ###### **Abundância**
 
 ```{r}
@@ -2030,6 +2094,35 @@ gerar_resultados_Distance(
   tipo_de_resultado = "densidade"
   )
 
+```
+
+```{r}
+cutias_cov <- filtrar_dados(
+  nome_ucs = "resex_tapajos_arapiuns", 
+  nome_sps = "dasyprocta_croconota",
+  validacao_obs = "especie"
+)
+
+cutias_cov_distance <- transformar_dados_formato_Distance(
+  cutias_cov,
+  amostras_repetidas = FALSE)
+# eliminar NAs dos dados
+cutias_cov_distance <- cutias_cov_distance |> 
+  tidyr::drop_na(cense_time)
+
+resultados_bootstrap <- gerar_intervalos_confianca_bootstrap(
+  dados = cutias_cov_distance,
+  funcao_chave = "hr", 
+  termos_ajuste = NULL,
+  truncamento = "10%",
+  formula = ~ size + cense_time, 
+  funcao_sumario = "densidade", 
+  nboot = 300,
+  nucleos = 7
+)
+
+resultados_bootstrap$intervalo_confianca
+resultados_bootstrap$histograma
 ```
 
 ### Fluxo 5 - Amostragem por distância com estratificação por Unidade de Conservação
