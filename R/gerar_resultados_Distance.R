@@ -179,7 +179,7 @@ gerar_resultados_Distance <- function(
 
       resultados_Distance <- resultados_Distance |>
         dplyr::mutate(Modelo = rep(
-          melhor_modelo_cutias$Model,
+          resultado_selecao_modelos$Model,
           each = length(unique(resultados_Distance$Label))
         )
         ) |> # pode ser um argumento da função
@@ -206,8 +206,15 @@ gerar_resultados_Distance <- function(
         purrr::map(
           \(.x) .x$dht$individuals$summary[1:9]
         ) |>
-        purrr::list_rbind() |>
-        dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |>
+        purrr::list_rbind()
+
+      resultados_Distance <- resultados_Distance |>
+        dplyr::mutate(
+          Modelo = rep(
+            resultado_selecao_modelos$Model,
+            each = length(unique(resultados_Distance$Region))
+          )
+        ) |>
         dplyr::relocate(Modelo, .before = Region) |>
         dplyr::rename(
           Regiao = Region,
@@ -254,8 +261,14 @@ gerar_resultados_Distance <- function(
         purrr::map(
           \(.x) .x$dht$individuals$D
         ) |>
-        purrr::list_rbind() |>
-        dplyr::mutate(Modelo = resultado_selecao_modelos$Model) |> # pode ser um argumento da função
+        purrr::list_rbind()
+
+      resultados_Distance <- resultados_Distance |>
+        dplyr::mutate(Modelo = rep(
+          resultado_selecao_modelos$Model,
+          each = length(unique(resultados_Distance$Label))
+        )
+        ) |> # pode ser um argumento da função
         dplyr::relocate(Modelo, .before = Label) |>
         dplyr::rename(
           Rotulo = Label,
@@ -316,7 +329,6 @@ utils::globalVariables(
     "Intervalo de confianca superior",
     "ucl",
     "Graus de liberdade",
-    "df",
-    "melhor_modelo_cutias"
+    "df"
   )
 )
