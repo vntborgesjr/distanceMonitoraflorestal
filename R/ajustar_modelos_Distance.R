@@ -17,7 +17,7 @@
 #' [transformar_dados_formato_Distance()].
 #' @param funcao_chave recebe uma dentre três funções utilizadas para modelar a
 #' detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
-#' "unif" - Uniform
+#' "unif" - Uniform.
 #' @param termos_ajuste recebe um dentre n termos de ajuste: `"cos"` - cosseno;
 #' `"herm"` - Hermet polynomial; e `"poly"` - Polinomial simples. Quando `NULL`
 #' diferentes modelos são ajustados para função chave escolhida utilizando
@@ -39,7 +39,7 @@
 #' `funcao_chave = "hn"`, são utilizados os termos de ajuste `NULL` (sem termos),
 #'  `"cos"` e `"herm"`; para `funcao_chave = "hr"`, são utilizados os termos de
 #'  ajuste `NULL` (sem termos), `"cos"` e `"poly"`; e para `funcao_chave  = "unif"`,
-#'  são utilizados so termos de ajuste `"cos"` e `"poly"`
+#'  são utilizados so termos de ajuste `"cos"` e `"poly"`.
 #'
 #' @return Retorna uma lista contendo a estimativa de abundância para região
 #' estudada
