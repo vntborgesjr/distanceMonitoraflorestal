@@ -6,7 +6,7 @@
 #'
 #' @param dados recebe um conjunto de dados filtrados pela função
 #' [filtrar_dados()] e transformados pela função
-#'  [transfomar_dados_formato_Distance()].
+#'  [transformar_dados_formato_Distance()].
 #' @param funcao_chave recebe uma dentre três funções utilizadas para modelar a
 #' detectabilidade da espécie: "hn" - Half-normal; "hr" - Hazard-rate; e
 #' "unif" - Uniform.
@@ -44,7 +44,7 @@
 #' @export
 #'
 #' @examples \dontrun{
-#'
+#' gerar_intervalos_confianca_bootstrap()
 #' }
 gerar_intervalos_confianca_bootstrap <- function(
     dados,
@@ -99,7 +99,7 @@ gerar_intervalos_confianca_bootstrap <- function(
 
   # nível de significância
   alpha <- 0.05
-  bootci <- quantile(
+  bootci <- stats::quantile(
     est.boot$Dhat,
     probs = c(alpha/2, 1-alpha/2),
     na.rm = TRUE
