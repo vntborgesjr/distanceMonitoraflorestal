@@ -154,18 +154,24 @@ gerar_resultados_Distance <- function(
           Esforco = Effort.x,
           `Abundancia estimada` = Nhat,
           `N de deteccoes` = n
+        ) |>
+        tidyr::unite(
+          `UC - Estacao amostral`,
+          Regiao,
+          `Estacao amostral`,
+          sep = " - "
         )
 
-      # resultados_Distance <- resultados_Distance |>
-      #   dplyr::mutate(
-      #     Modelo = rep(
-      #       resultado_selecao_modelos$Model,
-      #       each = length(
-      #         resultados_Distance$`Estacao amostral`[1:18]
-      #       )
-      #     )
-      #   ) |> # pode ser um argumento da função
-      #   dplyr::relocate(Modelo, .before = Regiao)
+      resultados_Distance <- resultados_Distance |>
+        dplyr::mutate(
+          Modelo = rep(
+            resultado_selecao_modelos$Model,
+            each = length(
+              unique(resultados_Distance$`UC - Estacao amostral`)
+            )
+          )
+        ) |> # pode ser um argumento da função
+        dplyr::relocate(Modelo, .before = `UC - Estacao amostral`)
 
     } else {
 
