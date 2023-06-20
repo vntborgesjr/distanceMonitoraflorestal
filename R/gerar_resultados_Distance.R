@@ -241,6 +241,12 @@ gerar_resultados_Distance <- function(
           Esforco = Effort.x,
           `Abundancia estimada` = Nhat,
           `N de deteccoes` = n
+        ) |>
+        tidyr::unite(
+          `UC - Estacao amostral`,
+          Regiao,
+          `Estacao amostral`,
+          sep = " - "
         )
 
       resultados_Distance <- resultados_Distance |>
@@ -248,11 +254,11 @@ gerar_resultados_Distance <- function(
           Modelo = rep(
             resultado_selecao_modelos$Model,
             each = length(
-              unique(resultados_Distance$`Estacao amostral`)
+              unique(resultados_Distance$`UC - Estacao amostral`)
             )
           )
         ) |>
-        dplyr::relocate(Modelo, .before = Regiao)
+        dplyr::relocate(Modelo, .before = `UC - Estacao amostral`)
 
     } else {
 
