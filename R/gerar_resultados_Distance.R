@@ -200,7 +200,9 @@ gerar_resultados_Distance <- function(
           `Graus de liberdade` = df
         ) |>
         dplyr::mutate(
-          `Estimativa de densidade (ind/ha)` = `Estimativa de densidade`*10000
+          `Estimativa de densidade (ind/ha)` = `Estimativa de densidade`*10000,
+          `Intervalo de confianca inferior` = `Intervalo de confianca inferior`*10000,
+          `Intervalo de confianca superior` = `Intervalo de confianca superior`*10000
         ) |>
         dplyr::relocate(
           `Estimativa de densidade (ind/ha)`,
@@ -300,7 +302,9 @@ gerar_resultados_Distance <- function(
           `Graus de liberdade` = df
         ) |>
         dplyr::mutate(
-          `Estimativa de densidade (ind/ha)` = `Estimativa de densidade`*10000
+          `Estimativa de densidade (ind/ha)` = `Estimativa de densidade`*10000,
+          `Intervalo de confianca inferior` = `Intervalo de confianca inferior`*10000,
+          `Intervalo de confianca superior` = `Intervalo de confianca superior`*10000
         ) |>
         dplyr::relocate(
           `Estimativa de densidade (ind/ha)`,
