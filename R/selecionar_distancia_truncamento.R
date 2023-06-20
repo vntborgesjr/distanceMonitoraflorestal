@@ -77,7 +77,9 @@ selecionar_distancia_truncamento <- function(
   tabela_selecao_dist_truncamento <- tabela_selecao_dist_truncamento |>
     dplyr::left_join(aic, dplyr::join_by(`AIC`)) |>
     dplyr::mutate(Model = dist_truncamento) |>
-    dplyr::select(!df:dist_truncamento)
+    dplyr::select(!df:dist_truncamento) |>
+    dplyr::arrange(AIC) |>
+    dplyr::select(1:7)
 
   # retorna um data.frame com a selecao da melhor distancia de truncamento
   return(list(
