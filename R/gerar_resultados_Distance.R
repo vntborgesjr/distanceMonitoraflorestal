@@ -198,7 +198,15 @@ gerar_resultados_Distance <- function(
           `Intervalo de confianca inferior` = lcl,
           `Intervalo de confianca superior` = ucl,
           `Graus de liberdade` = df
-        )
+        ) |>
+        dplyr::mutate(
+          `Estimativa de densidade (ind/ha)` = `Estimativa de densidade`*10000
+        ) |>
+        dplyr::relocate(
+          `Estimativa de densidade (ind/ha)`,
+          .before = `Erro padrao`
+        ) |>
+        dplyr::select(!`Estimativa de densidade`)
 
     }
 
@@ -290,7 +298,15 @@ gerar_resultados_Distance <- function(
           `Intervalo de confianca inferior` = lcl,
           `Intervalo de confianca superior` = ucl,
           `Graus de liberdade` = df
-        )
+        ) |>
+        dplyr::mutate(
+          `Estimativa de densidade (ind/ha)` = `Estimativa de densidade`*10000
+        ) |>
+        dplyr::relocate(
+          `Estimativa de densidade (ind/ha)`,
+          .before = `Erro padrao`
+        ) |>
+        dplyr::select(!`Estimativa de densidade`)
 
     }
 
@@ -331,6 +347,7 @@ utils::globalVariables(
     "n",
     "Rotulo",
     "Estimativa de densidade",
+    "Estimativa de densidade (ind/ha)",
     "Estimate",
     "Erro padrao",
     "se",
