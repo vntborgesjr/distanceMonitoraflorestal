@@ -93,7 +93,7 @@ filtrar_dados <- function(
   if (is.null(nome_ucs) & is.null(nome_sps)) {
 
     # gerar o tibble filtrado por UC e especie e nivel taxonomico de validacao
-    dados_filtrados <- monitora_aves_masto_florestal |>
+    dados_filtrados <- dados |>
       dplyr::filter(
         validacao %in% validacao_obs
       )
@@ -101,7 +101,7 @@ filtrar_dados <- function(
   } else if (!is.null(nome_ucs) & !is.null(nome_sps)) {
 
     # gerar o tibble filtrado por UC e especie e nivel taxonomico de validacao
-    dados_filtrados <- monitora_aves_masto_florestal |>
+    dados_filtrados <- dados |>
       dplyr::filter(
         nome_uc %in% nome_ucs,
         nome_sp %in% nome_sps,
@@ -111,7 +111,7 @@ filtrar_dados <- function(
   } else  if (is.null(nome_ucs)) {
 
     # gerar o tibble filtrado por especie e nivel taxonomico de validacao
-    dados_filtrados <- monitora_aves_masto_florestal |>
+    dados_filtrados <- dados |>
       dplyr::filter(
         nome_sp %in% nome_sps,
         validacao %in% validacao_obs
@@ -120,7 +120,7 @@ filtrar_dados <- function(
   } else if (is.null(nome_sps)) {
 
     # gerar o tibble filtrado por UC e nivel taxonomico de validacao
-    dados_filtrados <- monitora_aves_masto_florestal |>
+    dados_filtrados <- dados |>
       dplyr::filter(
         nome_uc %in% nome_ucs,
         validacao %in% validacao_obs
