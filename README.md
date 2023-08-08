@@ -13,14 +13,15 @@ Você pode instalar a versão de desenvolvimento do distanceMonitoraflorestal ut
 
 ``` r
 devtools::install_github("vntborgesjr/distanceMonitoraflorestal")
+
+library(distanceMonitoraflorestal)
 ```
 
-## Exemplo
+## Exemplos
 
-Esse é um exemplo basico de como você pode visualizar a distribuição de distâncias da espécie com o maior número de observações na base de dados, *Dasypoctra croconota* na Resex Tapajós-Arapiuns.
+Exemplos de como utilizar o pacote contendo todas as etapas de análise (carregamento, transformação, exploração e análise dos dados) são fonecidos nos vignettes. Para acessá-los utilize:
 
 ``` r
-library(distanceMonitoraflorestal)
-plotar_distribuicao_distancia_estatico()
+vignette("distanceMonitoraflorestal")
 ```
 
