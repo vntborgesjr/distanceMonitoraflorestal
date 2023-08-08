@@ -1,8 +1,16 @@
 
 # Carregar pacotes necessarios --------------------------------------------
-
-# install.packages(c("devtools", "roxygen2","usethis", "testthat"))
-
+#
+# install.packages(
+#   c(
+#     "devtools",
+#     "roxygen2",
+#     "usethis",
+#     "testthat",
+#     "qpdf"
+#   )
+# )
+#
 # Carregar pacotes --------------------------------------------------------
 #library(devtools)
 #library(roxygen2)
