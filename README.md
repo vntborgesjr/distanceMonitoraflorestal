@@ -19,7 +19,7 @@ library(distanceMonitoraflorestal)
 
 ## Exemplos
 
-Exemplos de como utilizar o pacote contendo todas as etapas de análise (carregamento, transformação, exploração e análise dos dados) são fonecidos nos vignettes. Para acessá-los utilize:
+Exemplos de como utilizar o pacote contendo todas as etapas de análise (carregamento, transformação, exploração e análise dos dados) são fornecidos nos vignettes. Para acessá-los utilize:
 
 ``` r
 vignette("distanceMonitoraflorestal")
