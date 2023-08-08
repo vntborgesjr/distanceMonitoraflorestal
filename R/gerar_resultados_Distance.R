@@ -362,6 +362,7 @@ utils::globalVariables(
     "Intervalo de confianca superior",
     "ucl",
     "Graus de liberdade",
-    "df"
+    "df",
+    "UC - Estacao amostral"
   )
 )
