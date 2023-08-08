@@ -7,7 +7,8 @@
 #     "roxygen2",
 #     "usethis",
 #     "testthat",
-#     "qpdf"
+#     "qpdf",
+#     "pkgdown"
 #   )
 # )
 #
@@ -203,11 +204,17 @@
 # usethis::edit_r_environ() # contem o último token de acesso ao github
 # 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
 # usethis::use_github() # cria um novo repositório no github
-
+#
 # Criar documentação ------------------------------------------------------
-
+#
 # devtools::document()
-
+#
+#
+# Criar domcumentação online ----------------------------------------------
+#
+# usethis::use_pkgdown()
+# pkgdown::build_site()
+#
 # criar testes individuais de cada funcao ---------------------------------
 # rodar na primeira vez ou sempre que inserir uma nova funcao
 # minhas_funcoes <- c(

@@ -25,18 +25,4 @@ Exemplos de como utilizar o pacote contendo todas as etapas de análise (carrega
 vignette("distanceMonitoraflorestal")
 ```
 
-- [Carregando-uma-base-de-dados-atualizada](doc/Carregando-uma-base-de-dados-atualizada.html);
-
-- [Checagem-filtragem-e-transformacao-dos-dados](doc/Checagem-filtragem-e-transformacao-dos-dados.html);
-
-- [Ajuste-dos-modelos-dist-exatas-com-repeticao](doc/Ajuste-dos-modelos-dist-exatas-com-repeticao.html);
-
-- [Ajuste-dos-modelos-dist-exatas-sem-repeticao](doc/Ajuste-dos-modelos-dist-exatas-sem-repeticao.html);
-
-- [Ajuste-dos-modelos-dist-agrup-com-repeticoes](doc/Ajuste-dos-modelos-dist-agrup-com-repeticoes.html)
-
-- [Ajuste-dos-modelos-multiplas-covariaveis](doc/Ajuste-dos-modelos-multiplas-covariaveis.html);
-
-- [Ajuste-dos-modelos-dist-estratificada-por-uc](doc/Ajuste-dos-modelos-dist-estratificada-por-uc.html);
-
-- [Ajuste-dos-modelos-dist-estratificada-por-ano](doc/Ajuste-dos-modelos-dist-estratificada-por-ano.html)
+Ou acesse o índice de vignettes no link [Articles](), localizado na parte superior da página. Para consultar a documentação das funções, use o link [Reference](file:///home/vitor/Documentos/R-projects/piper3d/wwf/distanceMonitoraflorestal/docs/reference/index.html)
