@@ -25,4 +25,4 @@ Exemplos de como utilizar o pacote contendo todas as etapas de análise (carrega
 vignette("distanceMonitoraflorestal")
 ```
 
-Ou acesse o índice de vignettes no link [Articles](), localizado na parte superior da página. Para consultar a documentação das funções, use o link [Reference](file:///home/vitor/Documentos/R-projects/piper3d/wwf/distanceMonitoraflorestal/docs/reference/index.html)
+Ou acesse o índice de vignettes no link [Articles](file:///home/vitor/Documentos/R-projects/piper3d/wwf/distanceMonitoraflorestal/docs/articles/distanceMonitoraflorestal.html), localizado na parte superior da página. Para consultar a documentação das funções, use o link [Reference](file:///home/vitor/Documentos/R-projects/piper3d/wwf/distanceMonitoraflorestal/docs/reference/index.html)
