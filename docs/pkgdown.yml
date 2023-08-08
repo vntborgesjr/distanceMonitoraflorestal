@@ -1,0 +1,15 @@
+pandoc: 3.1.1
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  Ajuste-dos-modelos-dist-agrup-com-repeticoes: Ajuste-dos-modelos-dist-agrup-com-repeticoes.html
+  Ajuste-dos-modelos-dist-estratificada-por-ano: Ajuste-dos-modelos-dist-estratificada-por-ano.html
+  Ajuste-dos-modelos-dist-estratificada-por-uc: Ajuste-dos-modelos-dist-estratificada-por-uc.html
+  Ajuste-dos-modelos-dist-exatas-com-repeticao: Ajuste-dos-modelos-dist-exatas-com-repeticao.html
+  Ajuste-dos-modelos-dist-exatas-sem-repeticao: Ajuste-dos-modelos-dist-exatas-sem-repeticao.html
+  Ajuste-dos-modelos-multiplas-covariaveis: Ajuste-dos-modelos-multiplas-covariaveis.html
+  Carregando-uma-base-de-dados-atualizada: Carregando-uma-base-de-dados-atualizada.html
+  Checagem-filtragem-e-transformacao-dos-dados: Checagem-filtragem-e-transformacao-dos-dados.html
+  distanceMonitoraflorestal: distanceMonitoraflorestal.html
+last_built: 2023-08-08T21:05Z
+
