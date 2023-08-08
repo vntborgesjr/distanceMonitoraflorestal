@@ -19,12 +19,17 @@
 #'   \item{ano}{ano em que a observacao foi realizada}
 #'   \item{esforco_dia}{distancia total percorrida em metros em um dia da amostragem na Estacao Amostral equivalente}
 #'   \item{esforco_total}{distancia total percorrida em metros em todos os dias de amostragem na Estacao Amostral Equivalente}
-#'   \item{nome_sp}{nome do nivel taxonomico do individuo observado, ex. se o individuo foi identificado ao nivel de familia, corresponde a familia, se foi identificado ao nivel de genero, corresponde ao genero, se foi identificado ao nivel de especie, corresponde a especie}
+#'   \item{nome_classe}{nome da classe ao qual o individuo observado pertence}
+#'   \item{nome_ordem}{nome da ordem ao qual o individuo observado pertence}
+#'   \item{nome_familia}{nome do família ao qual o individuo observado pertence}
+#'   \item{nome_genero}{nome do gênero ao qual o individuo observado pertence}
+#'   \item{nome_sp}{nome do nivel taxonomico ao qual o individuo observado pertence, gênero sp. ou espécie}
 #'   \item{nome_sp_abv}{nome abreviado do nivel taxonomico do individuo observado, ex. se o individuo foi identificado ao nivel de familia, corresponde a familia, se foi identificado ao nivel de genero, corresponde ao genero, se foi identificado ao nivel de especie, corresponde a especie}
 #'   \item{validacao}{nivel taxonomico de validacao do individuo observado}
 #'   \item{distancia}{distancia perpendicular em relacao ao amostrador na qual o individuo foi observado}
 #'   \item{tamanho_grupo}{numero de individuos registrados na mesma observacao}
 #'   \item{numero_observadores}{numero de observadores que precorriam o transecto na ocasiao da observacao}
+#'   \item{velocidade_km_h}{velocidade média do percurso do transecto}
 #'   \item{tempo_censo}{tempo total de duracao do percurso de uma estacao amostral}
 #' }
 #'
