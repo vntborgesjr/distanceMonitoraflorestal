@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Ajuste dos modelos: Fluxo 4 - Amostragem por distância com multiplas covariaveis</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Ajuste dos modelos: Fluxo 4 - Amostragem
+por distância com multiplas covariaveis</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(distanceMonitoraflorestal)</span></code></pre></div>
+<div id="fluxo-4---amostragem-por-distância-com-múltiplas-covariáveis" class="section level1">
+<h1>Fluxo 4 - Amostragem por Distância com Múltiplas Covariáveis</h1>
+<p>Aqui vamos usar a abordagem do Fluxo 2, sem amostragens repetidas,
+para o ajuste de covariáveis. Vamos usar o tamanho do grupo (size) e
+tempo de denso percorrido até cada observação como exemplo de
+covariáveis.</p>
+<div id="carregando-os-dados" class="section level2">
+<h2>Carregando os dados</h2>
+<p>Aqui vamos trabalhar com os dados filtrados, sem repetições. O número
+de observações total foi de 55.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>cutias_cov <span class="ot">&lt;-</span> <span class="fu">filtrar_dados</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">nome_ucs =</span> <span class="st">&quot;resex_tapajos_arapiuns&quot;</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">nome_sps =</span> <span class="st">&quot;dasyprocta_croconota&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">validacao_obs =</span> <span class="st">&quot;especie&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>cutias_cov_distance <span class="ot">&lt;-</span> <span class="fu">transformar_dados_formato_Distance</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  cutias_cov,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="at">amostras_repetidas =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>cutias_cov_distance</span></code></pre></div>
+<div id="plotando-o-histograma" class="section level4">
+<h4>Plotando o histograma</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">plotar_distribuicao_distancia_interativo</span>(<span class="at">largura_caixa =</span> <span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="ajustando-diferentes-modelos-com-covariáveis" class="section level4">
+<h4>Ajustando diferentes modelos com covariáveis</h4>
+<p>Para o uso de coveriáveis, podemos usar somente as distribuições
+half-normal ou hazard-rate, pois ambas possuem o parâmetro escalar
+(sigma) pelo qual o vetor das covariáveis será multiplicado. Não é
+recomendável o uso de termos de ajuste com o uso de covariáveis pela
+grande chance de perda de monotonicidade nas curvas das funções de
+detecção. Assim, vamos trabalhar com as seguintes combinações de
+modelos.</p>
+<div id="half-normal-sem-termos-de-ajuste-hn" class="section level5">
+<h5>Half-normal sem termos de ajuste (HN)</h5>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção half-normal, sem covariável, para um truncamento de 10% dos dados</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>cutias_cov_distance_hn <span class="ot">&lt;-</span> cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    )</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>cutias_cov_distance_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span></span></code></pre></div>
+</div>
+<div id="hn-tamanho-do-grupo-hn-s" class="section level5">
+<h5>HN + Tamanho do grupo (HN + S)</h5>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção half-normal, com tamanho do grupo como covariável, para um truncamento de 10% dos dados</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>cutias_cov_distance_hn_size <span class="ot">&lt;-</span> cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="at">formula =</span> <span class="sc">~</span> size</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    )</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>cutias_cov_distance_hn_size</span></code></pre></div>
+</div>
+<div id="hn-tamanho-do-grupo-hn-s-1" class="section level5">
+<h5>HN + Tamanho do grupo (HN + S)</h5>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção half-normal, com tamanho do grupo como covariável, para um truncamento de 10% dos dados</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>cutias_cov_distance_hn_size_time <span class="ot">&lt;-</span> cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">formula =</span> <span class="sc">~</span> size <span class="sc">+</span> cense_time</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    )</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>cutias_cov_distance_hn_size_time</span></code></pre></div>
+</div>
+<div id="hazard-rate-sem-termos-de-ajuste-hz" class="section level5">
+<h5>Hazard-rate sem termos de ajuste (HZ)</h5>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção hazard-rate, sem covariável, para um truncamento de 10% dos dados</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>cutias_cov_distance_hr <span class="ot">&lt;-</span> cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    )</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>cutias_cov_distance_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span></span></code></pre></div>
+<div id="hz-tamanho-do-grupo-hz-s" class="section level6">
+<h6>HZ + Tamanho do grupo (HZ + S)</h6>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção hazard-rate, com tamanho do grupo como covariável, para um truncamento de 10% dos dados</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>cutias_cov_distance_hr_size <span class="ot">&lt;-</span> cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="at">formula =</span> <span class="sc">~</span> size</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    )</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>cutias_cov_distance_hr_size</span></code></pre></div>
+</div>
+<div id="hz-tamanho-do-grupo-hz-s-1" class="section level6">
+<h6>HZ + Tamanho do grupo (HZ + S)</h6>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção hazard-rate, com tamanho do grupo como covariável, para um truncamento de 10% dos dados</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>cutias_cov_distance_hr_size_time <span class="ot">&lt;-</span> cutias_cov_distance <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="at">formula =</span> <span class="sc">~</span> size <span class="sc">+</span> cense_time</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    )</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>cutias_cov_distance_hr_size_time</span></code></pre></div>
+</div>
+</div>
+<div id="comparando-os-modelos" class="section level5">
+<h5>Comparando os modelos</h5>
+<div id="tabela-com-o-resumo-comparativo-dos-modelos" class="section level6">
+<h6>Tabela com o resumo comparativo dos modelos</h6>
+<p>Aqui, vamos selecionar somente os modelos sem termos de ajuste, com e
+sem covariáveis.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>cutias_cov_distance_melhor_modelo <span class="ot">&lt;-</span> </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">selecionar_funcao_deteccao_termo_ajuste</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  cutias_cov_distance_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  cutias_cov_distance_hn_size,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  cutias_cov_distance_hn_size_time,</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  cutias_cov_distance_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  cutias_cov_distance_hr_size,</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  cutias_cov_distance_hr_size_time</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>cutias_cov_distance_melhor_modelo</span></code></pre></div>
+<p>Observe que nesse caso as covariávies alteraram pouco o ajuste dos
+modelos.</p>
+</div>
+<div id="gráficos-de-ajuste-das-funções-de-deteção-às-probabilidades-de-deteção" class="section level6">
+<h6>Gráficos de ajuste das funções de deteção às probabilidades de
+deteção</h6>
+<p>Ainda estamos ajustando a função para poder gerar os gráficos dos
+modelos com covariáveis. A função criada para os gráficos ainda não
+comporta os dados de modelos com covariáveis.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>modelos_cutias_cov_distance <span class="ot">&lt;-</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">gerar_lista_modelos_selecionados</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    cutias_cov_distance_hr_size_time,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    cutias_cov_distance_hn_size_time,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    cutias_cov_distance_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    cutias_cov_distance_hn_size,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    cutias_cov_distance_hr_size,</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    cutias_cov_distance_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>    <span class="at">nome_modelos_selecionados =</span> cutias_cov_distance_melhor_modelo</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  )</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="fu">plotar_funcao_deteccao_modelos_selecionados</span>(modelos_cutias_cov_distance)</span></code></pre></div>
+</div>
+<div id="teste-de-bondade-de-ajuste-dos-modelos-e-q-q-plots" class="section level6">
+<h6>Teste de bondade de ajuste dos modelos e Q-Q plots</h6>
+<p>Ainda estamos ajustando a função para poder gerar a tabela com os
+resultados do Cramér-von Mises e os gráficos dos modelos com
+covariáveis. A função criada para gerar tabela e os Q-Q plots ainda não
+comporta os dados de modelos com covariáveis.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">testar_bondade_ajuste</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  modelos_cutias_cov_distance,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="at">nboot =</span> <span class="dv">100</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+</div>
+<div id="avaliando-as-estimativas-de-abundância-e-densidade" class="section level5">
+<h5>Avaliando as estimativas de Abundância e Densidade</h5>
+<p>Para o uso de covariáveis, as estimativas de abundância/densidade
+devem ser feitas através do bootstrap (função <code>bootdht</code> do
+Distance). Ainda estamos implementando o bootstrap em nosso fluxo de
+estimativas de taxa de encontro, abundância e densidade.</p>
+<div id="área-coberta-pela-amostragem" class="section level6">
+<h6><strong>Área coberta pela Amostragem</strong></h6>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  modelos_cutias_cov_distance,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  cutias_cov_distance_melhor_modelo,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="at">tipo_de_resultado =</span> <span class="st">&quot;area_estudo&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="ábundância" class="section level6">
+<h6><strong>Ábundância</strong></h6>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  modelos_cutias_cov_distance,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  cutias_cov_distance_melhor_modelo,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="at">tipo_de_resultado =</span> <span class="st">&quot;abundancia&quot;</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="densidade" class="section level6">
+<h6><strong>Densidade</strong></h6>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  modelos_cutias_cov_distance,</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  cutias_cov_distance_melhor_modelo,</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="at">tipo_de_resultado =</span> <span class="st">&quot;densidade&quot;</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Ajuste dos modelos: Fluxo2 - distâncias exatas sem repetições</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Ajuste dos modelos: Fluxo2 - distâncias
+exatas sem repetições</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(distanceMonitoraflorestal)</span></code></pre></div>
+<div id="fluxo-2---distâncias-exatas-sem-repetições" class="section level1">
+<h1>Fluxo 2 - Distâncias exatas sem repetições</h1>
+<div id="filtrando-os-dados-para-eliminar-as-repetições" class="section level2">
+<h2>Filtrando os dados para eliminar as repetições</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>cutia_tap_arap_sem_repeticao <span class="ot">&lt;-</span> <span class="fu">filtrar_dados</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">nome_ucs =</span> <span class="st">&quot;resex_tapajos_arapiuns&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">nome_sps =</span> <span class="st">&quot;dasyprocta_croconota&quot;</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">validacao_obs =</span> <span class="st">&quot;especie&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">transformar_dados_formato_Distance</span>(<span class="at">amostras_repetidas =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>cutia_tap_arap_sem_repeticao</span></code></pre></div>
+</div>
+<div id="plotando-o-histograma-das-frequências-de-observações-pela-distância" class="section level2">
+<h2>Plotando o histograma das frequências de observações pela
+distância</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>cutia_tap_arap_sem_repeticao <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>(distance) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">plotar_distribuicao_distancia_interativo</span>(<span class="at">largura_caixa =</span> <span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="testando-distância-de-truncamento-w" class="section level2">
+<h2>Testando distância de truncamento (<em>w</em>)</h2>
+<div id="tabela-com-resumo-comparativo-dos-modelos" class="section level3">
+<h3>Tabela com resumo comparativo dos modelos</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># conduz a selecao da melhor distancia de truncamento a partir do ajsute de modelos com funcao de deteccao half-normal sem termos de ajuste</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>cutia_tap_arap_sem_repeticao_dist_trunc <span class="ot">&lt;-</span> cutia_tap_arap_sem_repeticao <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">selecionar_distancia_truncamento</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>cutia_tap_arap_sem_repeticao_dist_trunc<span class="sc">$</span>selecao</span></code></pre></div>
+</div>
+<div id="plotando-o-histograma-com-os-dados-truncados." class="section level3">
+<h3>Plotando o histograma com os dados truncados.</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">plotar_funcao_deteccao_selecao_distancia_truncamento</span>(cutia_tap_arap_sem_repeticao_dist_trunc)</span></code></pre></div>
+</div>
+</div>
+<div id="ajustando-diferentes-modelos-de-funções-de-detecção" class="section level2">
+<h2>Ajustando diferentes modelos de funções de detecção</h2>
+<div id="uniforme-cosseno" class="section level3">
+<h3>Uniforme + Cosseno</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção uniforme para um truncamento de 10% dos dados</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>cutia_tap_arap_sem_repeticao_unif <span class="ot">&lt;-</span> cutia_tap_arap_sem_repeticao <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;unif&quot;</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">termos_ajuste =</span> <span class="st">&quot;cos&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>)</span></code></pre></div>
+</div>
+<div id="half-normal-sem-termos-de-ajuste-e-com-termos-de-ajuste" class="section level3">
+<h3>Half-Normal sem termos de ajuste e com termos de ajuste</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção half-normal para um truncamento de 10% dos dados</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>cutia_tap_arap_sem_repeticao_hn <span class="ot">&lt;-</span> cutia_tap_arap_sem_repeticao <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>)</span></code></pre></div>
+</div>
+<div id="hazard-rate-sem-termos-de-ajuste-e-com-termos-de-ajuste" class="section level3">
+<h3>Hazard-rate sem termos de ajuste e com termos de ajuste</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># ajustando a função de detecção hazard-rate para um truncamento de 10% dos dados</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>cutia_tap_arap_sem_repeticao_hr <span class="ot">&lt;-</span> cutia_tap_arap_sem_repeticao <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="st">&quot;10%&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="comparando-os-modelos" class="section level2">
+<h2>Comparando os modelos</h2>
+<div id="tabela-com-o-resumo-comparativo-dos-modelos" class="section level3">
+<h3>Tabela com o resumo comparativo dos modelos</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>fluxo2_lista_modelos_ajustados <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hn, </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hr, </span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_unif</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>fluxo2_selecao_funcao_deteccao_termo_ajuste <span class="ot">&lt;-</span> <span class="fu">selecionar_funcao_deteccao_termo_ajuste</span>(</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hn<span class="sc">$</span>Cosseno,</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hn<span class="sc">$</span><span class="st">`</span><span class="at">Hermite polinomial</span><span class="st">`</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>, </span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hr<span class="sc">$</span>Cosseno, </span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hr<span class="sc">$</span><span class="st">`</span><span class="at">Polinomial simples</span><span class="st">`</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_unif</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>)</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>fluxo2_selecao_funcao_deteccao_termo_ajuste</span></code></pre></div>
+</div>
+<div id="gráficos-de-ajuste-das-funções-de-detecção-às-probabilidades-de-detecção" class="section level3">
+<h3>Gráficos de ajuste das funções de detecção às probabilidades de
+detecção</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># gerar uma lista com os modelos selecionados ordenados do melhor para o pior modelo</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>fluxo2_modelos_selecionados <span class="ot">&lt;-</span> <span class="fu">gerar_lista_modelos_selecionados</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_unif,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  cutia_tap_arap_sem_repeticao_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="at">nome_modelos_selecionados =</span> fluxo2_selecao_funcao_deteccao_termo_ajuste</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># plotar a probabilidade de detecção observada (barras) e a esperada (linhas e pontos)</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">plotar_funcao_deteccao_modelos_selecionados</span>(fluxo2_modelos_selecionados)</span></code></pre></div>
+</div>
+<div id="teste-de-bondade-de-ajuste-dos-modelos-e-q-q-plots" class="section level3">
+<h3>Teste de bondade de ajuste dos modelos e Q-Q plots</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>bondade_ajuste_fluxo2 <span class="ot">&lt;-</span> <span class="fu">testar_bondade_ajuste</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  fluxo2_modelos_selecionados, </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">chisq =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="at">intervalos_distancia  =</span>  <span class="cn">NULL</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>bondade_ajuste_fluxo2</span></code></pre></div>
+</div>
+</div>
+<div id="avaliando-as-estimativas-de-abundância-e-densidade" class="section level2">
+<h2>Avaliando as estimativas de Abundância e Densidade</h2>
+<div id="características-da-área-de-estudo-e-da-taxa-de-encontro" class="section level3">
+<h3>Características da área de estudo e da taxa de encontro</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># gera resultados área de estudo e taxa de encontro</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>fluxo2_caracteristicas_area_estudo_taxa_encontro <span class="ot">&lt;-</span> <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">dados =</span> fluxo2_modelos_selecionados,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="at">resultado_selecao_modelos =</span> fluxo2_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="at">tipo_de_resultado =</span> <span class="st">&quot;area_estudo&quot;</span>, </span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  <span class="at">estratificacao =</span> <span class="cn">FALSE</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>fluxo2_caracteristicas_area_estudo_taxa_encontro</span></code></pre></div>
+</div>
+<div id="características-de-abundância-esforço-e-detecção" class="section level3">
+<h3>Características de abundância, esforço e detecção</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># gera resultados abundância e detecção</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>fluxo2_caracteristicas_abundancia <span class="ot">&lt;-</span> <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">dados =</span> fluxo2_modelos_selecionados,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="at">resultado_selecao_modelos =</span> fluxo2_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="at">tipo_de_resultado =</span> <span class="st">&quot;abundancia&quot;</span>, </span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>  <span class="at">estratificacao =</span> <span class="cn">FALSE</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>fluxo2_caracteristicas_abundancia</span></code></pre></div>
+</div>
+<div id="características-de-densidade" class="section level3">
+<h3>Características de densidade</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># gera resultados densidade e coeficiente de variação</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>fluxo2_caracteristicas_densidade <span class="ot">&lt;-</span> <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="at">dados =</span> fluxo2_modelos_selecionados,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  <span class="at">resultado_selecao_modelos =</span> fluxo2_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="at">tipo_de_resultado =</span> <span class="st">&quot;densidade&quot;</span>, </span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="at">estratificacao =</span> <span class="cn">FALSE</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>fluxo2_caracteristicas_densidade</span></code></pre></div>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
