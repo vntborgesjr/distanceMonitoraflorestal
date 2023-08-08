@@ -24,7 +24,7 @@ library(distanceMonitoraflorestal)
 
 A base de dados para as análise tornam-se disponíveis ao usuário com o carregamento do pacote com o nome de `monitora_aves_masto_florestal`. Podemos inspecionar seu conteúdo usando a função `glimpse` do pacote `dplyr`.
 
-```{r}
+```{r, eval=FALSE}
 # inspecionar a base de dados
 dplyr::glimpse(monitora_aves_masto_florestal)
 ```
@@ -37,14 +37,14 @@ Para conduzir as análises de estimatica de abundância e densidade das espécie
 
 Por configuração, a função `filtrar_dados()` retorna a base de dados `monitora_aves_masto_florestal`.
 
-```{r}
+```{r, eval=FALSE}
 # retornar a base de dados completa
 filtrar_dados()
 ```
 
 Para retornar as observações de uma ou mais Unidades de Conservação, o(s) nome(s) da(s) Unidade(s) de Conservação deve(m) ser informados usando o argumento `nome_ucs`.
 
-```{r}
+```{r, eval=FALSE}
 # consultar o nome das UCs
 nomes_ucs <- monitora_aves_masto_florestal |> 
   dplyr::distinct(nome_uc)
@@ -52,32 +52,32 @@ nomes_ucs <- monitora_aves_masto_florestal |>
 nomes_ucs
 ```
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de uma UC fornecendo o nome
 filtrar_dados(nome_ucs = "resex_tapajos_arapiuns")
 ```
 
 Também é possível selecionar uma ou mais Unidades de Conservação fornecendo um vetor do tipo caracter com um ou mais elementos.
 
-```{r}
+```{r, eval=FALSE}
 # gerar um vetor contendo os nomes das UCs
 nomes_ucs <- dplyr::pull(nomes_ucs)
 nomes_ucs
 ```
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de uma UC fornecendo o nome
 filtrar_dados(nome_ucs = nomes_ucs[1])
 ```
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de mais de uma UC
 filtrar_dados(nome_ucs = nomes_ucs[2:3])
 ```
 
 Para selecionar as observações de uma ou mais espécies, o(s) nome(s) da(s) espécie(s) ser informados usando o argumento `nome_sps`.
 
-```{r}
+```{r, eval=FALSE}
 # consultar o nome das UCs
 nomes_sps <- monitora_aves_masto_florestal |> 
   dplyr::distinct(nome_sp)
@@ -85,32 +85,32 @@ nomes_sps <- monitora_aves_masto_florestal |>
 nomes_sps
 ```
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de uma espécie fornecendo o nome
 filtrar_dados(nome_sps = "dasyprocta_croconota")
 ```
 
 Também é possível selecionar uma ou mais espécies fornecendo um vetor do tipo caracter com um ou mais elementos.
 
-```{r}
+```{r, eval=FALSE}
 # gerar um vetor contendo os nomes das UCs
 nomes_sps <- dplyr::pull(nomes_sps)
 nomes_sps
 ```
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de uma UC fornecendo o nome
 filtrar_dados(nome_sps = nomes_sps[1])
 ```
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de mais de uma UC
 filtrar_dados(nome_sps = nomes_sps[c(33, 34)])
 ```
 
 Para selecionar as observações de uma ou mais observações validadas, o(s) nível(is) taxonômico(s) deve(m) ser informados usando o argumento `validacao_obs`.
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de uma espécie fornecendo o nome
 filtrar_dados(
   nome_sps = nomes_sps[c(33, 34)],
@@ -120,7 +120,7 @@ filtrar_dados(
 
 Finalmente, também é possível selecionar as observações a partir da(s) Unidade(s) de Cosnervação, espécie(s) e nível(is) taxonômico(s) de validação.
 
-```{r}
+```{r, eval=FALSE}
 # retornar as observações de uma espécie fornecendo o nome
 filtrar_dados(
   nome_ucs = "flona_do_jamari",
@@ -135,7 +135,7 @@ O uso da função que ajusta os modelos de função de detecção aos dados para
 
 Primeiramente, é necessário criar um tabela de dados contendo as observações da espécie que se deseja estimar a densidade.
 
-```{r}
+```{r, eval=FALSE}
 dasy_croc <- filtrar_dados(
   nome_sps = "dasyprocta_croconota",
   validacao_obs = "especie"
@@ -143,7 +143,7 @@ dasy_croc <- filtrar_dados(
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 # transformar os dados para o formato do Distance
 dasy_croc_com_rep <- transformar_dados_formato_Distance(dasy_croc)
 
@@ -152,7 +152,7 @@ dasy_croc_com_rep
 
 A função também permite eliminar as amostragens repetidas realizadas em uma mesma estação do ano, selecionando apenas o dia em que foi registrado o maior número de observações para uma determinada estação e ano. Para eliminar as amostragens repetidas, basta utilizar o argumento `amostras_repetidas = FALSE`.
 
-```{r}
+```{r, eval=FALSE}
 dasy_croc_sem_rep <- transformar_dados_formato_Distance(
   dados = dasy_croc,
   amostras_repetidas = FALSE
