@@ -37,7 +37,7 @@
 #'
 #' glimpse(dados_distance_sem_repeticao)
 transformar_dados_formato_Distance <- function(
-    dados = monitora_aves_masto_florestal,
+    ...,
     amostras_repetidas = TRUE
 ) {
 
@@ -49,13 +49,14 @@ transformar_dados_formato_Distance <- function(
       dplyr::select(
         Region.Label = nome_uc,
         Sample.Label = nome_ea,
-        Effort = esforco_total,
+        Effort_day = esforco_dia,
         sampling_day = data_amostragem,
         distance = distancia,
         season = estacao,
         year = ano,
         size = tamanho_grupo,
-        cense_time = tempo_censo
+        cense_time = tempo_censo,
+        speed = velocidade_km_h
       ) |>
       dplyr::mutate(
         Area = 0,
@@ -64,6 +65,34 @@ transformar_dados_formato_Distance <- function(
       dplyr::relocate(
         Area,
         .before = Sample.Label
+      )
+
+    # calculo do esforco amostral total
+    n_repeated_visits <- dados_formato_distance |>
+      # conta o numero de vezes que uma ea foi amostrada
+      dplyr::count(
+        Region.Label,
+        Sample.Label,
+        season,
+        year,
+        name = "repeated_visits"
+      )
+
+    dados_formato_distance <- dados_formato_distance |>
+      dplyr::left_join(
+        n_repeated_visits,
+        dplyr::join_by(...),
+        relationship = "many-to-many"
+      ) |>
+      # gera a distancia total percorrida em cada ea
+      dplyr::mutate(
+        Effort = Effort_day * repeated_visits,
+        .before = sampling_day
+      ) |>
+      # reposiciona as colunas
+      dplyr::relocate(
+        repeated_visits,
+        .after = Sample.Label
       )
 
   } else {
