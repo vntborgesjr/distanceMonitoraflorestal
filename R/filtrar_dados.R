@@ -1,19 +1,17 @@
 # Documentacao funcao filtrar_dados() --------------------------
-#' Filtra os dados a partir das Unidades de Conservação, das espécies e do nível taxonomico de validação
+#' Filtra os dados a partir do nível taxonomico de validação e demais colunas
 #'
 #' @description
-#' A função \code{filtrar_dados()} filtra a base de dados brutos a partir das colunas \code{nome_uc}, \code{nome_sp} e \code{validacao} que correspondem a(s) Unidade(s) de Conservação, a(s) espécie(s) e ao(s) nível(is) taxonômico(s) de validação desejadas, respectivamente.
+#' A função \code{filtrar_dados()} filtra a base de dados brutos a partir da coluna \code{validacao} e colunas desejadas.
 #'
 #' @usage filtrar_dados(
 #'          dados = monitora_aves_masto_florestal,
-#'          nome_ucs = NULL,
-#'          nome_sps = NULL,
+#'          ...,
 #'          validacao_obs = c("ordem", "familia", "genero", "especie", "na")
 #'        )
 #'
 #' @param dados recebe uma \code{tibble} que contenha as colunas `nome_uc`, `nome_sp` e `validacao`. Por configuração, carrega a base de dados burto de aves e médios e grandes mamíferos do Pojeto Monitora Componente Florestal, `monitora_aves_mamiferos_florestal`.
-#' @param nome_ucs recebe um vetor do tipo caracter contendo o nome de uma ou mais Unidades de Conservação.
-#' @param nome_sps recebe um vetor do tipo caracter contendo o nome de uma ou mais espécies.
+#' @param ... recebe as colunas a sere filtradas ex. \code{nome_uc}, \code{nome_sp}, \code{nome_genero}.
 #' @param validacao_obs recebe um vetor do tipo caracter contendo o nome de um ou mais níveis taxonômicos de validação.
 #'
 #' @details
@@ -87,23 +85,23 @@ filtrar_dados <- function(
     ...,
     validacao_obs = c("ordem", "familia", "genero", "especie", "na")
 ) {
-  
+
   # gerar o tibble filtrado pelas colunas desejadas e nivel taxonomico de validacao
   dados_filtrados <- dados |>
     dplyr::filter(
       ...,
       validacao %in% validacao_obs
     )
-  
+
   # gerar nomes das ucs e sps filtradas
   nome_uc1 <- unique(as.character(dados$nome_uc))
-  
+
   # gerar o tibble filtrado pelas uc, nivel taxonomico de validacao
-  dados_filtrados_uc <- dados |> 
+  dados_filtrados_uc <- dados |>
     dplyr::filter(
       nome_uc %in% nome_uc1
-    ) 
-  
+    )
+
   # incluir data amostradas e sem observação
   dados_filtrados <- dados_filtrados_uc |>
     # seleciona combinacoes unicas de nome_uc, nome_ea, data_amostragem,
@@ -115,7 +113,7 @@ filtrar_dados <- function(
       ano,
       estacao,
       esforco_dia
-    ) |> 
+    ) |>
     dplyr::left_join(
       y = dados_filtrados,
       by = dplyr::join_by(
@@ -126,8 +124,8 @@ filtrar_dados <- function(
         estacao,
         esforco_dia
       ),
-    ) 
-  
+    )
+
   return(dados_filtrados)
 }
 
