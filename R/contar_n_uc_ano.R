@@ -21,7 +21,8 @@
 #'
 #' # número total de UCs em cada ano - dados filtrados
 #' dados_filtrados <- filtrar_dados(
-#'   nome_ucs = "resex_tapajos_arapiuns"
+#' dados = monitora_aves_masto_florestal,
+#'   nome_uc == "resex_tapajos_arapiuns"
 #' )
 #'
 #' contar_n_uc_ano(dados_filtrados)
