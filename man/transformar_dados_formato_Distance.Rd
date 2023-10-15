@@ -6,11 +6,14 @@
 \usage{
 transformar_dados_formato_Distance(
   dados = monitora_aves_masto_florestal,
+  ...,
   amostras_repetidas = TRUE
 )
 }
 \arguments{
 \item{dados}{recebe a \code{tibble} gerada pela função \code{\link[=filtrar_dados]{filtrar_dados()}}. Por configuraçãoo, carrega a base de dados burtos de aves e médios e grandes mamíferos do Pojeto Monitora Componente Florestal \code{monitora_aves_masto_florestal}.}
+
+\item{...}{recebe as colunas que indicam a estratificação dos dados}
 
 \item{amostras_repetidas}{lógico, controla a saída dos dados transformados. Por configuração, retorna os dados com amostragens repetidas em cada estação amostral.
 
@@ -29,8 +32,7 @@ library(dplyr)
 
 # gerar os dados filtrados
 dados_filtrados <- filtrar_dados(
-  nome_uc = "resex_tapajos_arapiuns",
-  nome_sp = "dasyprocta_croconota",
+  ...,
   validacao_obs = "especie"
 )
 
