@@ -1,21 +1,34 @@
-# Documentacao da funcao gerar_dados_completos() ----------------------
-#' Seleciona, trasforma e renomea as colunas e observacoes nos dados brutos
+# Documentação da função gerar_dados_completos() ----------------------
+#' Seleciona, trasforma e renomea as colunas e observações nos dados brutos
 #'
 #' @description
-#' A funcao \code{gerar_dados_completos()} recebe uma \code{tibble} gerada a partir da funcao \code{carregar_dados_brutos_xlsx()}, selecionando, transformando e renomeando suas colunas e observacoes.
+#' A função \code{gerar_dados_completos()} recebe uma \code{tibble} gerada a
+#' partir da função \code{carregar_dados_brutos_xlsx()}, selecionando,
+#' transformando e renomeando suas colunas e observações.
 #'
 #' @usage gerar_dados_completos(dados)
 #'
 #' @param dados recebe uma \code{tibble} contendo os dados brutos.
 #'
 #' @details
-#' A funcao \code{gerar_dados_completos()} seleciona, transforma e renomeia as colunas e observacoes dos dados brutos do Projeto Monitora Componente Florestal. A funcao gera novas colunas contendo o numero de vezes que cada estacao amostral foi visitada, a categoria da UC,o nome abreviado das UC's, o nome abreviado das especies, o esforco amostral total empregado em cada estacao amostral, o numero de observadores e o tempo total de cada censo. Quando ausentes, as distancias de trilhas percorridas sao imputadas.
-#'
-#'
-#' @return Retorna um objeto do tipo \code{tibble} contendo uma selecao de colunas transformadas e renomeadas a partir dos dados brutos do Projeto Monitora Componente Florestal.
+#' A funcao \code{gerar_dados_completos()} seleciona, transforma e renomeia as
+#' colunas e observações dos dados brutos do Projeto Monitora Componente
+#' Florestal.
+#' @return Retorna um objeto do tipo \code{tibble} contendo uma seleção de
+#' colunas transformadas e renomeadas a partir dos dados brutos do Projeto
+#' Monitora Componente Florestal.
 
+#' @details
+#' A função gera novas colunas contendo o número de vezes que cada estação
+#' amostral foi visitada, a categoria da UC, o nome abreviado das UC's, o nome
+#' abreviado das espécies, o esforço amostral total empregado em cada estação
+#' amostral, o número de observadores e o tempo total de cada censo. Quando
+#' ausentes, as distâncias de trilhas percorridas sao imputadas. Outra
+#' transfomração importante é a inlcusão de linhas para os dias em que houve
+#' amostragem e uma dada espécie não foi observada (ex. distância = \code{NA})
+#'
 #' @export
-
+#'
 #' @author
 #' Vitor N. T. Borges-Junior
 #' Luciana A. Fusinatto
@@ -173,6 +186,7 @@ gerar_dados_completos <- function(dados) {
     # completar observacoes repetidas que estao ausentes
     # agrupar por nome da estacao amostral e data dee amostragem
     dplyr::group_by(
+      nome_uc,
       nome_ea,
       data_amostragem
     ) |>
@@ -233,41 +247,11 @@ gerar_dados_completos <- function(dados) {
       .after = nome_sp
     ) |>
     # preencher observacoes ausentes
-    tidyr::fill(esforco_dia)
-
-  # calculo do esforco amostral total
-  dados_completos <- dados_completos |>
-    # seleciona combinacoes unicas de nome_ea e data_amostragem
-    dplyr::distinct(
-      nome_ea,
-      data_amostragem
+    tidyr::fill(esforco_dia) |>
+    tidyr::fill(
+      velocidade_km_h,
+      .direction = "down"
     ) |>
-    # conta o numero de vezes que uma ea foi amostrada
-    dplyr::count(
-      nome_ea,
-      name = "n_visitas_repetidas"
-    ) |>
-    # reune os dados gerados com os dados_completos a partir da coluna nome_ea
-    dplyr::left_join(
-      y = dados_completos,
-      by = dplyr::join_by(nome_ea),
-    ) |>
-    # gera a distancia total percorrida em cada ea
-    dplyr::mutate(esforco_total = esforco_dia*n_visitas_repetidas) |>
-    # reposiciona as colunas
-    dplyr::relocate(
-      esforco_total,
-      .after = esforco_dia
-    ) |>
-    # agrupa a tibble pelas colunas nome_uc e nome_ea
-    dplyr::group_by(
-      nome_uc,
-      nome_ea
-    ) |>
-    # filtra a tibble mantendo apenas as linhas contendo o esforco maximo de um dia
-    dplyr::filter(esforco_dia == max(esforco_dia))  |>
-    # desagrupa a tibble
-    dplyr::ungroup() |>
     # eliminar espacos, letras minusculas e caracteres especiais das observacoes
     dplyr::mutate(
       dplyr::across(
@@ -285,6 +269,7 @@ gerar_dados_completos <- function(dados) {
 
   # retornar o tibble com os dados completos
   return(dados_completos)
+
 }
 
 utils::globalVariables(
@@ -294,16 +279,17 @@ utils::globalVariables(
     "observadores",
     "novo",
     "obs1",
-    "obs3",
+    "obs2",
     "obs3",
     "obs4",
     "obs5",
     "obs6",
     "esforco_dia2",
     "tempo_censo2",
-    "velocidade_km_m",
+    "velocidade_km_h2",
     "nome_classe",
     "numero_observadores",
     "categoria_uc",
     "n_visitas_repetidas"
   )
+)
