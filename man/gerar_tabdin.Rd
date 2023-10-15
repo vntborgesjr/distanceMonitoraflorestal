@@ -26,7 +26,8 @@ gerar_tabdin()
 
 # gerar tabela dinâmica a partir dos dados filtrados
 dados_filtrados <- filtrar_dados(
-nome_sps = c("dasyprocta_croconota", "dasyprocta_iacki")
+dados = monitora_aves_masto_florestal,
+nome_sp == c("dasyprocta_croconota", "dasyprocta_iacki")
 )
 gerar_tabdin(dados_filtrados)
 }
