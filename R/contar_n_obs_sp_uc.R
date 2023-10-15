@@ -21,7 +21,8 @@
 #'
 #' # número de observações para cada espécie e em cada UC - dados filtrados
 #' dados_filtrados <- filtrar_dados(
-#'   nome_ucs = "resex_tapajos_arapiuns"
+#' dados = monitora_aves_masto_florestal,
+#'   nome_uc == "resex_tapajos_arapiuns"
 #' )
 #'
 #' contar_n_obs_sp_uc(dados_filtrados)
