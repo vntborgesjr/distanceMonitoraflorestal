@@ -14,6 +14,7 @@
 #' A funcao \code{gerar_dados_completos()} seleciona, transforma e renomeia as
 #' colunas e observações dos dados brutos do Projeto Monitora Componente
 #' Florestal.
+#'
 #' @return Retorna um objeto do tipo \code{tibble} contendo uma seleção de
 #' colunas transformadas e renomeadas a partir dos dados brutos do Projeto
 #' Monitora Componente Florestal.
