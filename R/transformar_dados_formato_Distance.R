@@ -20,18 +20,26 @@
 #'
 #' # gerar os dados filtrados
 #' dados_filtrados <- filtrar_dados(
-#'   ...,
+#'   dados = monitora_aves_masto_florestal,
+#'   nome_uc == "resex_tapajos_arapiuns",
+#'   nome_sp == "dasyprocta_croconota",
 #'   validacao_obs = "especie"
 #' )
 #'
 #' # gerar os dados transformados com repeticao
-#' dados_distance_com_repeticao <- transformar_dados_formato_Distance(dados = dados_filtrados)
+#' dados_distance_com_repeticao <- transformar_dados_formato_Distance(
+#' dados = dados_filtrados,
+#'   Region.Label,
+#'   Sample.Label
+#' )
 #'
 #' glimpse(dados_distance_com_repeticao)
 #'
-#' # gerar os dados transformados com repeticao
+#' # gerar os dados transformados sem repeticao
 #' dados_distance_sem_repeticao <- transformar_dados_formato_Distance(
 #'   dados = dados_filtrados,
+#'   Region.Label,
+#'   Sample.Label,
 #'   amostras_repetidas = FALSE
 #' )
 #'
@@ -122,10 +130,7 @@ transformar_dados_formato_Distance <- function(
     n_repeated_visits <- dados_formato_distance |>
       # conta o numero de vezes que uma ea foi amostrada
       dplyr::count(
-        Region.Label,
-        Sample.Label,
-        season,
-        year,
+        ...,
         name = "repeated_visits"
       )
 
