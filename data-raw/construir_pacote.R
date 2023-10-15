@@ -246,7 +246,7 @@
 #
 # Instalar localmente o pacote didstanceMonitorafloresta ------------------
 
-# devtools::install_github("vntborgesjr/distanceMonitoraflorestal")
+# devtools::install_github("vntborgesjr/distanceMonitoraflorestal", force = TRUE)
 #
 
 # resolvendo variaveis globais --------------------------------------------
