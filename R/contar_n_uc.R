@@ -21,7 +21,8 @@
 #'
 #' # número total de UCs - dados filtrados
 #' dados_filtrados <- filtrar_dados(
-#'   nome_sps = "dasyprocta_corconota"
+#' dados = monitora_aves_masto_florestal,
+#'   nome_sp == "dasyprocta_corconota"
 #' )
 #'
 #' contar_n_uc(dados_filtrados)
