@@ -32,6 +32,7 @@ library(dplyr)
 
 # carregar dados filtrados por uma Unidade de Conservacão
 dados_filtrados_uc1 <- filtrar_dados(
+dados = monitora_aves_masto_florestal,
 nome_uc == "resex_tapajos_arapiuns"
 )
 
@@ -39,6 +40,7 @@ glimpse(dados_filtrados_uc1)
 
 # carregar dados filtrados por mais de uma Unidade de Conservação
 dados_filtrados_uc2 <- filtrar_dados(
+dados = monitora_aves_masto_florestal,
 nome_uc \%in\% c("resex_tapajos_arapiuns", "resex_barreiro_das_antas")
 )
 
@@ -46,6 +48,7 @@ glimpse(dados_filtrados_uc2)
 
 # carregar dados filtrados por mais de uma Unidade de Conservação e níveis taxonômicos de validação
 dados_filtrados_uc_validacao1 <- filtrar_dados(
+dados = monitora_aves_masto_florestal,
 nome_uc == "resex_tapajos_arapiuns",
 validacao_obs = c("genero", "especie")
 )
@@ -54,6 +57,7 @@ glimpse(dados_filtrados_uc_validacao1)
 
 # carregar dados filtrados por uma espécie
 dados_filtrados_sp1 <- filtrar_dados(
+dados = monitora_aves_masto_florestal,
 nome_sp == "dasyprocta_croconota"
 )
 
@@ -61,13 +65,15 @@ glimpse(dados_filtrados_sp1)
 
 # carregar dados filtrados por mais de uma especie
 dados_filtrados_sp2 <- filtrar_dados(
-nome_sp == c("dasyprocta_croconota", "dasyprocta_iacki")
+dados = monitora_aves_masto_florestal,
+nome_sp \%in\% c("dasyprocta_croconota", "dasyprocta_iacki")
 )
 
 glimpse(dados_filtrados_sp2)
 
 # carregar dados filtrados por unidade de conservacao e especie
 dados_filtrados_uc_sp <- filtrar_dados(
+dados = monitora_aves_masto_florestal,
 nome_uc == "resex_tapajos_arapiuns",
 nome_sp == c("dasyprocta_croconota")
 )
@@ -76,8 +82,9 @@ glimpse(dados_filtrados_uc_sp)
 
 # carregar dados filtrados por Unidades de Conservação, espécie e nível taxonômico de validação
 dados_filtrados_uc_sp_validacao <- filtrar_dados(
-  nome_ucs = c("resex_tapajos_arapiuns", "resex_barreiro_das_antas"),
-  nome_sps = c("dasyprocta_croconota", "guerlinguetus_aestuans"),
+dados = monitora_aves_masto_florestal,
+  nome_uc \%in\% c("resex_tapajos_arapiuns", "resex_barreiro_das_antas"),
+  nome_sp \%in\% c("dasyprocta_croconota", "guerlinguetus_aestuans"),
   validacao_obs = "especie"
 )
 
