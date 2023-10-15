@@ -31,11 +31,15 @@ library(dplyr)
 
 # gerar dados filtrados
 dasy_croc_tap_arap_repeticao <- filtrar_dados(
-  nome_uc = "resex_tapajos_arapiuns",
-  nome_sps = "dasyprocta_croconota",
+dados = monitora_aves_masto_florestal,
+  nome_uc == "resex_tapajos_arapiuns",
+  nome_sp == "dasyprocta_croconota",
   validacao_obs = "especie"
 ) |>
-transformar_dados_formato_Distance()
+transformar_dados_formato_Distance(
+  Region.Label,
+  Sample.Label,
+)
 
 # definir intervalos de distância (binagem)
 dasy_croc_tap_arap_repeticao_binados <- dasy_croc_tap_arap_repeticao |>
