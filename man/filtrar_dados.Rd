@@ -2,21 +2,18 @@
 % Please edit documentation in R/filtrar_dados.R
 \name{filtrar_dados}
 \alias{filtrar_dados}
-\title{Filtra os dados a partir das Unidades de Conservação, das espécies e do nível taxonomico de validação}
+\title{Filtra os dados a partir do nível taxonomico de validação e demais colunas}
 \usage{
 filtrar_dados(
          dados = monitora_aves_masto_florestal,
-         nome_ucs = NULL,
-         nome_sps = NULL,
+         ...,
          validacao_obs = c("ordem", "familia", "genero", "especie", "na")
        )
 }
 \arguments{
 \item{dados}{recebe uma \code{tibble} que contenha as colunas \code{nome_uc}, \code{nome_sp} e \code{validacao}. Por configuração, carrega a base de dados burto de aves e médios e grandes mamíferos do Pojeto Monitora Componente Florestal, \code{monitora_aves_mamiferos_florestal}.}
 
-\item{nome_ucs}{recebe um vetor do tipo caracter contendo o nome de uma ou mais Unidades de Conservação.}
-
-\item{nome_sps}{recebe um vetor do tipo caracter contendo o nome de uma ou mais espécies.}
+\item{...}{recebe as colunas a sere filtradas ex. \code{nome_uc}, \code{nome_sp}, \code{nome_genero}.}
 
 \item{validacao_obs}{recebe um vetor do tipo caracter contendo o nome de um ou mais níveis taxonômicos de validação.}
 }
@@ -24,7 +21,7 @@ filtrar_dados(
 Retorna um objeto do tipo \code{tibble} contendo os dados do Projeto Monitora Componente Florestal, filtrados a partir da(s) Unidade(s) de Conservação, da(s) espécie(s), ou dos nível(is) taxonômico(s) de validação.
 }
 \description{
-A função \code{filtrar_dados()} filtra a base de dados brutos a partir das colunas \code{nome_uc}, \code{nome_sp} e \code{validacao} que correspondem a(s) Unidade(s) de Conservação, a(s) espécie(s) e ao(s) nível(is) taxonômico(s) de validação desejadas, respectivamente.
+A função \code{filtrar_dados()} filtra a base de dados brutos a partir da coluna \code{validacao} e colunas desejadas.
 }
 \details{
 A filtragem da base de dados pode ser feita a partir do nome das Unidades de Conservação, a partir do nome das espécies, a partir do nível taxonômico de validação, ou a partir de suas combinações. Para maiores detalhes consulte os exemplos.
@@ -35,21 +32,21 @@ library(dplyr)
 
 # carregar dados filtrados por uma Unidade de Conservacão
 dados_filtrados_uc1 <- filtrar_dados(
-nome_ucs = "resex_tapajos_arapiuns"
+nome_uc == "resex_tapajos_arapiuns"
 )
 
 glimpse(dados_filtrados_uc1)
 
 # carregar dados filtrados por mais de uma Unidade de Conservação
 dados_filtrados_uc2 <- filtrar_dados(
-nome_ucs = c("resex_tapajos_arapiuns", "resex_barreiro_das_antas")
+nome_uc \%in\% c("resex_tapajos_arapiuns", "resex_barreiro_das_antas")
 )
 
 glimpse(dados_filtrados_uc2)
 
 # carregar dados filtrados por mais de uma Unidade de Conservação e níveis taxonômicos de validação
 dados_filtrados_uc_validacao1 <- filtrar_dados(
-nome_ucs = "resex_tapajos_arapiuns",
+nome_uc == "resex_tapajos_arapiuns",
 validacao_obs = c("genero", "especie")
 )
 
@@ -57,22 +54,22 @@ glimpse(dados_filtrados_uc_validacao1)
 
 # carregar dados filtrados por uma espécie
 dados_filtrados_sp1 <- filtrar_dados(
-nome_sps = "dasyprocta_croconota"
+nome_sp == "dasyprocta_croconota"
 )
 
 glimpse(dados_filtrados_sp1)
 
 # carregar dados filtrados por mais de uma especie
 dados_filtrados_sp2 <- filtrar_dados(
-nome_sps = c("dasyprocta_croconota", "dasyprocta_iacki")
+nome_sp == c("dasyprocta_croconota", "dasyprocta_iacki")
 )
 
 glimpse(dados_filtrados_sp2)
 
 # carregar dados filtrados por unidade de conservacao e especie
 dados_filtrados_uc_sp <- filtrar_dados(
-nome_ucs = "resex_tapajos_arapiuns",
-nome_sps = c("dasyprocta_croconota")
+nome_uc == "resex_tapajos_arapiuns",
+nome_sp == c("dasyprocta_croconota")
 )
 
 glimpse(dados_filtrados_uc_sp)
