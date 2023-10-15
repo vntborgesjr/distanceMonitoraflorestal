@@ -5,6 +5,7 @@
 #' A função `transformar_dados_formato_Distance()` transforma a base de dados para o formato de análise do pacote `Distance` podendo retornar a base de dados com ou sem amostras repetidas na estações amostrais.
 #'
 #' @param dados recebe a \code{tibble} gerada pela função [filtrar_dados()]. Por configuraçãoo, carrega a base de dados burtos de aves e médios e grandes mamíferos do Pojeto Monitora Componente Florestal `monitora_aves_masto_florestal`.
+#' @param ...
 #' @param amostras_repetidas lógico, controla a saída dos dados transformados. Por configuração, retorna os dados com amostragens repetidas em cada estação amostral.
 #'
 #'  @details
@@ -19,8 +20,7 @@
 #'
 #' # gerar os dados filtrados
 #' dados_filtrados <- filtrar_dados(
-#'   nome_uc = "resex_tapajos_arapiuns",
-#'   nome_sp = "dasyprocta_croconota",
+#'   ...,
 #'   validacao_obs = "especie"
 #' )
 #'
