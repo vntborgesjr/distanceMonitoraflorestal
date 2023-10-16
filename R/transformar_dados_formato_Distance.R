@@ -5,7 +5,7 @@
 #' A função `transformar_dados_formato_Distance()` transforma a base de dados para o formato de análise do pacote `Distance` podendo retornar a base de dados com ou sem amostras repetidas na estações amostrais.
 #'
 #' @param dados recebe a \code{tibble} gerada pela função [filtrar_dados()]. Por configuraçãoo, carrega a base de dados burtos de aves e médios e grandes mamíferos do Pojeto Monitora Componente Florestal `monitora_aves_masto_florestal`.
-#' @param ... recebe as colunas que indicam a estratificação dos dados
+#' @param ... recebe a estratificação dos dados
 #' @param amostras_repetidas lógico, controla a saída dos dados transformados. Por configuração, retorna os dados com amostragens repetidas em cada estação amostral.
 #'
 #'  @details
@@ -28,18 +28,23 @@
 #'
 #' # gerar os dados transformados com repeticao
 #' dados_distance_com_repeticao <- transformar_dados_formato_Distance(
-#' dados = dados_filtrados,
+#'   dados = dados_filtrados,
 #'   Region.Label,
-#'   Sample.Label
+#'   Sample.Label,
+#'   season,
+#'   year
 #' )
+#'
 #'
 #' glimpse(dados_distance_com_repeticao)
 #'
-#' # gerar os dados transformados sem repeticao
+#' # gerar os dados transformados com repeticao
 #' dados_distance_sem_repeticao <- transformar_dados_formato_Distance(
 #'   dados = dados_filtrados,
 #'   Region.Label,
 #'   Sample.Label,
+#'   season,
+#'   year,
 #'   amostras_repetidas = FALSE
 #' )
 #'
@@ -50,109 +55,65 @@ transformar_dados_formato_Distance <- function(
     amostras_repetidas = TRUE
 ) {
 
+  # tranformar dados mantendo as amostras repetidas
+  dados_formato_distance <- dados |>
+    dplyr::select(
+      Region.Label = nome_uc,
+      Sample.Label = nome_ea,
+      Effort_day = esforco_dia,
+      sampling_day = data_amostragem,
+      distance = distancia,
+      season = estacao,
+      year = ano,
+      size = tamanho_grupo,
+      cense_time = tempo_censo,
+      speed = velocidade_km_h
+    ) |>
+    dplyr::mutate(
+      Area = 0,
+      object = 1:nrow(dados)
+    ) |>
+    dplyr::relocate(
+      Area,
+      .before = Sample.Label
+    )
+
+  # calculo do esforco amostral total
+  n_repeated_visits <- dados_formato_distance |>
+    # conta o numero de vezes que uma ea foi amostrada
+    dplyr::count(
+      ...,
+      name = "repeated_visits"
+    )
+
+  dados_formato_distance <- dados_formato_distance |>
+    dplyr::left_join(
+      n_repeated_visits,
+      dplyr::join_by(...),
+      relationship = "many-to-many"
+    ) |>
+    # gera a distancia total percorrida em cada ea
+    dplyr::mutate(
+      Effort = Effort_day * repeated_visits,
+      .before = sampling_day
+    ) |>
+    # reposiciona as colunas
+    dplyr::relocate(
+      repeated_visits,
+      .after = Sample.Label
+    )
+
   # controlar a saída da amostragem
   if (amostras_repetidas == TRUE) {
 
-    # tranformar dados mantendo as amostras repetidas
-    dados_formato_distance <- dados |>
-      dplyr::select(
-        Region.Label = nome_uc,
-        Sample.Label = nome_ea,
-        Effort_day = esforco_dia,
-        sampling_day = data_amostragem,
-        distance = distancia,
-        season = estacao,
-        year = ano,
-        size = tamanho_grupo,
-        cense_time = tempo_censo,
-        speed = velocidade_km_h
-      ) |>
-      dplyr::mutate(
-        Area = 0,
-        object = 1:nrow(dados)
-      ) |>
-      dplyr::relocate(
-        Area,
-        .before = Sample.Label
-      )
-
-    # calculo do esforco amostral total
-    n_repeated_visits <- dados_formato_distance |>
-      # conta o numero de vezes que uma ea foi amostrada
-      dplyr::count(
-        ...,
-        name = "repeated_visits"
-      )
-
-    dados_formato_distance <- dados_formato_distance |>
-      dplyr::left_join(
-        n_repeated_visits,
-        dplyr::join_by(...),
-        relationship = "many-to-many"
-      ) |>
-      # gera a distancia total percorrida em cada ea
-      dplyr::mutate(
-        Effort = Effort_day * repeated_visits,
-        .before = sampling_day
-      ) |>
-      # reposiciona as colunas
-      dplyr::relocate(
-        repeated_visits,
-        .after = Sample.Label
-      )
+    # retorna os dados mantendo as amostras repetidas
+    return(dados_formato_distance)
 
   } else {
 
-    # tranformar dados mantendo as amostras repetidas
-    dados_formato_distance <- dados |>
-      dplyr::select(
-        Region.Label = nome_uc,
-        Sample.Label = nome_ea,
-        Effort_day = esforco_dia,
-        sampling_day = data_amostragem,
-        distance = distancia,
-        season = estacao,
-        year = ano,
-        size = tamanho_grupo,
-        cense_time = tempo_censo,
-        speed = velocidade_km_h
-      ) |>
-      dplyr::mutate(
-        Area = 0,
-        object = 1:nrow(dados)
-      ) |>
-      dplyr::relocate(
-        Area,
-        .before = Sample.Label
-      )
-
-    # calculo do esforco amostral total
-    n_repeated_visits <- dados_formato_distance |>
-      # conta o numero de vezes que uma ea foi amostrada
-      dplyr::count(
-        ...,
-        name = "repeated_visits"
-      )
-
-    dados_formato_distance <- dados_formato_distance |>
-      dplyr::left_join(
-        n_repeated_visits,
-        dplyr::join_by(...),
-        relationship = "many-to-many"
-      ) |>
-      # gera a distancia total percorrida em cada ea
-      dplyr::mutate(
-        Effort = Effort_day * repeated_visits,
-        .before = sampling_day
-      ) |>
-      # reposiciona as colunas
-      dplyr::relocate(
-        repeated_visits,
-        .after = Sample.Label
-      )
-
     # gerar filtro para eliminar amostras repetidas mantendo o dia com o maior n de obs
-    # gerar o n de obs por data de amostragem
+    # gerar o n de obs por data de amostragem numa
+    # mesma estação e ano
     n_obs_data <- dados_formato_distance |>
       dplyr::group_by(
         ...,
@@ -161,14 +122,13 @@ transformar_dados_formato_Distance <- function(
       dplyr::count(sampling_day) |>
       dplyr::ungroup()
 
-    # gerar as datas com maior n de obs em cada estacao e ano
-    data_com_maior_n_obs <- dados_formato_distance |>
+    # gerar as datas com maior n de obs de acordo com
+    # a estratificação especificada
+    data_com_maior_n_obs <- n_obs_data |>
       dplyr::group_by(
-        ...,
-        sampling_day
+        ...
       ) |>
-      dplyr::count(sampling_day) |>
-      dplyr::reframe(n_max = max(n)) |>
+      dplyr::filter(n == max(n)) |>
       dplyr::ungroup()
 
     # juntar as duas data.frames para obter as datas com maior n de obs
@@ -179,38 +139,61 @@ transformar_dados_formato_Distance <- function(
         data_com_maior_n_obs,
         dplyr::join_by(
           ...,
-          sampling_day
-          , n == n_max),
+          sampling_day,
+          n),
       ) |>
       dplyr::distinct(
         ...,
         sampling_day
-      ) |>
-      dplyr::mutate(
-        day = lubridate::day(sampling_day),
-        month = lubridate::month(sampling_day)
+      )
+
+    # gerar o filtro de datas repetindo dias com
+    # datas com mesmo número máximo de indivíduos
+    # observados
+    filtro_datas_sem_repeticao1 <- dados_para_filtrar_por_data_sem_repeticao$sampling_day
+
+    # eliminar amostras repetidas a partir do dia com
+    # maior distância perpendicular média
+    dados_para_filtrar_por_data_sem_repeticao_media <- dados_formato_distance |>
+      dplyr::filter(
+        sampling_day %in% filtro_datas_sem_repeticao1
       ) |>
       dplyr::group_by(
         ...,
         sampling_day
       ) |>
-      dplyr::filter(day == min(day))
+      dplyr::summarise(
+        distance_mean = mean(
+          distance,
+          na.rm = TRUE
+        )
+      ) |>
+      dplyr::filter(
+        distance_mean == max(
+          distance_mean,
+          na.rm = TRUE
+        )
+      ) |>
+      dplyr::ungroup()
 
-    # gerar o filtro de datas
-    filtro_datas_sem_repeticao <- dados_para_filtrar_por_data_sem_repeticao$sampling_day
-
-    # eliminar amostras repetidas
-    dados_formato_distance <- dados_formato_distance |>
-      dplyr::filter(sampling_day %in% filtro_datas_sem_repeticao)
+    # gerar o filtro de datas não repetidas com data
+    # com número máximo de indivíduos observados
+    filtro_datas_sem_repeticao2 <- dados_para_filtrar_por_data_sem_repeticao_media$sampling_day
 
     # gerar coluna object
     dados_formato_distance <- dados_formato_distance |>
-      dplyr::mutate(object = seq_along(dados_formato_distance$Region.Label))
+      dplyr::filter(
+        sampling_day %in% filtro_datas_sem_repeticao2,
+        !is.na(distance)
+      ) |>
+      dplyr::mutate(
+        object = seq_along(sampling_day)
+      )
+
+    # retorna os dados mantendo as amostras repetidas
+    return(dados_formato_distance)
 
   }
-
-  # retorna os dados mantendo as amostras repetidas
-  return(dados_formato_distance)
 
 }
 
@@ -225,8 +208,8 @@ utils::globalVariables(
     "nome_ea",
     "Effort",
     "Effort_day",
-    "n_repeated_visits",
     "repeated_visits",
+    "distance_mean",
     "esforco_total",
     "esforco_dia",
     "sampling_day",
