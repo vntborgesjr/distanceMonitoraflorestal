@@ -13,7 +13,7 @@ transformar_dados_formato_Distance(
 \arguments{
 \item{dados}{recebe a \code{tibble} gerada pela função \code{\link[=filtrar_dados]{filtrar_dados()}}. Por configuraçãoo, carrega a base de dados burtos de aves e médios e grandes mamíferos do Pojeto Monitora Componente Florestal \code{monitora_aves_masto_florestal}.}
 
-\item{...}{recebe as colunas que indicam a estratificação dos dados}
+\item{...}{recebe a estratificação dos dados}
 
 \item{amostras_repetidas}{lógico, controla a saída dos dados transformados. Por configuração, retorna os dados com amostragens repetidas em cada estação amostral.
 
@@ -40,18 +40,23 @@ dados_filtrados <- filtrar_dados(
 
 # gerar os dados transformados com repeticao
 dados_distance_com_repeticao <- transformar_dados_formato_Distance(
-dados = dados_filtrados,
+  dados = dados_filtrados,
   Region.Label,
-  Sample.Label
+  Sample.Label,
+  season,
+  year
 )
+
 
 glimpse(dados_distance_com_repeticao)
 
-# gerar os dados transformados sem repeticao
+# gerar os dados transformados com repeticao
 dados_distance_sem_repeticao <- transformar_dados_formato_Distance(
   dados = dados_filtrados,
   Region.Label,
   Sample.Label,
+  season,
+  year,
   amostras_repetidas = FALSE
 )
 
