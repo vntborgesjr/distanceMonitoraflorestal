@@ -79,7 +79,7 @@ gerar_dados_completos <- function(dados) {
       ),
       # gera uma nova coluna com o nome das UCs abreviados
       nome_uc_abv = stringr::str_split(# divide o genero e epiteto em diferentes listas
-        nome_sp, " "
+        nome_uc, " "
       ) |>
         purrr::map(# retem apenas as 4 primeiras letras dos itens de cada lista
           \(string) stringr::str_sub(
