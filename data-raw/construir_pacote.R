@@ -234,6 +234,7 @@
 # Adicionar vignette -------------------------------------------------------------------------
 # usethis::use_vignette("Checagem-filtragem-e-transformação-dos-dados")
 # usethis::use_vignette("Exploracao-e-selecao-de-dados-para-analises")
+# adicionar vignette de e
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo3-distancias-agrupadas-com-repeticoes")
@@ -241,7 +242,7 @@
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo5-amostragem-por-distancia-estratificada-por-unidade-de-conservacao")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo6-amostragem-por-distancia-estratificada-por-ano")
 #
-# construir o html para ser chamado usando vignettes()
+# construir o html para ser chamado usando vignette()
 # devtools::build_vignettes()
 #
 # Instalar localmente o pacote didstanceMonitorafloresta ------------------
