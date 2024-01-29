@@ -34,6 +34,9 @@
     <loc>/articles/Checagem-filtragem-e-transformacao-dos-dados.html</loc>
   </url>
   <url>
+    <loc>/articles/Exploracao-e-selecao-de-dados-para-analises.html</loc>
+  </url>
+  <url>
     <loc>/articles/distanceMonitoraflorestal.html</loc>
   </url>
   <url>
@@ -119,6 +122,9 @@
   </url>
   <url>
     <loc>/reference/plotar_distancia_covariavel.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plotar_distribuicao_distancia_estatico.html</loc>
   </url>
   <url>
     <loc>/reference/plotar_distribuicao_distancia_interativo.html</loc>
