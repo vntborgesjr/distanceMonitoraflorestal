@@ -133,7 +133,15 @@ filtrar_dados <- function(
       )
     )
 
+  # gerar o tibble filtrado pelas colunas desejadas e nivel taxonomico de validacao
+  dados_filtrados <- dados |>
+    dplyr::filter(
+      ...
+    )
+
+  # retornar dados filtrados
   return(dados_filtrados)
+
 }
 
 utils::globalVariables(
