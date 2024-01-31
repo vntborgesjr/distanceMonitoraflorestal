@@ -85,19 +85,33 @@ plotar_funcao_deteccao_modelos_selecionados <- function(
     intervalos_distancia = NULL
   ) {
 
-  # plot das curvas ajustadas das funções de detecção e histogramas dos modelos
-  # de amostragem por distãncia
-  dados |>
-    purrr::map(
-      \(.x) plot(
-        .x,
-        nc = nc,
-        breaks = intervalos_distancia,
-        xlab = "Distância (m)",
-        ylab = "Probabilidade de detecção",
-        pl.col = "chartreuse4"
+  if (class(dados) == "list") {
+    # plot das curvas ajustadas das funções de detecção e histogramas dos modelos
+    # de amostragem por distãncia
+    dados |>
+      purrr::map(
+        \(.x) plot(
+          .x,
+          nc = nc,
+          breaks = intervalos_distancia,
+          xlab = "Distância (m)",
+          ylab = "Probabilidade de detecção",
+          pl.col = "chartreuse4"
+        )
       )
+  } else {
+    # plot das curva ajustada das função de detecção e histogramas do modelo
+    # de amostragem por distãncia
+    plot(
+      dados,
+      nc = nc,
+      breaks = intervalos_distancia,
+      xlab = "Distância (m)",
+      ylab = "Probabilidade de detecção",
+      pl.col = "chartreuse4"
     )
+  }
+
 }
 
 utils::globalVariables(
