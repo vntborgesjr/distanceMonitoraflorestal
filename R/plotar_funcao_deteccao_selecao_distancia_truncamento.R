@@ -14,8 +14,8 @@ plotar_funcao_deteccao_selecao_distancia_truncamento <- function(dados) {
     purrr::map(
       \(.x) plot(
         .x,
-        xlab = "Distancia (m)",
-        ylab = "Probabilidade de detecacao",
+        xlab = "Distância (m)",
+        ylab = "Probabilidade de detecção",
         pl.col = "chartreuse4"
       )
     )
