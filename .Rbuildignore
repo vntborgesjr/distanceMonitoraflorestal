@@ -1,10 +1,5 @@
 ^distanceMonitoraflorestal\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^Meta$
 ^data-raw$
 
-^_pkgdown\.yml$
-^docs$
-^pkgdown$
-^doc$
