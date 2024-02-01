@@ -11,6 +11,8 @@
 #' pelo usuário
 #' @param estratificacao lógico, indica se os modelos informados contém ou não
 #' estratificação
+#' @param nivel_estratificacao recebe o nível de estratificação utilizado
+#' na função [transformar_dados_formato_Distance()]
 #'
 #' @description
 #' Descrever o que cada opção retorna
