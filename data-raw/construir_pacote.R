@@ -205,16 +205,6 @@
 # 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
 # usethis::use_github() # cria um novo repositório no github
 #
-# Criar documentação ------------------------------------------------------
-#
-# devtools::document()
-# a documentação é gerada automaticamente em devtools::check()
-#
-# Criar domcumentação online ----------------------------------------------
-#
-# usethis::use_pkgdown()
-# pkgdown::build_site()
-#
 # criar testes individuais de cada funcao ---------------------------------
 # rodar na primeira vez ou sempre que inserir uma nova funcao
 # minhas_funcoes <- c(
@@ -232,17 +222,36 @@
 # usethis::use_lifecycle_badge("experimental")
 #
 # Adicionar vignette -------------------------------------------------------------------------
+# usethis::use_vignette("distanceMonitorafloresta")
+# usethis::use_vignette("Carregando-uma-base-de-dados-atualizada")
 # usethis::use_vignette("Checagem-filtragem-e-transformação-dos-dados")
 # usethis::use_vignette("Exploracao-e-selecao-de-dados-para-analises")
-# usethis::use_vignette("Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes")
-# usethis::use_vignette("Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes")
+# usethis::use_vignette("04-Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes")
+# usethis::use_vignette("05-Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo3-distancias-agrupadas-com-repeticoes")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo4-amostragem-por-distancia-com-multiplas-covariaveis")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo5-amostragem-por-distancia-estratificada-por-unidade-de-conservacao")
 # usethis::use_vignette("Ajuste-dos-modelos-fluxo6-amostragem-por-distancia-estratificada-por-ano")
 #
+# testar vignettes
+# devtools::install(build_vignettes = TRUE)
+# vignette(
+# "distanceMonitoraflorestal",
+# package = "distanceMonitoraflorestal"
+# )
+#
 # construir o html para ser chamado usando vignette()
 # devtools::build_vignettes()
+#
+# Criar documentação ------------------------------------------------------
+#
+# devtools::document()
+# a documentação é gerada automaticamente em devtools::check()
+#
+# Criar domcumentação online ----------------------------------------------
+#
+# usethis::use_pkgdown()
+# pkgdown::build_site()
 #
 # Instalar localmente o pacote didstanceMonitorafloresta ------------------
 
