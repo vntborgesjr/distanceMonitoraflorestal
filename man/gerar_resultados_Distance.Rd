@@ -26,6 +26,9 @@ pelo usuário}
 
 \item{estratificacao}{lógico, indica se os modelos informados contém ou não
 estratificação}
+
+\item{nivel_estratificacao}{recebe o nível de estratificação utilizado
+na função \code{\link[=transformar_dados_formato_Distance]{transformar_dados_formato_Distance()}}}
 }
 \value{
 Retorna uma \code{tibble}.
