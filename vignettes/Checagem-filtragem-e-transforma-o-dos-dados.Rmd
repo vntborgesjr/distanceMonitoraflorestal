@@ -1,8 +1,8 @@
 ---
-title: "Checagem-filtragem-e-transformação-dos-dados"
+title: "Checagem-filtragem-e-transformacao-dos-dados"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Checagem-filtragem-e-transformação-dos-dados}
+  %\VignetteIndexEntry{Checagem-filtragem-e-transformacao-dos-dados}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
