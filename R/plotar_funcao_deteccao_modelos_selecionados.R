@@ -85,7 +85,7 @@ plotar_funcao_deteccao_modelos_selecionados <- function(
     intervalos_distancia = NULL
   ) {
 
-  if (class(dados) == "list") {
+  if (inherits(dados, "list") == TRUE) {
     # plot das curvas ajustadas das funções de detecção e histogramas dos modelos
     # de amostragem por distãncia
     dados |>
