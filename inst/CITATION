@@ -1,15 +1,15 @@
 citHeader("Para citar o pacote distanceMonitoraflorestal em publicações use:")
 citEntry(entry="Manual",
          title ="distanceMonitoraflorestal: ferramentas para selecao, visualizacao e analise de densidade de aves, medios e grandes mamiferos do Programa Monitora Componente Florestal",
-         author = "Vitor Nelson Teixeira Borges Junior, Julia Lins Luz, Luciana A. Fusinatto",
+         author = "Vitor Nelson Teixeira Borges-Júnior, Luciana A. Fusinatto, Elildo Carvalho-Júnior, Helga Correa Wiederhecker",
          Organization = " Piper 3D, WWF, ICMBio",
          address      = " ",
          year         = 2023,
          note         = "R package version 0.0.0.9000",
          url          = "",
          textVersion =
-         paste("Borges-Junior, V.N.T., Luz, J.L., Fusinatto, L.A. (2023) ",
+         paste("Borges-Junior V.N.T., Fusinatto L.A, Carvalho-Júnior E.R., Wiederhecker H.C. (2023) ",
                "distanceMonitoraflorestal: ferramentas para selecao, visualizacao e analise de densidade de aves, medios e grandes mamiferos do Programa Monitora Componente Florestal ",
                "Piper 3D, Rio de Janeiro, RJ, Brasil ",
-                "https:// ",
+                "https://vntborgesjr.github.io/distanceMonitoraflorestal/",
                 " Version = 0.0.0.9000",".",sep="") )

@@ -4,16 +4,30 @@ Version: 0.0.0.9000
 Authors@R: 
     c(
     person(
-    given = "Vitor Nelson", 
-    family = "Teixeira Borges-Júnior", 
+    given = "Vitor", 
+    family = "Borges-Júnior", 
     email = "vntborgesjr@gmail.com", 
     role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7726-9871")),
     person(
     given = "Luciana", 
-    family = "A. Fusinatto", 
+    family = "Fusinatto", 
     email = "lufusinatto@gmail.com", 
-    role = c("ctb"),
+    role = c("aut"),
+    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
+    ),
+    person(
+    given = "Elildo", 
+    family = "Carvalho-Júnior", 
+    email = "elildo.carvalho-junior@icmbio.gov.br", 
+    role = c("aut"),
+    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
+    ),
+    person(
+    given = "Helga", 
+    family = "Wiederhecker", 
+    email = "helgacorrea@wwf.org.br", 
+    role = c("aut"),
     comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
     ),
     person(
