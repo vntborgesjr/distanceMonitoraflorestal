@@ -11,6 +11,15 @@
 #' `distance`
 #' @param largura_caixa recebe um valor que estabelece a largura das colunas
 #' do histograma
+#' @param cor define a cor do contorno das barras
+#' @param preenchimeno define a cor de preenchimento das barras
+#' @param legenda define o conteúdo da legenda da figura. "auto" atribui as
+#' o vetor c("a", "b", "c")
+#' @param familia_fonte define o tipo de fonte
+#' @param tamanho_fonte_titulo_eixos define o tamanho da fonte dos títulos
+#' dos eixos
+#' @param tamanho_fonte_valores define o tamanho da fonte dos valores dos
+#' eixos
 #'
 #' @return Retorna um objeto do tipo \code{...} contendo um gráfico de pontos
 #'  (Cleveland dotplot), de caixa (boxplot) e um histograma, da distribuição
