@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(distanceMonitoraflorestal)
 ```
 
-#### Fluxo 3 - Distâncias agrupadas com todas as repetições
+# Fluxo 3 - Distâncias agrupadas com todas as repetições
 
 Aqui vamos partir do mesmo conjunto de dados do Fluxo 1
 (`cutia_tap_arap`), com todas as repetições, mas vamos agrupar as
