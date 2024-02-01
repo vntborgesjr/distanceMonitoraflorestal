@@ -111,7 +111,7 @@ gerar_resultados_Distance <- function(
   tipo_de_resultado <- match.arg(tipo_de_resultado)
 
   # fluxo para entrada de um único modelo
-  if (class(dados) == "dsmodel") {
+  if (inherits(dados, what = "dsmodel") == TRUE) {
 
     # trasformar dados em uma lista
     dados <- list(dados)
