@@ -2,14 +2,15 @@
 % Please edit documentation in R/gerar_resultados_Distance.R
 \name{gerar_resultados_Distance}
 \alias{gerar_resultados_Distance}
-\title{Resultados sobre a Area, Abundancia e densidade estimada, detecção e
-coeficiente de variacao}
+\title{Resultados sobre a Área, Abundância e densidade estimada, detecção e
+coeficiente de variação}
 \usage{
 gerar_resultados_Distance(
   dados,
   resultado_selecao_modelos,
-  tipo_de_resultado = c("area_estudo", "abundancia", "densidade"),
-  estratificacao = FALSE
+  tipo_de_resultado = c("area_estudo", "abundância", "densidade"),
+  estratificacao = FALSE,
+  nivel_estratificacao
 )
 }
 \arguments{
