@@ -88,7 +88,7 @@ plotar_resultados_Distance <- function(
           Modelo,
           Ano
         ) |>
-        dplyr::summarise(`Abundância estimada` = sum(`Abundância estimada`)) |>
+        dplyr::summarise(`Estimativa de densidade (ind/ha)` = sum(`Estimativa de densidade (ind/ha)`)) |>
         ggplot2::ggplot() +
         ggplot2::aes(
           x = Ano,
@@ -104,11 +104,6 @@ plotar_resultados_Distance <- function(
       grafico <- dados |>
         dplyr::filter(Rotulo != "Total") |>
         dplyr::mutate(Ano = as.integer(Rotulo)) |>
-        dplyr::group_by(
-          Modelo,
-          Ano
-        ) |>
-        dplyr::summarise(n = sum(`Abundância estimada`)) |>
         ggplot2::ggplot() +
         ggplot2::aes(
           x = Ano,
