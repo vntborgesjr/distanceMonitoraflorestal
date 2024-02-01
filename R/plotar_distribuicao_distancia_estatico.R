@@ -12,13 +12,13 @@
 #' @param largura_caixa recebe um valor que estabelece a largura das colunas
 #' do histograma
 #' @param cor define a cor do contorno das barras
-#' @param preenchimeno define a cor de preenchimento das barras
+#' @param preenchimento define a cor de preenchimento das barras
 #' @param legenda define o conteúdo da legenda da figura. "auto" atribui as
 #' o vetor c("a", "b", "c")
 #' @param familia_fonte define o tipo de fonte
 #' @param tamanho_fonte_titulo_eixos define o tamanho da fonte dos títulos
 #' dos eixos
-#' @param tamanho_fonte_valores define o tamanho da fonte dos valores dos
+#' @param tamanho_fonte_valores_eixos define o tamanho da fonte dos valores dos
 #' eixos
 #'
 #' @return Retorna um objeto do tipo \code{...} contendo um gráfico de pontos
@@ -78,7 +78,7 @@ plotar_distribuicao_distancia_estatico <- function(
     ggplot2::geom_point(
       color = preenchimento
     )  +
-    ggplot2::labs(x = "Distância",
+    ggplot2::labs(x = "Dist\uância",
                   y = " \n \n") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
@@ -103,7 +103,7 @@ plotar_distribuicao_distancia_estatico <- function(
                             col = "white",
                             center = 1.25) +
     ggplot2::labs(x = "",
-                  y = "Frequência") +
+                  y = "Frequ\uência") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.title = ggplot2::element_text(
