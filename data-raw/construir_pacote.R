@@ -224,14 +224,14 @@
 # Adicionar vignette -------------------------------------------------------------------------
 # usethis::use_vignette("distanceMonitorafloresta")
 # usethis::use_vignette("Carregando-uma-base-de-dados-atualizada")
-# usethis::use_vignette("Checagem-filtragem-e-transformação-dos-dados")
+# usethis::use_vignette("Checagem-filtragem-e-transformacao-dos-dados")
 # usethis::use_vignette("Exploracao-e-selecao-de-dados-para-analises")
-# usethis::use_vignette("04-Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes")
-# usethis::use_vignette("05-Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes")
-# usethis::use_vignette("Ajuste-dos-modelos-fluxo3-distancias-agrupadas-com-repeticoes")
-# usethis::use_vignette("Ajuste-dos-modelos-fluxo4-amostragem-por-distancia-com-multiplas-covariaveis")
-# usethis::use_vignette("Ajuste-dos-modelos-fluxo5-amostragem-por-distancia-estratificada-por-unidade-de-conservacao")
-# usethis::use_vignette("Ajuste-dos-modelos-fluxo6-amostragem-por-distancia-estratificada-por-ano")
+# usethis::use_vignette("Fluxo1-distancias-exatas-com-repeticoes")
+# usethis::use_vignette("Fluxo2-distancias-exatas-sem-repeticoes")
+# usethis::use_vignette("Fluxo3-distancias-agrupadas-com-repeticoes")
+# usethis::use_vignette("Fluxo4-multiplas-covariaveis")
+# usethis::use_vignette("Fluxo5-estratificacao-por-unidade-de-conservacao")
+# usethis::use_vignette("Fluxo6-estratificacao-por-ano")
 #
 # testar vignettes
 # devtools::install(build_vignettes = TRUE)
