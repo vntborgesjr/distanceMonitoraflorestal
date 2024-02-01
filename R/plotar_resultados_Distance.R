@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples \dontrun{
-#'
+#' plotar_resultados_Distance()
 #' }
 plotar_resultados_Distance <- function(
     dados,
