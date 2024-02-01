@@ -25,6 +25,8 @@ do histograma}
 
 \item{cor}{define a cor do contorno das barras}
 
+\item{preenchimento}{define a cor de preenchimento das barras}
+
 \item{legenda}{define o conteúdo da legenda da figura. "auto" atribui as
 o vetor c("a", "b", "c")}
 
@@ -33,9 +35,7 @@ o vetor c("a", "b", "c")}
 \item{tamanho_fonte_titulo_eixos}{define o tamanho da fonte dos títulos
 dos eixos}
 
-\item{preenchimeno}{define a cor de preenchimento das barras}
-
-\item{tamanho_fonte_valores}{define o tamanho da fonte dos valores dos
+\item{tamanho_fonte_valores_eixos}{define o tamanho da fonte dos valores dos
 eixos}
 }
 \value{

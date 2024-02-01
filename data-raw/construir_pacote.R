@@ -208,7 +208,7 @@
 # Criar documentação ------------------------------------------------------
 #
 # devtools::document()
-#
+# a documentação é gerada automaticamente em devtools::check()
 #
 # Criar domcumentação online ----------------------------------------------
 #
