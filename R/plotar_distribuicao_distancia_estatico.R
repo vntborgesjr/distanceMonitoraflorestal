@@ -78,7 +78,7 @@ plotar_distribuicao_distancia_estatico <- function(
     ggplot2::geom_point(
       color = preenchimento
     )  +
-    ggplot2::labs(x = "Dist\uância",
+    ggplot2::labs(x = "Distância",
                   y = " \n \n") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
@@ -103,7 +103,7 @@ plotar_distribuicao_distancia_estatico <- function(
                             col = "white",
                             center = 1.25) +
     ggplot2::labs(x = "",
-                  y = "Frequ\uência") +
+                  y = "Frequência") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.title = ggplot2::element_text(
