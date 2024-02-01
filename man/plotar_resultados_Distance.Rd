@@ -26,6 +26,6 @@ Descrever o que cada opção retorna
 }
 \examples{
 \dontrun{
-
+plotar_resultados_Distance()
 }
 }
