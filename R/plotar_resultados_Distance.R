@@ -140,6 +140,7 @@ utils::globalVariables(
   c(
     "tipo_de_resultado",
     "dados",
-    "grafico"
+    "grafico",
+    "Ano"
   )
 )
