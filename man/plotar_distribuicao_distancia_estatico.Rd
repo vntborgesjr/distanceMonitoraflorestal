@@ -22,6 +22,21 @@ plotar_distribuicao_distancia_estatico(
 
 \item{largura_caixa}{recebe um valor que estabelece a largura das colunas
 do histograma}
+
+\item{cor}{define a cor do contorno das barras}
+
+\item{legenda}{define o conteúdo da legenda da figura. "auto" atribui as
+o vetor c("a", "b", "c")}
+
+\item{familia_fonte}{define o tipo de fonte}
+
+\item{tamanho_fonte_titulo_eixos}{define o tamanho da fonte dos títulos
+dos eixos}
+
+\item{preenchimeno}{define a cor de preenchimento das barras}
+
+\item{tamanho_fonte_valores}{define o tamanho da fonte dos valores dos
+eixos}
 }
 \value{
 Retorna um objeto do tipo \code{...} contendo um gráfico de pontos
