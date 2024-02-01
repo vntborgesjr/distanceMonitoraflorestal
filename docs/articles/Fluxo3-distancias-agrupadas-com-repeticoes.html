@@ -45,7 +45,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Carregando-uma-base-de-dados-atualizada.html">Carregando-uma-base-de-dados-atualizada</a>
-    <a class="dropdown-item" href="../articles/Checagem-filtragem-e-transforma-o-dos-dados.html">Checagem-filtragem-e-transformação-dos-dados</a>
+    <a class="dropdown-item" href="../articles/Checagem-filtragem-e-transformacao-dos-dados.html">Checagem-filtragem-e-transformacao-dos-dados</a>
     <a class="dropdown-item" href="../articles/Exploracao-e-selecao-de-dados-para-analises.html">Exploracao-e-selecao-de-dados-para-analises</a>
     <a class="dropdown-item" href="../articles/Fluxo1-distancias-exatas-com-repeticoes.html">Ajuste-dos-modelos-fluxo1-distancias-exatas-com-repeticoes</a>
     <a class="dropdown-item" href="../articles/Fluxo2-distancias-exatas-sem-repeticoes.html">Ajuste-dos-modelos-fluxo2-distancias-exatas-sem-repeticoes</a>
@@ -83,19 +83,19 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">distanceMonitoraflorestal</span><span class="op">)</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="fluxo-3---distâncias-agrupadas-com-todas-as-repetições">Fluxo 3 - Distâncias agrupadas com todas as repetições<a class="anchor" aria-label="anchor" href="#fluxo-3---dist%C3%A2ncias-agrupadas-com-todas-as-repeti%C3%A7%C3%B5es"></a>
-</h4>
+<div class="section level2">
+<h2 id="fluxo-3---distâncias-agrupadas-com-todas-as-repetições">Fluxo 3 - Distâncias agrupadas com todas as repetições<a class="anchor" aria-label="anchor" href="#fluxo-3---dist%C3%A2ncias-agrupadas-com-todas-as-repeti%C3%A7%C3%B5es"></a>
+</h2>
 <p>Aqui vamos partir do mesmo conjunto de dados do Fluxo 1
 (<code>cutia_tap_arap</code>), com todas as repetições, mas vamos
 agrupar as distâncias em intervalos. Vamos usar o mesmo valor de
 truncamento, removendo 10% das observações nas maiores distâncias, o que
 significa que aproveitaremos as observações feitas até 15m de distância
 do observador.</p>
-<div class="section level5">
-<h5 id="plotando-o-histograma-das-frequências-de-observações-pela-distância">Plotando o histograma das frequências de observações pela
+<div class="section level6">
+<h6 id="plotando-o-histograma-das-frequências-de-observações-pela-distância">Plotando o histograma das frequências de observações pela
 distância<a class="anchor" aria-label="anchor" href="#plotando-o-histograma-das-frequ%C3%AAncias-de-observa%C3%A7%C3%B5es-pela-dist%C3%A2ncia"></a>
-</h5>
+</h6>
 <p>O histograma interativo está disponível no aplicativo em Shiny
 <code>app_distancia_interativo.R</code>em
 <code>piper3d_monitora_florestal\apps</code>.</p>
@@ -119,13 +119,13 @@ frequências de observações nos histogramas.</p>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">distance</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span><span class="fu"><a href="../reference/plotar_distribuicao_distancia_interativo.html">plotar_distribuicao_distancia_interativo</a></span><span class="op">(</span>largura_caixa <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level5">
-<h5 id="definindo-os-intevalos-de-distância-de-agrupamento">Definindo os intevalos de distância de agrupamento<a class="anchor" aria-label="anchor" href="#definindo-os-intevalos-de-dist%C3%A2ncia-de-agrupamento"></a>
-</h5>
+<div class="section level6">
+<h6 id="definindo-os-intevalos-de-distância-de-agrupamento">Definindo os intevalos de distância de agrupamento<a class="anchor" aria-label="anchor" href="#definindo-os-intevalos-de-dist%C3%A2ncia-de-agrupamento"></a>
+</h6>
 <p>É importante ressaltar que o valor máximo para categorização dos
 dados não deve utltrapassar o valor de truncagem. Caso contrário, não
 será possível ajustar os modelos aos dados.</p>
-<div class="section level6">
+<div class="section level7">
 <h6 id="primeira-binagem---intervalos-iguais-de-1-5m">Primeira binagem - Intervalos iguais de 1.5m<a class="anchor" aria-label="anchor" href="#primeira-binagem---intervalos-iguais-de-1-5m"></a>
 </h6>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -138,7 +138,7 @@ será possível ajustar os modelos aos dados.</p>
 <span>      <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="segunda-binagem---primeiro-intervalo-de-1m-e-demais-intervalos-de-1-4m">Segunda binagem - Primeiro intervalo de 1m e demais intervalos de
 1.4m<a class="anchor" aria-label="anchor" href="#segunda-binagem---primeiro-intervalo-de-1m-e-demais-intervalos-de-1-4m"></a>
 </h6>
@@ -156,7 +156,7 @@ será possível ajustar os modelos aos dados.</p>
 <span>  <span class="op">)</span></span>
 <span>  </span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="terceira-binagem---intervalos-iguais-de-2-5m">Terceira binagem - Intervalos iguais de 2.5m<a class="anchor" aria-label="anchor" href="#terceira-binagem---intervalos-iguais-de-2-5m"></a>
 </h6>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -170,10 +170,10 @@ será possível ajustar os modelos aos dados.</p>
 <span>  <span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level5">
-<h5 id="ajustando-diferentes-modelos-de-funções-de-detecção">Ajustando diferentes modelos de funções de detecção<a class="anchor" aria-label="anchor" href="#ajustando-diferentes-modelos-de-fun%C3%A7%C3%B5es-de-detec%C3%A7%C3%A3o"></a>
-</h5>
 <div class="section level6">
+<h6 id="ajustando-diferentes-modelos-de-funções-de-detecção">Ajustando diferentes modelos de funções de detecção<a class="anchor" aria-label="anchor" href="#ajustando-diferentes-modelos-de-fun%C3%A7%C3%B5es-de-detec%C3%A7%C3%A3o"></a>
+</h6>
+<div class="section level7">
 <h6 id="uniforme-cosseno">Uniforme + Cosseno<a class="anchor" aria-label="anchor" href="#uniforme-cosseno"></a>
 </h6>
 <p>Primeira Binagem</p>
@@ -203,7 +203,7 @@ observações mais distantes truncam os dados em 15m.</p>
 <span>    termos_ajuste <span class="op">=</span> <span class="st">"cos"</span>,</span>
 <span>    truncamento <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="half-normal-sem-termos-de-ajuste-e-com-termos-de-ajuste">Half-Normal sem termos de ajuste e com termos de ajuste<a class="anchor" aria-label="anchor" href="#half-normal-sem-termos-de-ajuste-e-com-termos-de-ajuste"></a>
 </h6>
 <p>Primeira binagem</p>
@@ -228,7 +228,7 @@ observações mais distantes truncam os dados em 15m.</p>
 <span>    funcao_chave <span class="op">=</span> <span class="st">"hn"</span>,</span>
 <span>    truncamento <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="hazard-rate-sem-termos-de-ajuste-e-com-termos-de-ajuste">Hazard-rate sem termos de ajuste e com termos de ajuste<a class="anchor" aria-label="anchor" href="#hazard-rate-sem-termos-de-ajuste-e-com-termos-de-ajuste"></a>
 </h6>
 <p>Primeira binagem</p>
@@ -254,10 +254,10 @@ observações mais distantes truncam os dados em 15m.</p>
 <span>    truncamento <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level5">
-<h5 id="comparando-os-modelos">Comparando os modelos<a class="anchor" aria-label="anchor" href="#comparando-os-modelos"></a>
-</h5>
 <div class="section level6">
+<h6 id="comparando-os-modelos">Comparando os modelos<a class="anchor" aria-label="anchor" href="#comparando-os-modelos"></a>
+</h6>
+<div class="section level7">
 <h6 id="tabela-com-o-resumo-comparativo-dos-modelos">Tabela com o resumo comparativo dos modelos<a class="anchor" aria-label="anchor" href="#tabela-com-o-resumo-comparativo-dos-modelos"></a>
 </h6>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -300,7 +300,7 @@ observações mais distantes truncam os dados em 15m.</p>
 <span></span>
 <span><span class="va">fluxo3.3_selecao_funcao_deteccao_termo_ajuste</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="gráficos-de-ajuste-das-funções-de-detecção-às-probabilidades-de-detecção">Gráficos de ajuste das funções de detecção às probabilidades de
 detecção<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-ajuste-das-fun%C3%A7%C3%B5es-de-detec%C3%A7%C3%A3o-%C3%A0s-probabilidades-de-detec%C3%A7%C3%A3o"></a>
 </h6>
@@ -348,7 +348,7 @@ detecção<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-ajuste-d
 <span><span class="co"># plotar a probabilidade de detecção observada (barras) e a esperada (linhas e pontos)</span></span>
 <span><span class="fu"><a href="../reference/plotar_funcao_deteccao_modelos_selecionados.html">plotar_funcao_deteccao_modelos_selecionados</a></span><span class="op">(</span><span class="va">fluxo3.3_modelos_selecionados</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="teste-de-bondade-de-ajuste-dos-modelos-e-q-q-plots">Teste de bondade de ajuste dos modelos e Q-Q plots<a class="anchor" aria-label="anchor" href="#teste-de-bondade-de-ajuste-dos-modelos-e-q-q-plots"></a>
 </h6>
 <p>Primeira binagem</p>
@@ -390,10 +390,10 @@ detecção<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-ajuste-d
 <span><span class="va">bondade_ajuste_fluxo3.3</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level5">
-<h5 id="avaliando-as-estimativas-de-abundância-e-densidade">Avaliando as estimativas de Abundância e Densidade<a class="anchor" aria-label="anchor" href="#avaliando-as-estimativas-de-abund%C3%A2ncia-e-densidade"></a>
-</h5>
 <div class="section level6">
+<h6 id="avaliando-as-estimativas-de-abundância-e-densidade">Avaliando as estimativas de Abundância e Densidade<a class="anchor" aria-label="anchor" href="#avaliando-as-estimativas-de-abund%C3%A2ncia-e-densidade"></a>
+</h6>
+<div class="section level7">
 <h6 id="características-da-área-de-estudo-e-da-taxa-de-encontro">Características da área de estudo e da taxa de encontro<a class="anchor" aria-label="anchor" href="#caracter%C3%ADsticas-da-%C3%A1rea-de-estudo-e-da-taxa-de-encontro"></a>
 </h6>
 <p>Primeira binagem</p>
@@ -427,7 +427,7 @@ detecção<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-ajuste-d
 <span></span>
 <span><span class="va">fluxo3.3_caracteristicas_area_estudo_taxa_encontro</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="características-de-abundância-esforço-e-detecção">Características de abundância, esforço e detecção<a class="anchor" aria-label="anchor" href="#caracter%C3%ADsticas-de-abund%C3%A2ncia-esfor%C3%A7o-e-detec%C3%A7%C3%A3o"></a>
 </h6>
 <p>Primeira binagem</p>
@@ -461,7 +461,7 @@ detecção<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-ajuste-d
 <span></span>
 <span><span class="va">fluxo3.3_caracteristicas_abundancia</span></span></code></pre></div>
 </div>
-<div class="section level6">
+<div class="section level7">
 <h6 id="características-de-densidade">Características de densidade<a class="anchor" aria-label="anchor" href="#caracter%C3%ADsticas-de-densidade"></a>
 </h6>
 <p>Primeira binagem</p>
