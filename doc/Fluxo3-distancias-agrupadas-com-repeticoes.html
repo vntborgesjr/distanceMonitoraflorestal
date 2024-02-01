@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Ajuste-dos-modelos-fluxo3-distancias-agrupadas-com-repeticoes</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Ajuste-dos-modelos-fluxo3-distancias-agrupadas-com-repeticoes</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(distanceMonitoraflorestal)</span></code></pre></div>
+<div id="fluxo-3---distâncias-agrupadas-com-todas-as-repetições" class="section level4">
+<h4>Fluxo 3 - Distâncias agrupadas com todas as repetições</h4>
+<p>Aqui vamos partir do mesmo conjunto de dados do Fluxo 1
+(<code>cutia_tap_arap</code>), com todas as repetições, mas vamos
+agrupar as distâncias em intervalos. Vamos usar o mesmo valor de
+truncamento, removendo 10% das observações nas maiores distâncias, o que
+significa que aproveitaremos as observações feitas até 15m de distância
+do observador.</p>
+<div id="plotando-o-histograma-das-frequências-de-observações-pela-distância" class="section level5">
+<h5>Plotando o histograma das frequências de observações pela
+distância</h5>
+<p>O histograma interativo está disponível no aplicativo em Shiny
+<code>app_distancia_interativo.R</code>em
+<code>piper3d_monitora_florestal\apps</code>.</p>
+<p>Aqui, plotamos quatro histogramas com binagens diferentes, para
+observar o efeito de agrupar os dados sobre as distribuições das
+frequências de observações nos histogramas.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>(distance) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">plotar_distribuicao_distancia_interativo</span>(<span class="at">largura_caixa =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>(distance) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">plotar_distribuicao_distancia_interativo</span>(<span class="at">largura_caixa =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>(distance) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">plotar_distribuicao_distancia_interativo</span>(<span class="at">largura_caixa =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>(distance) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">plotar_distribuicao_distancia_interativo</span>(<span class="at">largura_caixa =</span> <span class="dv">5</span>)</span></code></pre></div>
+</div>
+<div id="definindo-os-intevalos-de-distância-de-agrupamento" class="section level5">
+<h5>Definindo os intevalos de distância de agrupamento</h5>
+<p>É importante ressaltar que o valor máximo para categorização dos
+dados não deve utltrapassar o valor de truncagem. Caso contrário, não
+será possível ajustar os modelos aos dados.</p>
+<div id="primeira-binagem---intervalos-iguais-de-1.5m" class="section level6">
+<h6>Primeira binagem - Intervalos iguais de 1.5m</h6>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>cutia_tap_arap_bin1 <span class="ot">&lt;-</span> cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">definir_intervalos_distancia</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">intervalos_distancia =</span> <span class="fu">seq</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>      <span class="at">from =</span> <span class="dv">0</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>      <span class="at">to =</span> <span class="dv">15</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">1.5</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>      )</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="segunda-binagem---primeiro-intervalo-de-1m-e-demais-intervalos-de-1.4m" class="section level6">
+<h6>Segunda binagem - Primeiro intervalo de 1m e demais intervalos de
+1.4m</h6>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>cutia_tap_arap_bin2 <span class="ot">&lt;-</span> cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">definir_intervalos_distancia</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">intervalos_distancia =</span> <span class="fu">c</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>      <span class="dv">0</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>      <span class="fu">seq</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>      <span class="at">from =</span> <span class="dv">1</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>      <span class="at">to =</span> <span class="dv">15</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">1.4</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>      )</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    )</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>  )</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  </span></code></pre></div>
+</div>
+<div id="terceira-binagem---intervalos-iguais-de-2.5m" class="section level6">
+<h6>Terceira binagem - Intervalos iguais de 2.5m</h6>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>cutia_tap_arap_bin3 <span class="ot">&lt;-</span> cutia_tap_arap <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">definir_intervalos_distancia</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="at">intervalos_distancia =</span> <span class="fu">seq</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>      <span class="at">from =</span> <span class="dv">0</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>      <span class="at">to =</span> <span class="dv">15</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">2.5</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>      )</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+</div>
+<div id="ajustando-diferentes-modelos-de-funções-de-detecção" class="section level5">
+<h5>Ajustando diferentes modelos de funções de detecção</h5>
+<div id="uniforme-cosseno" class="section level6">
+<h6>Uniforme + Cosseno</h6>
+<p>Primeira Binagem</p>
+<p>Aqui, por conta da binagem, o truncamento deve ser expresso em
+distância. Para os dados que estamos trabalhando, o corte de 10% das
+observações mais distantes truncam os dados em 15m.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>cutia_tap_arap_bin1_unif <span class="ot">&lt;-</span> cutia_tap_arap_bin1 <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;unif&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">termos_ajuste =</span> <span class="st">&quot;cos&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>cutia_tap_arap_bin2_unif <span class="ot">&lt;-</span> cutia_tap_arap_bin2 <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;unif&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="at">termos_ajuste =</span> <span class="st">&quot;cos&quot;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>cutia_tap_arap_bin3_unif <span class="ot">&lt;-</span> cutia_tap_arap_bin3 <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;unif&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="at">termos_ajuste =</span> <span class="st">&quot;cos&quot;</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+</div>
+<div id="half-normal-sem-termos-de-ajuste-e-com-termos-de-ajuste" class="section level6">
+<h6>Half-Normal sem termos de ajuste e com termos de ajuste</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>cutia_tap_arap_bin1_hn <span class="ot">&lt;-</span> cutia_tap_arap_bin1 <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>cutia_tap_arap_bin2_hn <span class="ot">&lt;-</span> cutia_tap_arap_bin2 <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>cutia_tap_arap_bin3_hn <span class="ot">&lt;-</span> cutia_tap_arap_bin3 <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hn&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+</div>
+<div id="hazard-rate-sem-termos-de-ajuste-e-com-termos-de-ajuste" class="section level6">
+<h6>Hazard-rate sem termos de ajuste e com termos de ajuste</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>cutia_tap_arap_bin1_hr <span class="ot">&lt;-</span> cutia_tap_arap_bin1 <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>cutia_tap_arap_bin2_hr <span class="ot">&lt;-</span> cutia_tap_arap_bin2 <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>cutia_tap_arap_bin3_hr <span class="ot">&lt;-</span> cutia_tap_arap_bin3 <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">ajustar_modelos_Distance</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    <span class="at">funcao_chave =</span> <span class="st">&quot;hr&quot;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    <span class="at">truncamento =</span> <span class="dv">15</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="comparando-os-modelos" class="section level5">
+<h5>Comparando os modelos</h5>
+<div id="tabela-com-o-resumo-comparativo-dos-modelos" class="section level6">
+<h6>Tabela com o resumo comparativo dos modelos</h6>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_selecao_funcao_deteccao_termo_ajuste <span class="ot">&lt;-</span> <span class="fu">selecionar_funcao_deteccao_termo_ajuste</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  cutia_tap_arap_bin1_unif,</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  cutia_tap_arap_bin1_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  cutia_tap_arap_bin1_hn<span class="sc">$</span>Cosseno,</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  cutia_tap_arap_bin1_hn<span class="sc">$</span><span class="st">`</span><span class="at">Hermite polinomial</span><span class="st">`</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  cutia_tap_arap_bin1_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>  cutia_tap_arap_bin1_hr<span class="sc">$</span>Cosseno,</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>  cutia_tap_arap_bin1_hr<span class="sc">$</span><span class="st">`</span><span class="at">Polinomial simples</span><span class="st">`</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>  <span class="at">distancia_categorizada =</span> <span class="cn">TRUE</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>)</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_selecao_funcao_deteccao_termo_ajuste</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_selecao_funcao_deteccao_termo_ajuste <span class="ot">&lt;-</span> <span class="fu">selecionar_funcao_deteccao_termo_ajuste</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  cutia_tap_arap_bin2_unif,</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  cutia_tap_arap_bin2_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  cutia_tap_arap_bin2_hn<span class="sc">$</span>Cosseno,</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  cutia_tap_arap_bin2_hn<span class="sc">$</span><span class="st">`</span><span class="at">Hermite polinomial</span><span class="st">`</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  cutia_tap_arap_bin2_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>  cutia_tap_arap_bin2_hr<span class="sc">$</span>Cosseno,</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>  cutia_tap_arap_bin2_hr<span class="sc">$</span><span class="st">`</span><span class="at">Polinomial simples</span><span class="st">`</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>  <span class="at">distancia_categorizada =</span> <span class="cn">TRUE</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>)</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_selecao_funcao_deteccao_termo_ajuste</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_selecao_funcao_deteccao_termo_ajuste <span class="ot">&lt;-</span> <span class="fu">selecionar_funcao_deteccao_termo_ajuste</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  cutia_tap_arap_bin3_unif,</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  cutia_tap_arap_bin3_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  cutia_tap_arap_bin3_hn<span class="sc">$</span>Cosseno,</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  cutia_tap_arap_bin3_hn<span class="sc">$</span><span class="st">`</span><span class="at">Hermite polinomial</span><span class="st">`</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>  cutia_tap_arap_bin3_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>  cutia_tap_arap_bin3_hr<span class="sc">$</span>Cosseno,</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>  cutia_tap_arap_bin3_hr<span class="sc">$</span><span class="st">`</span><span class="at">Polinomial simples</span><span class="st">`</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>  <span class="at">distancia_categorizada =</span> <span class="cn">TRUE</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>)</span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_selecao_funcao_deteccao_termo_ajuste</span></code></pre></div>
+</div>
+<div id="gráficos-de-ajuste-das-funções-de-detecção-às-probabilidades-de-detecção" class="section level6">
+<h6>Gráficos de ajuste das funções de detecção às probabilidades de
+detecção</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># Gráficos de ajuste das funções de deteção às probabilidades de deteção</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_modelos_selecionados <span class="ot">&lt;-</span> <span class="fu">gerar_lista_modelos_selecionados</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  cutia_tap_arap_bin1_hn<span class="sc">$</span><span class="st">`</span><span class="at">Cosseno</span><span class="st">`</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  cutia_tap_arap_bin1_unif,</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  cutia_tap_arap_bin1_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  cutia_tap_arap_bin1_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>, </span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  <span class="at">nome_modelos_selecionados =</span> fluxo3<span class="fl">.1</span>_selecao_funcao_deteccao_termo_ajuste</span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>)</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co"># plotar a probabilidade de detecção observada (barras) e a esperada (linhas e pontos)</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="fu">plotar_funcao_deteccao_modelos_selecionados</span>(</span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>  fluxo3<span class="fl">.1</span>_modelos_selecionados</span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a>)</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Gráficos de ajuste das funções de deteção às probabilidades de deteção</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_modelos_selecionados <span class="ot">&lt;-</span> <span class="fu">gerar_lista_modelos_selecionados</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  cutia_tap_arap_bin2_unif,</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  cutia_tap_arap_bin2_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>  cutia_tap_arap_bin2_hn<span class="sc">$</span><span class="st">`</span><span class="at">Cosseno</span><span class="st">`</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  cutia_tap_arap_bin2_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>, </span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>  <span class="at">nome_modelos_selecionados =</span> fluxo3<span class="fl">.2</span>_selecao_funcao_deteccao_termo_ajuste</span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>)</span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co"># plotar a probabilidade de detecção observada (barras) e a esperada (linhas e pontos)</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="fu">plotar_funcao_deteccao_modelos_selecionados</span>(fluxo3<span class="fl">.2</span>_modelos_selecionados)</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># Gráficos de ajuste das funções de deteção às probabilidades de deteção</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_modelos_selecionados <span class="ot">&lt;-</span> <span class="fu">gerar_lista_modelos_selecionados</span>(</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  cutia_tap_arap_bin3_hn<span class="sc">$</span><span class="st">`</span><span class="at">Cosseno</span><span class="st">`</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  cutia_tap_arap_bin3_hr<span class="sc">$</span>Cosseno,</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  cutia_tap_arap_bin3_hr<span class="sc">$</span><span class="st">`</span><span class="at">Polinomial simples</span><span class="st">`</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>  cutia_tap_arap_bin3_hr<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>  cutia_tap_arap_bin3_unif,</span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  cutia_tap_arap_bin3_hn<span class="sc">$</span><span class="st">`</span><span class="at">Sem termo</span><span class="st">`</span>, </span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>  <span class="at">nome_modelos_selecionados =</span> fluxo3<span class="fl">.3</span>_selecao_funcao_deteccao_termo_ajuste</span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>)</span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co"># plotar a probabilidade de detecção observada (barras) e a esperada (linhas e pontos)</span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="fu">plotar_funcao_deteccao_modelos_selecionados</span>(fluxo3<span class="fl">.3</span>_modelos_selecionados)</span></code></pre></div>
+</div>
+<div id="teste-de-bondade-de-ajuste-dos-modelos-e-q-q-plots" class="section level6">
+<h6>Teste de bondade de ajuste dos modelos e Q-Q plots</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>bondade_ajuste_fluxo3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">testar_bondade_ajuste</span>(fluxo3<span class="fl">.1</span>_modelos_selecionados,</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>  <span class="at">chisq =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  <span class="at">intervalos_distancia =</span>  <span class="fu">seq</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>    <span class="at">from =</span> <span class="dv">0</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="at">to  =</span> <span class="dv">15</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>    <span class="at">by =</span> <span class="fl">1.5</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>  )</span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>)</span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>bondade_ajuste_fluxo3<span class="fl">.1</span></span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>bondade_ajuste_fluxo3<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">testar_bondade_ajuste</span>(fluxo3<span class="fl">.2</span>_modelos_selecionados,</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="at">chisq =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  <span class="at">intervalos_distancia =</span>  </span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">15</span>, <span class="fl">1.4</span>))</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>  )</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>bondade_ajuste_fluxo3<span class="fl">.2</span></span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>bondade_ajuste_fluxo3<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">testar_bondade_ajuste</span>(fluxo3<span class="fl">.3</span>_modelos_selecionados,</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="at">chisq =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  <span class="at">intervalos_distancia =</span>  <span class="fu">seq</span>(</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>    <span class="at">from =</span> <span class="dv">0</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>    <span class="at">to  =</span> <span class="dv">15</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>    <span class="at">by =</span> <span class="fl">2.5</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>  )</span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>)</span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>bondade_ajuste_fluxo3<span class="fl">.3</span></span></code></pre></div>
+</div>
+</div>
+<div id="avaliando-as-estimativas-de-abundância-e-densidade" class="section level5">
+<h5>Avaliando as estimativas de Abundância e Densidade</h5>
+<div id="características-da-área-de-estudo-e-da-taxa-de-encontro" class="section level6">
+<h6>Características da área de estudo e da taxa de encontro</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a área, número de detecções, e taxa de encontro  </span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_caracteristicas_area_estudo_taxa_encontro <span class="ot">&lt;-</span> fluxo3<span class="fl">.1</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.1</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;area_estudo&quot;</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>  )</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_caracteristicas_area_estudo_taxa_encontro</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a área, número de detecções, e taxa de encontro  </span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_caracteristicas_area_estudo_taxa_encontro <span class="ot">&lt;-</span> fluxo3<span class="fl">.2</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.2</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;area_estudo&quot;</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>  )</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_caracteristicas_area_estudo_taxa_encontro</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a área, número de detecções, e taxa de encontro  </span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_caracteristicas_area_estudo_taxa_encontro <span class="ot">&lt;-</span> fluxo3<span class="fl">.3</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.3</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;area_estudo&quot;</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>  )</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_caracteristicas_area_estudo_taxa_encontro</span></code></pre></div>
+</div>
+<div id="características-de-abundância-esforço-e-detecção" class="section level6">
+<h6>Características de abundância, esforço e detecção</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a abundância</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_caracteristicas_abundancia <span class="ot">&lt;-</span> fluxo3<span class="fl">.1</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.1</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;abundancia&quot;</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>  )</span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_caracteristicas_abundancia</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a abundância</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_caracteristicas_abundancia <span class="ot">&lt;-</span> fluxo3<span class="fl">.2</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.2</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;abundancia&quot;</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>  )</span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_caracteristicas_abundancia</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a abundância</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_caracteristicas_abundancia <span class="ot">&lt;-</span> fluxo3<span class="fl">.3</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.3</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;abundancia&quot;</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>  )</span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_caracteristicas_abundancia</span></code></pre></div>
+</div>
+<div id="características-de-densidade" class="section level6">
+<h6>Características de densidade</h6>
+<p>Primeira binagem</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a densidade</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_caracteristicas_densidade <span class="ot">&lt;-</span> fluxo3<span class="fl">.1</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.1</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;densidade&quot;</span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>  )</span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>fluxo3<span class="fl">.1</span>_caracteristicas_densidade</span></code></pre></div>
+<p>Segunda binagem</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a densidade</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_caracteristicas_densidade <span class="ot">&lt;-</span> fluxo3<span class="fl">.2</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.2</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;densidade&quot;</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>  )</span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>fluxo3<span class="fl">.2</span>_caracteristicas_densidade</span></code></pre></div>
+<p>Terceira binagem</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co"># gerar resultados sobre a densidade</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_caracteristicas_densidade <span class="ot">&lt;-</span> fluxo3<span class="fl">.3</span>_modelos_selecionados <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  <span class="fu">gerar_resultados_Distance</span>(</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>    <span class="at">resultado_selecao_modelos =</span> fluxo3<span class="fl">.3</span>_selecao_funcao_deteccao_termo_ajuste,</span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>    <span class="at">tipo_de_resultado =</span> <span class="st">&quot;densidade&quot;</span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a>  )</span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a>fluxo3<span class="fl">.3</span>_caracteristicas_densidade</span></code></pre></div>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
