@@ -2,41 +2,6 @@ Package: distanceMonitoraflorestal
 Title: Estima a densidade de aves e médios e grandes mamíferos em Unidades de Conservação do Brasil
 Version: 0.0.0.9000
 Authors@R: 
-    c(
-    person(
-    given = "Vitor", 
-    family = "Borges-Júnior", 
-    email = "vntborgesjr@gmail.com", 
-    role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-7726-9871")),
-    person(
-    given = "Luciana", 
-    family = "Fusinatto", 
-    email = "lufusinatto@gmail.com", 
-    role = c("aut"),
-    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
-    ),
-    person(
-    given = "Elildo", 
-    family = "Carvalho-Júnior", 
-    email = "elildo.carvalho-junior@icmbio.gov.br", 
-    role = c("aut"),
-    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
-    ),
-    person(
-    given = "Helga", 
-    family = "Wiederhecker", 
-    email = "helgacorrea@wwf.org.br", 
-    role = c("aut"),
-    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
-    ),
-    person(
-    given ="World Wild Fund", 
-    family = "WWF", 
-    email = "relacionamento@wwf.org.br", 
-    role = c("fnd")
-    )       
-    )
 Description: Funcionalidades para selecionar, transformar, visualizar e estimar a abundância e densidade de aves e médios e grandes mamíferos de 40 Unidades de Conservação do Brasil, a partir dos dados do Projeto Monitora Componente Florestal.
 License: MIT + file LICENSE
 Encoding: UTF-8
