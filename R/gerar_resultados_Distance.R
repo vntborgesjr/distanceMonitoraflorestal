@@ -15,7 +15,9 @@
 #' na função [transformar_dados_formato_Distance()]
 #'
 #' @description
-#' Descrever o que cada opção retorna
+#' Para as opções "area_estudo" e "abundância" a unidade de árear e esforço está
+#'  em metros quadrados e em metros, respectivamente. Para  a opção "densidade"
+#'  a unidade está em hectare
 #'
 #' @return Retorna uma `tibble`.
 #' @export
