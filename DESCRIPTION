@@ -14,21 +14,21 @@ Authors@R:
     family = "Fusinatto",
     email = "lufusinatto@gmail.com",
     role = c("aut"),
-    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
+    comment = c(ORCID = "0000-0001-9354-1698")
     ),
     person(
     given = "Elildo",
     family = "Carvalho-Júnior",
     email = "elildo.carvalho-junior@icmbio.gov.br",
     role = c("aut"),
-    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
+    comment = c(ORCID = "0000-0003-4356-2954")
     ),
     person(
     given = "Helga",
     family = "Wiederhecker",
     email = "helgacorrea@wwf.org.br",
     role = c("aut"),
-    comment = c(ORCID = "xxxx-xxxx-xxxx-xxxx")
+    comment = c(ORCID = "0000-0002-6454-0829")
     ),
     person(
     given ="World Wild Fund",
