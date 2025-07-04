@@ -1,15 +1,35 @@
 citHeader("Para citar o pacote distanceMonitoraflorestal em publicações use:")
-citEntry(entry="Manual",
+citEntry(
+entry="Article",
+         title ="distanceMonitoraflorestal: um pacote em R para estimar as densidades de populações de aves e mamíferos do Programa Monitora",
+         author = "Vitor Nelson Teixeira Borges-Júnior, Luciana A. Fusinatto, Elildo Carvalho-Júnior, Helga Correa Wiederhecker",
+         journal = "Biodiversidade Brasileira",
+         volume = "15",
+         number = "2"
+         Organization = "Piper 3D, WWF, ICMBio",
+         year         = 2025,
+         note         = "R package version 0.0.0.9000",
+         doi          = "https://doi.org/10.37002/biodiversidadebrasileira.v15i2.2536",
+         textVersion =
+         paste("Borges-Junior V.N.T., Fusinatto L.A, Carvalho-Júnior E.R., Wiederhecker H.C. (2025) ",
+               "distanceMonitoraflorestal: um pacote em R para estimar as densidades de populações de aves e mamíferos do Programa Monitora ",
+               "Biodiversidade Brasileira ",
+               "15(2) "
+                "https://vntborgesjr.github.io/distanceMonitoraflorestal/",
+                sep="")
+)
+citEntry(
+entry="Manual",
          title ="distanceMonitoraflorestal: ferramentas para selecao, visualizacao e analise de densidade de aves, medios e grandes mamiferos do Programa Monitora Componente Florestal",
          author = "Vitor Nelson Teixeira Borges-Júnior, Luciana A. Fusinatto, Elildo Carvalho-Júnior, Helga Correa Wiederhecker",
          Organization = " Piper 3D, WWF, ICMBio",
-         address      = " ",
          year         = 2023,
          note         = "R package version 0.0.0.9000",
-         url          = "",
+         url          = "https://vntborgesjr.github.io/distanceMonitoraflorestal/",
          textVersion =
          paste("Borges-Junior V.N.T., Fusinatto L.A, Carvalho-Júnior E.R., Wiederhecker H.C. (2023) ",
                "distanceMonitoraflorestal: ferramentas para selecao, visualizacao e analise de densidade de aves, medios e grandes mamiferos do Programa Monitora Componente Florestal ",
                "Piper 3D, Rio de Janeiro, RJ, Brasil ",
                 "https://vntborgesjr.github.io/distanceMonitoraflorestal/",
-                " Version = 0.0.0.9000",".",sep="") )
+                " Version = 0.0.0.9000",".",sep="")
+)
