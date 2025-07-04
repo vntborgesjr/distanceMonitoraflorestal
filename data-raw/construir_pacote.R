@@ -253,7 +253,7 @@
 # usethis::use_pkgdown()
 # pkgdown::build_site()
 #
-# Instalar localmente o pacote didstanceMonitorafloresta ------------------
+# Instalar localmente o pacote distanceMonitorafloresta ------------------
 
 # devtools::install_github("vntborgesjr/distanceMonitoraflorestal", force = TRUE)
 #
