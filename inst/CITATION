@@ -13,9 +13,10 @@ entry="Article",
          textVersion =
          paste("Borges-Junior V.N.T., Fusinatto L.A, Carvalho-Júnior E.R., Wiederhecker H.C. (2025) ",
                "distanceMonitoraflorestal: um pacote em R para estimar as densidades de populações de aves e mamíferos do Programa Monitora ",
-               "Biodiversidade Brasileira ",
-               "15(2) ",
-                "https://vntborgesjr.github.io/distanceMonitoraflorestal/",
+               "Biodiversidade Brasileira, ",
+               "15(2): ",
+               "85-101, ",
+                "doi: https://vntborgesjr.github.io/distanceMonitoraflorestal/",
                 sep="")
 )
 citEntry(
