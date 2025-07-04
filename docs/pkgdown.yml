@@ -1,9 +1,10 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
+pandoc: '3.4'
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   Carregando-uma-base-de-dados-atualizada: Carregando-uma-base-de-dados-atualizada.html
   Checagem-filtragem-e-transformacao-dos-dados: Checagem-filtragem-e-transformacao-dos-dados.html
+  distanceMonitoraflorestal: distanceMonitoraflorestal.html
   Exploracao-e-selecao-de-dados-para-analises: Exploracao-e-selecao-de-dados-para-analises.html
   Fluxo1-distancias-exatas-com-repeticoes: Fluxo1-distancias-exatas-com-repeticoes.html
   Fluxo2-distancias-exatas-sem-repeticoes: Fluxo2-distancias-exatas-sem-repeticoes.html
@@ -11,6 +12,4 @@ articles:
   Fluxo4-multiplas-covariaveis: Fluxo4-multiplas-covariaveis.html
   Fluxo5-estratificacao-por-unidade-de-conservacao: Fluxo5-estratificacao-por-unidade-de-conservacao.html
   Fluxo6-estratificacao-por-ano: Fluxo6-estratificacao-por-ano.html
-  distanceMonitoraflorestal: distanceMonitoraflorestal.html
-last_built: 2024-04-30T19:00Z
-
+last_built: 2025-07-04T20:12Z
